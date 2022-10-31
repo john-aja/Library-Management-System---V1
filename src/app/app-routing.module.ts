@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
-import { ExtraOptions, RouterModule, Routes } from '@angular/router';
-import { HomePageComponent } from './home-page/home-page.component';
+import { RouterModule, Routes } from '@angular/router';
+
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
+  // { path: '', component: LoginPageComponent },
   {
-    path: 'home',
-    // canActivate: [AuthGuard],
-    component: HomePageComponent,
+    path: '',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./app-shell/app-shell.module').then((m) => m.AppShellModule),
   },
 ];
 

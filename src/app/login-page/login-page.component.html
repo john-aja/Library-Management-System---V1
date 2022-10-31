@@ -52,7 +52,13 @@
         data-logo_alignment="center"
         data-width="300"
       ></div> -->
-      <button (click)="isLoggedIn()">Login</button>
+      <button
+        (click)="isLoggedIn()"
+        class="flex justify-center items-center gap-2 px-10 py-2 bg-blue-900 rounded-md text-white cursor-pointer transition-all duration-75 hover:translate-y-px"
+      >
+        <p>Sign in with Google</p>
+        <img src="../../assets/google icon.svg" alt="" />
+      </button>
     </div>
 
     <div class="ocean">

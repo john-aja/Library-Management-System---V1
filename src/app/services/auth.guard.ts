@@ -20,12 +20,11 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (localStorage.getItem('lms-token')) {
-      console.log('HERE');
-      this.router.navigate(['/home']);
+    if (localStorage.getItem('user')) {
+      // console.log('HERE');
+      // this.router.navigate(['']);
       return true;
     }
-    // not logged in so redirect to login page with the return url
     this.router.navigate(['/login']);
     return false;
   }

@@ -8,3 +8,69 @@
 body {
   font-family: "Kanit", sans-serif;
 }
+html {
+  font-size: 100%;
+}
+input:focus,
+select:focus {
+  outline: none;
+}
+
+.dark_theme {
+  background: rgb(5, 4, 47);
+  background: linear-gradient(
+    180deg,
+    rgba(5, 4, 47, 1) 0%,
+    rgba(4, 14, 76, 1) 100%
+  );
+}
+
+.light_dark_theme {
+  background: #eeeeee;
+  // background: linear-gradient(180deg, rgb(4, 15, 54) 0%, rgb(12, 49, 113) 100%);
+}
+
+.highlight {
+  background-color: #eeeeee;
+}
+
+.text-color-light {
+  color: #eeeeee;
+}
+
+.text-color-blue {
+  color: rgba(5, 4, 47, 1);
+}
+
+.bg-green {
+  background-color: #17b794;
+}
+
+@media only screen and (max-width: 1100px) {
+  html {
+    font-size: 88%;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  html {
+    font-size: 82%;
+  }
+}
+
+@media only screen and (max-width: 930px) {
+  html {
+    font-size: 77%;
+  }
+}
+@media only screen and (max-width: 700px) {
+  html {
+    font-size: 72%;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  html {
+    font-size: 70%;
+  }
+}

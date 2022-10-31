@@ -1,0 +1,166 @@
+<div class="h-full w-full relative">
+  <div class="overflow-hidden">
+    <div class="mt-28 pt-2 pl-10 user_container">
+      <div
+        class="inline-flex bg-white text-black bg-opacity-70 rounded-md px-4 gap-10"
+      >
+        <p
+          class="px-4 py-3 cursor-pointer"
+          [ngClass]="members ? 'border-b-4 border_blue' : ''"
+          (click)="membersTab()"
+        >
+          Members
+        </p>
+        <p
+          class="px-4 py-3 cursor-pointer"
+          [ngClass]="admin ? 'border-b-4 border_blue' : ''"
+          (click)="adminsTab()"
+        >
+          Admins
+        </p>
+      </div>
+    </div>
+
+    <!-- Members tab ////////////// -->
+
+    <ng-container *ngIf="members">
+      <div class="mt-8 px-14 flex justify-between items-center">
+        <div class="flex items-center gap-10">
+          <p class="text-white text-2xl">Members</p>
+          <p
+            class="px-8 py-2 rounded-md text-white bg-green cursor-pointer"
+            (click)="addMember()"
+          >
+            Add New
+          </p>
+        </div>
+        <div class="flex flex-col gap-4 text-right pr-6">
+          <p class="text-gray-400">
+            Total Members:
+            <span class="text-white">{{ usersList.length }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="px-10 mt-10">
+        <div
+          class="px-10 py-4 mb-4 bg-opacity-20 grid grid-cols-5 justify-around rounded-md text-white text-1xl font-bold"
+          style="background-color: #28518a"
+        >
+          <p>S.No</p>
+          <p>Name</p>
+          <p>Designation</p>
+          <p>Email</p>
+          <p class="pl-10 whitespace-nowrap">No. of books taken</p>
+        </div>
+        <div
+          *ngFor="let item of usersList; index as i"
+          class="px-10 py-4 grid grid-cols-5 justify-around rounded-md text-white text-1xl font-light"
+        >
+          <p class="pl-3">{{ i + 1 }}</p>
+          <p>{{ item.name }}</p>
+          <p>{{ item.designation }}</p>
+          <p>{{ item.email }}</p>
+          <p class="pl-10">{{ item.numberOfBooksTaken }}</p>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Admin tab ////////////// -->
+
+    <ng-container *ngIf="admin">
+      <div class="mt-8 px-14 flex justify-between items-center">
+        <div class="flex items-center gap-10">
+          <p class="text-white text-2xl">Admins</p>
+          <p
+            class="px-8 py-2 rounded-md text-white bg-green cursor-pointer"
+            (click)="addAdmin()"
+          >
+            Add New
+          </p>
+        </div>
+        <div class="flex flex-col gap-4 text-right pr-6">
+          <p class="text-gray-400">
+            Total Admins:
+            <span class="text-white">{{ adminList.length }}</span>
+          </p>
+        </div>
+      </div>
+      <div class="px-10 mt-10">
+        <div
+          class="px-10 py-4 mb-4 bg-blue-900 bg-opacity-20 grid grid-cols-4 justify-around rounded-md text-white text-1xl font-bold"
+        >
+          <p>S.No</p>
+          <p>Name</p>
+          <p>Designation</p>
+          <p>Email</p>
+        </div>
+        <div
+          *ngFor="let item of adminList; index as i"
+          class="px-10 py-4 grid grid-cols-4 justify-around rounded-md text-white text-1xl font-light"
+        >
+          <p class="pl-3">{{ i + 1 }}</p>
+          <p>{{ item.name }}</p>
+          <p>{{ item.designation }}</p>
+          <p>{{ item.email }}</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Add Members ////////////////////////// -->
+
+  <div
+    *ngIf="newMember"
+    class="h-auto w-2/4 dark_theme text-white rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 drop-shadow-sm"
+  >
+    <div class="py-8 px-10">
+      <p class="text-2xl">Add a new member</p>
+      <div class="mt-10 grid" style="grid-template-columns: 1fr 2fr">
+        <div class="flex flex-col gap-10">
+          <label class="h-10 pt-2 w-1/2">Name</label>
+          <label class="h-10 pt-2">Designation</label>
+          <label class="h-10 pt-2">Email</label>
+          <label class="h-10 pt-2">Role</label>
+        </div>
+        <div class="flex flex-col gap-10 pr-10">
+          <input
+            placeholder="Enter member's full name"
+            type="text"
+            class="w-full h-10 rounded-md pl-3 font-light"
+          />
+          <input
+            placeholder="Enter member's designation"
+            type="text"
+            class="w-full h-10 rounded-md pl-3 font-light"
+          />
+          <input
+            placeholder="Enter member's email"
+            type="text"
+            class="w-full h-10 rounded-md pl-3 font-light"
+          />
+          <select class="w-full h-10 rounded-md pl-3 font-light cursor-pointer">
+            <option selected>Select role</option>
+            <option>User</option>
+            <option>Admin</option>
+          </select>
+        </div>
+      </div>
+      <div class="mt-10 w-full flex justify-end pr-10">
+        <button class="px-16 py-2 bg-green rounded-md">Submit</button>
+      </div>
+    </div>
+
+    <div class="absolute top-5 right-6">
+      <button class="item-1" (click)="close()">
+        <span class="inner">
+          <span class="label">Close</span>
+        </span>
+      </button>
+    </div>
+  </div>
+  <div
+    *ngIf="newMember"
+    (click)="close()"
+    class="h-full w-full absolute top-0 left-0 bg-gray-600 bg-opacity-50 z-20 backdrop-blur-sm"
+  ></div>
+</div>

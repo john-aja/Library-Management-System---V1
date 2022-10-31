@@ -3,14 +3,37 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
-import { HomePageComponent } from './home-page/home-page.component';
+
+import { SearchFilterPipe } from './search-filter.pipe';
+import { FormsModule } from '@angular/forms';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { LibraryComponent } from './library/library.component';
+import { ViewBookComponent } from './view-book/view-book.component';
+import { AddBookComponent } from './add-book/add-book.component';
+import { AvailableBooksComponent } from './available-books/available-books.component';
+import { RemoveBookComponent } from './remove-book/remove-book.component';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginPageComponent, HomePageComponent],
-  imports: [BrowserModule, AppRoutingModule, RouterModule, ReactiveFormsModule],
+  declarations: [
+    AppComponent,
+    LoginPageComponent,
+    LibraryComponent,
+    ViewBookComponent,
+    SearchFilterPipe,
+    AddBookComponent,
+    AvailableBooksComponent,
+    RemoveBookComponent,
+    UsersComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

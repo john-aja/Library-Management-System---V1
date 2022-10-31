@@ -1,0 +1,76 @@
+.similar_books::-webkit-scrollbar {
+  display: none;
+}
+
+// closebtn
+
+.item-1 {
+  height: 50px;
+  .inner {
+    display: block;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    &:before {
+      content: "";
+      position: absolute;
+      height: 4px;
+      width: 24px;
+      background-color: rgb(167, 15, 15);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      transition: ease-out 0.2s all;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      height: 4px;
+      width: 24px;
+      background-color: rgb(207, 44, 44);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      transition: ease-out 0.2s all;
+    }
+  }
+  .label {
+    color: rgb(213, 31, 31);
+    opacity: 0;
+    transition: linear 0.3s all;
+  }
+  &:hover,
+  &:focus {
+    .inner {
+      &:before {
+        transform: translate(-50%, 0%) rotate(0);
+        top: 25%;
+        width: 100%;
+      }
+      &:after {
+        transform: translate(-50%, 0%) rotate(0);
+        top: 76%;
+        width: 100%;
+      }
+    }
+    .label {
+      opacity: 1;
+      margin-top: 2px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .item-1 {
+    height: 43px;
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          top: 72%;
+        }
+      }
+    }
+  }
+}

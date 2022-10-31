@@ -1,0 +1,45 @@
+.profile_pic {
+  border-color: #01005e;
+}
+
+.profile_name {
+  background-color: #17b794;
+}
+
+.border-l {
+  border-color: #a7a7a736;
+}
+.border-style {
+  border-color: rgba(135, 135, 135, 0.414);
+}
+
+.nav_bar {
+  width: 20%;
+}
+
+@media only screen and (max-width: 900px) {
+  .nav_bar {
+    width: 100% !important;
+    height: auto;
+    border-bottom: 1px solid rgba(115, 115, 115, 0.238);
+  }
+  .dark_theme {
+    background: linear-gradient(
+      180deg,
+      rgba(4, 14, 76, 1) 100%,
+      rgba(5, 4, 47, 1) 0%
+    );
+  }
+  .main_container {
+    flex-direction: column;
+  }
+  .collapse_nav {
+    display: none;
+  }
+  .border-style {
+    border-color: rgba(135, 135, 135, 0);
+  }
+  .profile_picture_div {
+    top: 10rem;
+  }
+}

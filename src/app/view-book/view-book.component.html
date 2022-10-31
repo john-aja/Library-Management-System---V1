@@ -1,0 +1,168 @@
+<div>
+  <div>
+    <div class="p-10 pt-12 flex gap-6 text-white items-center">
+      <img class="w-44 rounded-md" src="{{ receiver.imageUrl }}" alt="" />
+      <div class="flex flex-col gap-3">
+        <p class="text-4xl">{{ receiver.bookName }}</p>
+
+        <p class="text-2xl text-gray-400">{{ receiver.author }}</p>
+        <p class="text-gray-500">Genre : {{ receiver.genre }}</p>
+        <p class="text-gray-300">{{ receiver.description }}</p>
+        <div>
+          <p
+            *ngIf="!receiver?.availability && !availabilityBtn"
+            class="px-4 py-2 bg-red-500 inline-block rounded-full text-white text-xs"
+          >
+            Book not available in library
+          </p>
+
+          <p
+            *ngIf="receiver?.availability && !availabilityBtn"
+            class="px-4 py-2 bg-green-400 inline-block rounded-full text-white text-xs"
+          >
+            Book available in library
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-b-2 border-gray-700 border-opacity-30 pb-6 ml-10 mr-10">
+      <div class="flex-col inline-flex" *ngIf="!receiver?.availability">
+        <p
+          class="px-10 py-2 bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
+          (click)="addVote()"
+        >
+          Request admin to add +
+        </p>
+
+        <p class="mt-2 w-64 text-gray-400 text-xs pl-4 text-left">
+          *Once requested admin will review your request to add book to the
+          library
+        </p>
+      </div>
+      <div
+        class="flex-col inline-flex"
+        *ngIf="receiver?.availability"
+        [ngClass]="!availabilityBtn ? '' : '-mt-8'"
+      >
+        <p
+          class="px-10 py-2 text-center bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
+          (click)="takeBook()"
+        >
+          Take book
+        </p>
+
+        <p class="mt-2 w-64 text-gray-400 text-xs pl-4 text-left">
+          *Once taken, you should return it within a month or two.
+        </p>
+      </div>
+    </div>
+
+    <div class="pl-10" [ngClass]="!availabilityBtn ? 'mt-6' : 'mt-8'">
+      <p class="text-white text-2xl">Books from author {{ receiver.author }}</p>
+      <div class="flex w-full overflow-x-scroll gap-8 pb-12 similar_books">
+        <ng-container *ngFor="let item of similarBooks; let i = index">
+          <div
+            class="flex flex-col gap-4 items-center"
+            (click)="onSelect($event, item, i)"
+          >
+            <img
+              class="w-36 mt-4 cursor-pointer rounded-md"
+              src="{{ item.imageUrl }}"
+            />
+            <p
+              class="w-40 text-md cursor-pointer text-center text-white leading-none font-black"
+            >
+              {{ item.bookName }}
+            </p>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="bookView">
+  <div
+    class="w-2/4 h-3/4 absolute top-1/2 left-1/2 light_dark_theme -translate-x-1/2 -translate-y-1/2 z-50 rounded-lg drop-shadow-2xl flex items-center justify-center"
+  >
+    <div class="flex flex-col justify-center items-center gap-4 p-6">
+      <img
+        class="w-56 rounded-md"
+        src="{{ selectedReceiver.imageUrl }}"
+        alt=""
+      />
+      <p class="text-2xl text-color-blue font-bold">
+        {{ selectedReceiver.bookName }}
+      </p>
+      <p class="text-center">{{ selectedReceiver.description }}</p>
+
+      <div class="absolute top-4 right-6">
+        <button class="item-1" (click)="close()">
+          <span class="inner">
+            <span class="label">Close</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="bookView || addVotePopup || takeBookPopup">
+  <div
+    class="h-full w-full absolute top-0 left-0 bg-black bg-opacity-30 z-20 backdrop-blur-sm"
+    (click)="close()"
+  ></div>
+</ng-container>
+
+<ng-container *ngIf="addVotePopup">
+  <div
+    class="w-auto h-auto light_dark_theme absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-md"
+  >
+    <div class="flex justify-center items-center flex-col px-10 py-6">
+      <p class="text-1xl">Are you sure you want to add a vote for this book.</p>
+      <p class="text-xs text-gray-400 mt-2">
+        *Most voted book will be added to the library after review.
+      </p>
+      <div class="flex w-full justify-center gap-20 mt-8">
+        <button
+          class="px-10 py-2 bg-green rounded-md text-white transition-all hover:bg-green-600"
+          (click)="yesVote(receiver)"
+        >
+          Yes
+        </button>
+        <button
+          class="px-10 py-2 bg-red-400 rounded-md text-white transition-all hover:bg-red-600"
+          (click)="noVote()"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="takeBookPopup">
+  <div
+    class="w-auto h-auto light_dark_theme absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-md"
+  >
+    <div class="flex justify-center items-center flex-col px-10 py-6">
+      <p class="text-1xl">Are you sure you want to take this book.</p>
+      <p class="text-xs text-gray-400 mt-2">
+        *Once taken, you should return it within a month or two.
+      </p>
+      <div class="flex w-full justify-center gap-20 mt-8">
+        <button
+          class="px-10 py-2 bg-green rounded-md text-white transition-all hover:bg-green-600"
+          (click)="takeYes()"
+        >
+          Yes
+        </button>
+        <button
+          class="px-10 py-2 bg-red-400 rounded-md text-white transition-all hover:bg-red-600"
+          (click)="takeNo()"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-container>

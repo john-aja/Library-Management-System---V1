@@ -15,9 +15,11 @@ export class LoginPageService {
       // Ref: https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
       client_id:
         '1062987206467-rs3f2p347c36t21k1a9rmvfjfb7qoahd.apps.googleusercontent.com',
-      callback: (token) => {
-        this.signin(token.credential);
-      },
+      callback:
+        // (this.handleCredentialResponse.bind(this),
+        (token) => {
+          this.signin(token.credential, token);
+        },
       auto_select: true,
       cancel_on_tap_outside: false,
     });
@@ -26,7 +28,7 @@ export class LoginPageService {
     google.accounts.id.prompt((notification: PromptMomentNotification) => {
       if (notification.getDismissedReason() === 'credential_returned') {
         this.ngZone.run(() => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['']);
         });
       }
     });
@@ -36,6 +38,8 @@ export class LoginPageService {
   //   let decodedToken: any | null = null;
   //   try {
   //     decodedToken = JSON.parse(atob(response?.credential.split('.')[1]));
+  //     console.log(decodedToken);
+  //     // this.router.navigate(['']);
   //   } catch (e) {
   //     console.error('Error while trying to decode token', e);
   //   }
@@ -43,9 +47,12 @@ export class LoginPageService {
   //   localStorage.setItem('token', decodedToken.jti);
   // }
 
-  signin(token: any) {
-    // console.log(token);
-    // JSON.stringify(localStorage.setItem('lms-token', token));
+  signin(token: any, response: CredentialResponse) {
+    console.log(response);
+    let decodedToken = JSON.parse(atob(token.split('.')[1]));
+    console.log(decodedToken);
+    localStorage.setItem('user', JSON.stringify(decodedToken));
+    JSON.stringify(localStorage.setItem('lms-token', token));
     // console.log(localStorage.getItem('lms-token'));
     // if (localStorage.getItem('lms-token')) {
     //   console.log('from service');

@@ -6,7 +6,11 @@ module.exports = {
   //   },
   content: ["./src/**/*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'green-pallete': '#17b794',
+      },
+    },
   },
   plugins: [],
 }

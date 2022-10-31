@@ -1,0 +1,40 @@
+.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media only screen and (max-width: 900px) {
+  .nav_items {
+    flex-direction: row;
+    margin-left: 2rem;
+    justify-content: start;
+    margin-right: 2rem;
+  }
+  .sidebar_content {
+    flex-direction: row;
+  }
+  .sidebar_logo_container {
+    justify-content: start;
+    padding-left: 15px;
+    margin-top: 1.7rem;
+    margin-bottom: 1.7rem;
+    width: auto;
+  }
+  .sidebar_logo_container img {
+    width: 12rem;
+  }
+  .logo-ic {
+    width: 6rem !important;
+  }
+  .icon_text {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  a {
+    border-radius: 4px;
+  }
+}
+@media only screen and (max-width: 650px) {
+  .icons {
+    display: none;
+  }
+}

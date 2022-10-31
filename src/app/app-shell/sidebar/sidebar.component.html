@@ -1,0 +1,42 @@
+<div class="flex flex-col items-center sidebar_content">
+  <div class="w-full flex justify-center my-10 sidebar_logo_container">
+    <img
+      src="../../assets/Surfboard_library_logo.svg"
+      class="w-48 transition-all duration-700 p-2"
+      [ngClass]="!hideText ? '' : 'hidden'"
+    />
+    <img
+      src="../../assets/logo_library.svg"
+      class="w-16 transition-all duration-700 logo-ic"
+      [ngClass]="hideText ? '' : 'hidden'"
+    />
+  </div>
+
+  <div class="w-full flex flex-col justify-center gap-4 nav_items">
+    <ng-container *ngFor="let item of navBarModule">
+      <a
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [ngClass]="this.highlight === item.route ? 'active' : ''"
+        (isActiveChange)="routesChange($event, item.route)"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="p-2 rounded-sm hover:bg-white hover:bg-opacity-10"
+      >
+        <div
+          class="w-full flex gap-3 items-center icon_text"
+          [ngClass]="!hideText ? 'mx-6 justify-start' : 'justify-center'"
+        >
+          <div class="rounded-sm flex icons">
+            <img [src]="item.icon" class="w-5 h-5" />
+          </div>
+          <div
+            class="text-md font-medium text-gray-300 nav-text transition-all duration-1000 delay-1000 whitespace-nowrap"
+            [ngClass]="!hideText ? '' : 'hidden'"
+          >
+            {{ item.title }}
+          </div>
+        </div>
+      </a>
+    </ng-container>
+  </div>
+</div>

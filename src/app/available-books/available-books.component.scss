@@ -1,0 +1,125 @@
+select {
+  appearance: none;
+  background: url(../../assets/dropdown.svg) #d7d7d7 98.7% 55% / 2rem no-repeat;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+}
+
+input {
+  background-color: #d7d7d7;
+}
+
+input::placeholder {
+  color: rgb(4, 6, 34);
+}
+
+// closebtn
+
+.item-1 {
+  height: 50px;
+  .inner {
+    display: block;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    &:before {
+      content: "";
+      position: absolute;
+      height: 4px;
+      width: 25px;
+      background-color: rgb(167, 15, 15);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      transition: ease-out 0.2s all;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      height: 4px;
+      width: 25px;
+      background-color: rgb(207, 44, 44);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      transition: ease-out 0.2s all;
+    }
+  }
+  .label {
+    color: rgb(213, 31, 31);
+    opacity: 0;
+    transition: linear 0.3s all;
+  }
+  &:hover,
+  &:focus {
+    .inner {
+      &:before {
+        transform: translate(-50%, 0%) rotate(0);
+        top: 25%;
+        width: 40px;
+      }
+      &:after {
+        transform: translate(-50%, 0%) rotate(0);
+        top: 76%;
+        width: 40px;
+      }
+    }
+    .label {
+      opacity: 1;
+      margin-top: 2px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .book_img {
+    width: 8.5rem;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .book_img {
+    width: 8rem;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .item-1 {
+    height: 43px;
+
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 33px;
+          top: 72%;
+        }
+        &:before {
+          width: 33px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 930px) {
+  .book_img {
+    width: 7rem;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .library_filter_container {
+    padding-top: 3rem;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .book_img {
+    width: 6rem;
+  }
+}

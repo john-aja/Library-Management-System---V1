@@ -1,0 +1,54 @@
+<div class="flex w-screen h-screen main_container">
+  <div
+    class="h-full dark_theme relative transition-all duration-700 nav_bar"
+    #navBar
+  >
+    <app-sidebar></app-sidebar>
+    <div class="absolute bottom-10 right-4 collapse_nav">
+      <img
+        class="w-5 h-5 cursor-pointer transition-all duration-300"
+        src="../../../assets/double_arrow.svg"
+        [ngClass]="
+          changeWidth
+            ? 'rotate-180 hover:translate-x-1'
+            : 'rotate-0 hover:-translate-x-1'
+        "
+        alt=""
+        (click)="navCollapse()"
+      />
+    </div>
+  </div>
+
+  <div class="w-full h-full dark_theme border-l-2 border-style">
+    <div class="absolute top-28 right-16 z-20 profile_picture_div">
+      <div class="div_class rounded-full relative">
+        <p
+          class="text-white profile_name rounded-l-full px-10 py-1 absolute right-6 top-1/2 -translate-y-1/2 whitespace-nowrap z-20"
+        >
+          {{ userInfo.name }}
+        </p>
+        <img
+          (click)="openProfile()"
+          class="w-12 rounded-full z-50 relative profile_pic border-2"
+          src="{{ userInfo.picture }}"
+        />
+
+        <!-- Profile box -->
+        <ng-container *ngIf="profileBox">
+          <div
+            class="absolute top-14 right-2 bg-white h-auto w-96 z-50 rounded-md profile_box"
+          >
+            <app-profile-info></app-profile-info>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<ng-container *ngIf="profileBox">
+  <div
+    class="h-full w-full absolute top-0 left-0 bg-black bg-opacity-30 z-10 backdrop-blur-sm"
+    (click)="close()"
+  ></div>
+</ng-container>

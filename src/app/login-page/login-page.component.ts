@@ -7,7 +7,9 @@ import { LoginPageService } from './login-page.service';
   styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent implements OnInit {
+  userInfo: any;
   constructor(private ls: LoginPageService) {}
+
   ngOnInit(): void {}
 
   isLoggedIn() {

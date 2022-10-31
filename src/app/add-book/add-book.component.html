@@ -1,0 +1,411 @@
+<div class="h-full w-full relative">
+  <div class="overflow-hidden">
+    <div class="p-10 mt-36 add_form_container">
+      <p class="text-white text-2xl">Complete the form to add book</p>
+      <p class="text-gray-500 text-sm mt-4">
+        Fill in each details to add book to the surfboard library
+      </p>
+
+      <!-- label fields -->
+
+      <div class="mt-10 border-y-2 border-style h-full">
+        <div class="flex justify-start">
+          <div
+            class="border-r-2 border-style h-full flex flex-col items-end whitespace-nowrap"
+          >
+            <!-- bookName -->
+
+            <div
+              class="pl-20 mr-9 gap-10 mt-14 relative"
+              style="
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                justify-items: right;
+                align-items: center;
+              "
+            >
+              <label class="text-white">
+                <p class="text-right">Book name</p>
+                <p class="text-sm text-gray-500 text-right">*Browse and type</p>
+              </label>
+              <div
+                class="p-3 rounded-full track_line"
+                [ngClass]="
+                  stepTwo || stepThree || stepFour || stepFive
+                    ? 'before:bg-green-pallete green'
+                    : 'before:bg-gray-500 bg-gray-400'
+                "
+              >
+                <img
+                  class="w-4 h-4 max-w-fit"
+                  src="../../assets/book_name.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <!-- authorName  -->
+
+            <div
+              class="pl-20 mr-9 gap-10 mt-14 relative"
+              style="
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                justify-items: right;
+                align-items: center;
+              "
+            >
+              <label class="text-white">
+                <p class="text-right">Author name</p>
+                <p class="text-sm text-gray-500 text-right">*Browse and type</p>
+              </label>
+              <div
+                class="p-3 rounded-full track_line"
+                [ngClass]="
+                  stepThree || stepFour || stepFive
+                    ? 'before:bg-green-pallete green'
+                    : 'before:bg-gray-500 bg-gray-400'
+                "
+              >
+                <img
+                  class="w-4 h-4 max-w-fit"
+                  src="../../assets/author_name.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <!-- imageUrl  -->
+
+            <div
+              class="pl-20 mr-9 gap-10 mt-14 relative"
+              style="
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                justify-items: right;
+                align-items: center;
+              "
+            >
+              <label class="text-white">
+                <p class="text-right">Image Url</p>
+                <p class="text-sm text-gray-500 text-right">
+                  *Browse and paste
+                </p>
+              </label>
+              <div
+                class="p-3 rounded-full track_line"
+                [ngClass]="
+                  stepFour || stepFive
+                    ? 'before:bg-green-pallete green'
+                    : 'before:bg-gray-500 bg-gray-400'
+                "
+              >
+                <img
+                  class="w-4 h-4 max-w-fit"
+                  src="../../assets/image_url.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <!-- Description  -->
+
+            <div
+              class="pl-20 mr-9 gap-10 mt-14 relative"
+              style="
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                justify-items: right;
+                align-items: center;
+              "
+            >
+              <label class="text-white">
+                <p class="text-right">Book Description</p>
+                <p class="text-sm text-gray-500 text-right">*Browse and type</p>
+              </label>
+              <div
+                class="p-3 rounded-full track_line"
+                [ngClass]="
+                  stepFive
+                    ? 'before:bg-green-pallete green'
+                    : 'before:bg-gray-500 bg-gray-400'
+                "
+              >
+                <img
+                  class="w-4 h-4 max-w-fit"
+                  src="../../assets/Info.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <!-- bookGenre  -->
+            <div
+              class="pl-20 mr-9 gap-10 my-14 relative"
+              style="
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                justify-items: right;
+                align-items: center;
+              "
+            >
+              <label class="text-white">
+                <p class="text-right">Book Genre</p>
+                <p class="text-sm text-gray-500 text-right">
+                  *Browse and select
+                </p>
+              </label>
+              <div
+                class="p-3 rounded-full"
+                [ngClass]="
+                  genreValue !== '' && stepFive ? 'green' : 'bg-gray-400'
+                "
+              >
+                <img
+                  class="w-4 h-4 max-w-fit"
+                  src="../../assets/book_genre.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- input fields /////////////////////////////////////////////////////// -->
+
+          <!-- bookName -->
+
+          <div
+            [formGroup]="addBookForm"
+            (keydown.enter)="$event.preventDefault()"
+            *ngIf="stepOne"
+            class="text-white pl-20 mt-14 w-full"
+          >
+            <p class="text-2xl text-left">Enter exact name of the book</p>
+            <p class="text-sm text-gray-500">
+              *If you are not sure about the book name, please browse and type
+            </p>
+            <input
+              class="mt-6 w-full h-10 rounded-md text-black pl-2"
+              type="text"
+              #bookName
+              maxlength="50"
+              formControlName="bookName"
+              placeholder="Enter book name"
+            />
+            <p class="mt-2 flex justify-end w-full pr-2 text-sm text-gray-400">
+              {{ bookName.value.length }}/50
+            </p>
+            <div class="flex justify-end mt-6 w-full">
+              <button
+                class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
+                (click)="stepOneBtn()"
+                [ngClass]="
+                  !addBookForm.valid
+                    ? 'bg-gray-500 cursor-not-allowed'
+                    : 'green hover:bg-green-500'
+                "
+                [disabled]="!addBookForm.valid"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- authorName  -->
+
+          <div
+            [formGroup]="addAuthorForm"
+            (keydown.enter)="$event.preventDefault()"
+            *ngIf="stepTwo"
+            class="text-white pl-20 mt-14 w-full"
+          >
+            <p class="text-2xl text-left">
+              Enter exact name of the book's author
+            </p>
+            <p class="text-sm text-gray-500">
+              *If you are not sure about the author name, please browse and type
+            </p>
+            <input
+              class="mt-6 w-full h-10 rounded-md text-black pl-2"
+              type="text"
+              #authorName
+              maxlength="50"
+              formControlName="authorName"
+              placeholder="Enter author name"
+            />
+            <p class="mt-2 flex justify-end w-full pr-2 text-sm text-gray-400">
+              {{ authorName.value.length }}/50
+            </p>
+            <div class="flex justify-end gap-8 mt-6 w-full">
+              <button
+                (click)="backBtnOne()"
+                class="text-gray-400 font-bold hover:text-gray-300 transition-all"
+              >
+                Back
+              </button>
+              <button
+                class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
+                (click)="stepTwoBtn()"
+                [ngClass]="
+                  !addAuthorForm.valid
+                    ? 'bg-gray-500 cursor-not-allowed'
+                    : 'green hover:bg-green-500'
+                "
+                [disabled]="!addAuthorForm.valid"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- imageUrl -->
+
+          <div
+            [formGroup]="addImageForm"
+            (keydown.enter)="$event.preventDefault()"
+            *ngIf="stepThree"
+            class="text-white pl-20 mt-14 w-full"
+          >
+            <p class="text-2xl text-left">Browse and paste the image url</p>
+            <p class="text-sm text-gray-500">
+              *Browse, copy the image address and paste it here.
+            </p>
+            <input
+              class="mt-6 w-full h-10 rounded-md text-black pl-2"
+              type="text"
+              #imageUrl
+              maxlength="100"
+              formControlName="imageUrl"
+              placeholder="Paste the book's image url"
+            />
+            <p class="mt-2 flex justify-end w-full pr-2 text-sm text-gray-400">
+              {{ imageUrl.value.length }}/100
+            </p>
+            <div class="flex justify-end gap-8 mt-6 w-full">
+              <button
+                (click)="backBtnTwo()"
+                class="text-gray-400 font-bold hover:text-gray-300 transition-all"
+              >
+                Back
+              </button>
+              <button
+                class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
+                (click)="stepThreeBtn()"
+                [disabled]="!addImageForm.valid"
+                [ngClass]="
+                  !addImageForm.valid
+                    ? 'bg-gray-500 cursor-not-allowed'
+                    : 'green hover:bg-green-500'
+                "
+              >
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- Description -->
+
+          <div
+            [formGroup]="addDescriptionForm"
+            (keydown.enter)="$event.preventDefault()"
+            *ngIf="stepFour"
+            class="text-white pl-20 mt-14 w-full"
+          >
+            <p class="text-2xl text-left">
+              Browse and type short description of the book
+            </p>
+            <p class="text-sm text-gray-500">
+              *Browse, and enter short description of the book.
+            </p>
+            <input
+              class="mt-6 w-full h-10 rounded-md text-black pl-2"
+              type="text"
+              #imageUrl
+              maxlength="500"
+              formControlName="description"
+              placeholder="Enter book description"
+            />
+            <p class="mt-2 flex justify-end w-full pr-2 text-sm text-gray-400">
+              {{ imageUrl.value.length }}/500
+            </p>
+            <div class="flex justify-end gap-8 mt-6 w-full">
+              <button
+                (click)="backBtnThree()"
+                class="text-gray-400 font-bold hover:text-gray-300 transition-all"
+              >
+                Back
+              </button>
+              <button
+                class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
+                (click)="stepFourBtn()"
+                [disabled]="!addDescriptionForm.valid"
+                [ngClass]="
+                  !addDescriptionForm.valid
+                    ? 'bg-gray-500 cursor-not-allowed'
+                    : 'green hover:bg-green-500'
+                "
+              >
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- bookGenre -->
+
+          <div
+            [formGroup]="addGenreForm"
+            (keydown.enter)="$event.preventDefault()"
+            *ngIf="stepFive"
+            class="text-white pl-20 mt-14 w-full"
+          >
+            <p class="text-2xl text-left">Select the genre of the book</p>
+            <p class="text-sm text-gray-500">
+              *If you are not sure about the genre, please browse and select
+            </p>
+            <!-- <input
+              class="mt-10 w-full h-10 rounded-md text-black pl-2"
+              type="select"
+              formControlName="bookGenre"
+            /> -->
+            <select
+              class="mt-6 w-full h-10 rounded-md text-black pl-2 cursor-pointer"
+              formControlName="bookGenre"
+              #genreDropDown
+              (change)="getGenre($event.target)"
+            >
+              <option value="" selected>Select genre</option>
+              <option value="Action">Action</option>
+              <option value="Comedy">Comedy</option>
+              <option value="Drama">Drama</option>
+              <option value="Horror">Horror</option>
+              <option value="Fiction">Fiction</option>
+              <option value="Mystery">Mystery</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Technical">Technical</option>
+            </select>
+            <div class="flex justify-end gap-8 mt-6 w-full">
+              <button
+                (click)="backBtnFour()"
+                class="text-gray-400 font-bold hover:text-gray-300 transition-all"
+              >
+                Back
+              </button>
+              <button
+                class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
+                (click)="submitBtn()"
+                [disabled]="genreDropDown.value === ''"
+                [ngClass]="
+                  genreDropDown.value !== ''
+                    ? 'green hover:bg-green-400'
+                    : 'bg-gray-500 cursor-not-allowed'
+                "
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
