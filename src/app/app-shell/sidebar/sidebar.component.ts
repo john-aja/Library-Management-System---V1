@@ -10,6 +10,7 @@ import { AppShellService } from '../app-shell.service';
 export class SidebarComponent implements OnInit {
   clickEventsubscription: Subscription;
   hideText: boolean = false;
+  menuContainer: boolean = false;
 
   navBarModule = [
     {
@@ -55,8 +56,15 @@ export class SidebarComponent implements OnInit {
     if (route == '') {
       this.highlight = true;
     }
+    this.menuContainer = false;
     this.highlight = event;
     console.log(event);
+  }
+  openMenu() {
+    this.menuContainer = !this.menuContainer;
+  }
+  closeMenu() {
+    this.menuContainer = false;
   }
   changeToIcon() {
     if (!this.hideText) this.hideText = true;

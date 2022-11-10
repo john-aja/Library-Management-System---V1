@@ -1,5 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as firebase from 'firebase/compat';
+import {
+  getDatabase,
+  onValue,
+  orderByChild,
+  query,
+  ref,
+} from 'firebase/database';
+import { first, map } from 'rxjs';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-remove-book',
@@ -19,11 +30,17 @@ export class RemoveBookComponent implements OnInit {
   removeReasonForm!: FormGroup<any>;
   addGenreForm!: FormGroup<any>;
   addBookIdForm!: FormGroup<any>;
-  constructor(private fb: FormBuilder) {}
+  bookObj: any;
+  aflCategories: any;
+  constructor(
+    private fb: FormBuilder,
+    public db: AngularFireDatabase,
+    private fbs: FirebaseService
+  ) {}
 
   ngOnInit(): void {
     this.initializeForm();
-    // console.log(this.genreDropDown.nativeElement.value);
+    this.removeBookFunction();
   }
   stepOneBtn() {
     this.stepOne = false;
@@ -133,14 +150,15 @@ export class RemoveBookComponent implements OnInit {
   }
 
   submitBtn() {
-    let bookObj = {
+    this.bookObj = {
       bookName: this.addBookForm.controls['bookName'].value,
       author: this.addAuthorForm.controls['authorName'].value,
       reason: this.removeReasonForm.controls['reason'].value,
       genre: this.genreValue,
       bookId: this.addBookIdForm.controls['bookId'].value,
     };
-    console.log(bookObj);
+    this.removeBookFunction();
+    console.log(this.bookObj);
     this.addBookForm.reset();
     this.addAuthorForm.reset();
     this.removeReasonForm.reset();
@@ -152,5 +170,31 @@ export class RemoveBookComponent implements OnInit {
     this.stepFour = false;
     this.stepFive = false;
     alert('Successfully removed book from the library');
+  }
+
+  removeBookFunction() {
+    //   const db = getDatabase();
+    //   const bookInfo = ref(db, 'addedBooks/');
+    //   onValue(bookInfo, (snapshot) => {
+    //     let obj = [];
+    //     const data = snapshot.val();
+    //     obj.push(data);
+    //     console.log(obj);
+    //     console.log(Object.values(obj[0]));
+    //   });
+    //   let theThing = this.db
+    //     .list('/addedBooks', (ref) =>
+    //       ref
+    //         .orderByChild('bookName')
+    //         .equalTo(this.bookObj.bookName)
+    //         .limitToFirst(1)
+    //     )
+    //     .valueChanges()
+    //     .pipe(first())
+    //     .toPromise()
+    //     .then((snapshots: any) => {
+    //       console.log(snapshots);
+    //       theThing = snapshots[0];
+    //     });
   }
 }

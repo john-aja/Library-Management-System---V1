@@ -1,6 +1,6 @@
 <div class="h-full w-full relative">
   <div class="overflow-hidden">
-    <div class="p-10 mt-36 add_form_container">
+    <div class="px-10 mt-28 add_form_container">
       <p class="text-white text-2xl">Complete the form to remove book</p>
       <p class="text-gray-500 text-sm mt-4">
         Fill in each details to remove book from the surfboard library
@@ -16,7 +16,7 @@
             <!-- bookName -->
 
             <div
-              class="pl-20 mr-9 gap-10 mt-14 relative"
+              class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -33,7 +33,7 @@
                 [ngClass]="
                   stepTwo || stepThree || stepFour || stepFive
                     ? 'before:bg-green-pallete green'
-                    : 'before:bg-gray-500 bg-gray-400'
+                    : 'before:bg-gray-500 bg-gray-400 before:bg-opacity-40 bg-opacity-30'
                 "
               >
                 <img
@@ -47,7 +47,7 @@
             <!-- authorName  -->
 
             <div
-              class="pl-20 mr-9 gap-10 mt-14 relative"
+              class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -64,7 +64,7 @@
                 [ngClass]="
                   stepThree || stepFour || stepFive
                     ? 'before:bg-green-pallete green'
-                    : 'before:bg-gray-500 bg-gray-400'
+                    : 'before:bg-gray-500 bg-gray-400 before:bg-opacity-40 bg-opacity-30'
                 "
               >
                 <img
@@ -78,7 +78,7 @@
             <!-- Reason for removing  -->
 
             <div
-              class="pl-20 mr-9 gap-10 mt-14 relative"
+              class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -97,7 +97,7 @@
                 [ngClass]="
                   stepFour || stepFive
                     ? 'before:bg-green-pallete green'
-                    : 'before:bg-gray-500 bg-gray-400'
+                    : 'before:bg-gray-500 bg-gray-400 before:bg-opacity-40 bg-opacity-30'
                 "
               >
                 <img
@@ -111,7 +111,7 @@
             <!-- Description  -->
 
             <div
-              class="pl-20 mr-9 gap-10 mt-14 relative"
+              class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -130,7 +130,7 @@
                 [ngClass]="
                   stepFive
                     ? 'before:bg-green-pallete green'
-                    : 'before:bg-gray-500 bg-gray-400'
+                    : 'before:bg-gray-500 bg-gray-400 before:bg-opacity-40 bg-opacity-30'
                 "
               >
                 <img
@@ -143,7 +143,7 @@
 
             <!-- bookGenre  -->
             <div
-              class="pl-20 mr-9 gap-10 my-14 relative"
+              class="pl-20 mr-9 gap-10 my-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -160,7 +160,9 @@
               <div
                 class="p-3 rounded-full"
                 [ngClass]="
-                  genreValue !== '' && stepFive ? 'green' : 'bg-gray-400'
+                  genreValue !== '' && stepFive
+                    ? 'green'
+                    : 'bg-gray-400  bg-opacity-30'
                 "
               >
                 <img
@@ -180,10 +182,12 @@
             [formGroup]="addBookForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepOne"
-            class="text-white pl-20 mt-14 w-full"
+            class="text-white pl-20 mt-14 w-full form_container"
           >
-            <p class="text-2xl text-left">Enter exact name of the book</p>
-            <p class="text-sm text-gray-500">
+            <p class="text-2xl text-left enter_book">
+              Enter exact name of the book
+            </p>
+            <p class="text-sm text-gray-500 enter_book_hint">
               *If you are not sure about the book name, please browse and type
             </p>
             <input
@@ -219,12 +223,12 @@
             [formGroup]="addAuthorForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepTwo"
-            class="text-white pl-20 mt-14 w-full"
+            class="text-white pl-20 mt-14 w-full form_container"
           >
-            <p class="text-2xl text-left">
+            <p class="text-2xl text-left enter_book">
               Enter exact name of the book's author
             </p>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-gray-500 enter_book_hint">
               *If you are not sure about the author name, please browse and type
             </p>
             <input
@@ -266,12 +270,12 @@
             [formGroup]="removeReasonForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepThree"
-            class="text-white pl-20 mt-14 w-full"
+            class="text-white pl-20 mt-14 w-full form_container"
           >
-            <p class="text-2xl text-left">
+            <p class="text-2xl text-left enter_book">
               Enter reason for removing the book from library
             </p>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-gray-500 enter_book_hint">
               *Describe the reason why are you removing this book.
             </p>
             <input
@@ -313,12 +317,12 @@
             [formGroup]="addBookIdForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepFour"
-            class="text-white pl-20 mt-14 w-full"
+            class="text-white pl-20 mt-14 w-full form_container"
           >
-            <p class="text-2xl text-left">
+            <p class="text-2xl text-left enter_book">
               Enter the book id (Surfboard Library Book Id)
             </p>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-gray-500 enter_book_hint">
               *If you are not sure about the Id, please leave it blank.
             </p>
             <input
@@ -359,10 +363,12 @@
             [formGroup]="addGenreForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepFive"
-            class="text-white pl-20 mt-14 w-full"
+            class="text-white pl-20 mt-14 w-full form_container"
           >
-            <p class="text-2xl text-left">Select the genre of the book</p>
-            <p class="text-sm text-gray-500">
+            <p class="text-2xl text-left enter_book">
+              Select the genre of the book
+            </p>
+            <p class="text-sm text-gray-500 enter_book_hint">
               *If you are not sure about the genre, please browse and select
             </p>
             <select
@@ -372,14 +378,11 @@
               (change)="getGenre($event)"
             >
               <option value="" selected>Select genre</option>
-              <option value="Action">Action</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Drama">Drama</option>
-              <option value="Horror">Horror</option>
+              <option value="Biography">Biography</option>
+              <option value="Auto-Biography">Auto-Biography</option>
               <option value="Fiction">Fiction</option>
-              <option value="Mystery">Mystery</option>
-              <option value="Thriller">Thriller</option>
-              <option value="Technical">Technical</option>
+              <option value="Non-Fiction">Non-Fiction</option>
+              <option value="Education">Education</option>
             </select>
             <div class="flex justify-end gap-8 mt-6 w-full">
               <button

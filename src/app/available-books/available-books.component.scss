@@ -16,6 +16,11 @@ input::placeholder {
   color: rgb(4, 6, 34);
 }
 
+.dark_theme_bg {
+  background: rgb(5, 4, 47);
+  background: linear-gradient(180deg, rgba(5, 4, 47, 1) 0%, rgb(6, 5, 62) 100%);
+}
+
 // closebtn
 
 .item-1 {
@@ -75,18 +80,6 @@ input::placeholder {
   }
 }
 
-@media only screen and (max-width: 1200px) {
-  .book_img {
-    width: 8.5rem;
-  }
-}
-
-@media only screen and (max-width: 1100px) {
-  .book_img {
-    width: 8rem;
-  }
-}
-
 @media only screen and (max-width: 1000px) {
   .item-1 {
     height: 43px;
@@ -106,20 +99,155 @@ input::placeholder {
   }
 }
 
-@media only screen and (max-width: 930px) {
-  .book_img {
-    width: 7rem;
-  }
-}
-
 @media only screen and (max-width: 900px) {
   .library_filter_container {
     padding-top: 3rem;
+  }
+  .dark_theme_bg {
+    background: rgb(5, 4, 47);
+    background: linear-gradient(
+      180deg,
+      rgba(4, 14, 76, 1) 0%,
+      rgba(4, 14, 76, 1) 100%
+    );
   }
 }
 
 @media only screen and (max-width: 800px) {
   .book_img {
-    width: 6rem;
+    width: 8.5rem;
+    height: 13rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .author_book {
+    width: 80%;
+  }
+  .item-1 {
+    // height: 43px;
+    .inner {
+      &:before {
+        width: 18px;
+      }
+      &:after {
+        width: 18px;
+      }
+    }
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 30px;
+          top: 70%;
+        }
+        &:before {
+          width: 30px;
+          top: 28%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .item-1 {
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 27px;
+          top: 67%;
+        }
+        &:before {
+          width: 27px;
+          top: 28%;
+        }
+      }
+    }
+  }
+  .book_img {
+    width: 6.5rem;
+    height: 9rem;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .item-1 {
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 25px;
+          top: 68%;
+        }
+        &:before {
+          width: 25px;
+          top: 28%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .item-1 {
+    .inner {
+      &:after {
+        height: 3px;
+      }
+      &:before {
+        height: 3px;
+      }
+    }
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 22px;
+          top: 65%;
+        }
+        &:before {
+          width: 22px;
+          top: 34%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .item-1 {
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 21px;
+          top: 63%;
+        }
+        &:before {
+          width: 21px;
+          top: 34%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .item-1 {
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 20px;
+          top: 63%;
+        }
+        &:before {
+          width: 20px;
+          top: 36%;
+        }
+      }
+    }
   }
 }

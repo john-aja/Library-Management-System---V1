@@ -4,11 +4,11 @@
 
 .track_line::before {
   content: "";
-  height: 4rem;
+  height: 3.75rem;
   width: 3px;
   position: absolute;
-  top: 2.6rem;
-  right: 1.1rem;
+  top: 2.63rem;
+  right: 1.08rem;
 }
 
 .green {
@@ -24,12 +24,89 @@ input::placeholder {
   font-weight: 300;
 }
 
+textarea:focus {
+  outline: none;
+}
+
 .border-style {
   border-color: rgba(135, 135, 135, 0.414);
 }
 
+.description_area {
+  min-height: 16rem;
+  letter-spacing: 0.5px;
+}
+
+@media only screen and (max-width: 1350px) {
+  .upload_success {
+    padding: 1rem;
+  }
+}
+
+@media only screen and (max-width: 1300px) {
+  .uploaded_image_container {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .uploaded_img {
+    width: 10rem;
+  }
+  .upload_success {
+    flex-direction: row;
+    width: 100%;
+  }
+  .upload_success img {
+    display: none;
+  }
+  .upload_success .text-center {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 900px) {
   .add_form_container {
-    margin-top: 1rem;
+    margin-top: 3rem;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+  .description_area {
+    min-height: 15rem;
+  }
+}
+
+@media only screen and (max-width: 730px) {
+  .upload_success p {
+    font-size: 0.75rem;
+  }
+}
+
+@media only screen and (max-width: 660px) {
+  .form_container {
+    padding-left: 20px;
+  }
+  .icon_info {
+    padding-left: 2rem;
+  }
+}
+
+@media only screen and (max-width: 470px) {
+  .drop_area {
+    height: 67%;
+  }
+  .track_line::before {
+    top: 2.6rem;
+    right: 0.95rem;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .enter_book {
+    font-size: 1.23rem;
+  }
+  .enter_book_hint {
+    font-size: 8px;
+  }
+  .upload_success {
+    padding: 0.5rem;
   }
 }

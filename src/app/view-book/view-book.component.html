@@ -5,20 +5,20 @@
       <div class="flex flex-col gap-3">
         <p class="text-4xl">{{ receiver.bookName }}</p>
 
-        <p class="text-2xl text-gray-400">{{ receiver.author }}</p>
+        <p class="text-2xl text-gray-400">{{ receiver.authorName }}</p>
         <p class="text-gray-500">Genre : {{ receiver.genre }}</p>
         <p class="text-gray-300">{{ receiver.description }}</p>
         <div>
           <p
-            *ngIf="!receiver?.availability && !availabilityBtn"
-            class="px-4 py-2 bg-red-500 inline-block rounded-full text-white text-xs"
+            *ngIf="receiver?.availability === 'No'"
+            class="px-4 py-2 bg-red-500 inline-block rounded-full text-white text-xs mt-2"
           >
             Book not available in library
           </p>
 
           <p
-            *ngIf="receiver?.availability && !availabilityBtn"
-            class="px-4 py-2 bg-green-400 inline-block rounded-full text-white text-xs"
+            *ngIf="receiver?.availability === 'Yes'"
+            class="px-4 py-2 bg-green-400 inline-block rounded-full text-white text-xs mt-2"
           >
             Book available in library
           </p>
@@ -27,7 +27,7 @@
     </div>
 
     <div class="border-b-2 border-gray-700 border-opacity-30 pb-6 ml-10 mr-10">
-      <div class="flex-col inline-flex" *ngIf="!receiver?.availability">
+      <div class="flex-col inline-flex" *ngIf="receiver?.availability === 'No'">
         <p
           class="px-10 py-2 bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
           (click)="addVote()"
@@ -42,8 +42,7 @@
       </div>
       <div
         class="flex-col inline-flex"
-        *ngIf="receiver?.availability"
-        [ngClass]="!availabilityBtn ? '' : '-mt-8'"
+        *ngIf="receiver?.availability === 'Yes'"
       >
         <p
           class="px-10 py-2 text-center bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
@@ -58,24 +57,28 @@
       </div>
     </div>
 
-    <div class="pl-10" [ngClass]="!availabilityBtn ? 'mt-6' : 'mt-8'">
-      <p class="text-white text-2xl">Books from author {{ receiver.author }}</p>
+    <div class="pl-10 mt-6">
+      <p class="text-white text-2xl">
+        Books from author {{ receiver.authorName }}
+      </p>
       <div class="flex w-full overflow-x-scroll gap-8 pb-12 similar_books">
-        <ng-container *ngFor="let item of similarBooks; let i = index">
-          <div
-            class="flex flex-col gap-4 items-center"
-            (click)="onSelect($event, item, i)"
-          >
-            <img
-              class="w-36 mt-4 cursor-pointer rounded-md"
-              src="{{ item.imageUrl }}"
-            />
-            <p
-              class="w-40 text-md cursor-pointer text-center text-white leading-none font-black"
+        <ng-container *ngIf="similarBooks | async as authorBook">
+          <ng-container *ngFor="let item of $any(authorBook); let i = index">
+            <div
+              class="flex flex-col gap-4 items-center"
+              (click)="onSelect($event, item, i)"
             >
-              {{ item.bookName }}
-            </p>
-          </div>
+              <img
+                class="w-40 h-64 mt-4 cursor-pointer rounded-md book_img"
+                src="{{ item.imageUrl }}"
+              />
+              <p
+                class="w-40 text-md cursor-pointer text-center text-white leading-none font-black"
+              >
+                {{ item.bookName }}
+              </p>
+            </div>
+          </ng-container>
         </ng-container>
       </div>
     </div>
@@ -83,11 +86,11 @@
 </div>
 <ng-container *ngIf="bookView">
   <div
-    class="w-2/4 h-3/4 absolute top-1/2 left-1/2 light_dark_theme -translate-x-1/2 -translate-y-1/2 z-50 rounded-lg drop-shadow-2xl flex items-center justify-center"
+    class="w-2/4 h-3/4 absolute top-1/2 left-1/2 light_dark_theme -translate-x-1/2 -translate-y-1/2 z-50 rounded-lg drop-shadow-2xl flex items-center justify-center author_book"
   >
     <div class="flex flex-col justify-center items-center gap-4 p-6">
       <img
-        class="w-56 rounded-md"
+        class="w-48 rounded-md"
         src="{{ selectedReceiver.imageUrl }}"
         alt=""
       />
@@ -115,7 +118,7 @@
 
 <ng-container *ngIf="addVotePopup">
   <div
-    class="w-auto h-auto light_dark_theme absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-md"
+    class="alert_box w-auto h-auto light_dark_theme absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-md"
   >
     <div class="flex justify-center items-center flex-col px-10 py-6">
       <p class="text-1xl">Are you sure you want to add a vote for this book.</p>
@@ -142,7 +145,7 @@
 
 <ng-container *ngIf="takeBookPopup">
   <div
-    class="w-auto h-auto light_dark_theme absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-md"
+    class="alert_box w-auto h-auto light_dark_theme absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-md"
   >
     <div class="flex justify-center items-center flex-col px-10 py-6">
       <p class="text-1xl">Are you sure you want to take this book.</p>

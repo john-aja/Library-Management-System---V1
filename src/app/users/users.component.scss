@@ -83,6 +83,11 @@ input:focus {
   }
 }
 
+@media only screen and (max-width: 1500px) {
+  .add-member-form {
+    width: 70%;
+  }
+}
 @media only screen and (max-width: 1000px) {
   .item-1 {
     height: 43px;
@@ -112,5 +117,139 @@ input:focus {
 @media only screen and (max-width: 900px) {
   .user_container {
     margin-top: 3rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .close_btn {
+    top: 0.5rem;
+  }
+  .author_book {
+    width: 80%;
+  }
+  .item-1 {
+    // height: 43px;
+    .inner {
+      &:before {
+        width: 18px;
+      }
+      &:after {
+        width: 18px;
+      }
+    }
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 30px;
+          top: 70%;
+        }
+        &:before {
+          width: 30px;
+          top: 28%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .item-1 {
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 27px;
+          top: 67%;
+        }
+        &:before {
+          width: 27px;
+          top: 28%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .item-1 {
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 25px;
+          top: 68%;
+        }
+        &:before {
+          width: 25px;
+          top: 28%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .item-1 {
+    .inner {
+      &:after {
+        height: 3px;
+      }
+      &:before {
+        height: 3px;
+      }
+    }
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 22px;
+          top: 65%;
+        }
+        &:before {
+          width: 22px;
+          top: 34%;
+        }
+      }
+    }
+  }
+  .add-member-form {
+    width: 80%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .item-1 {
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 21px;
+          top: 63%;
+        }
+        &:before {
+          width: 21px;
+          top: 37%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .item-1 {
+    &:hover,
+    &:focus {
+      .inner {
+        &:after {
+          width: 20px;
+          top: 63%;
+        }
+        &:before {
+          width: 20px;
+          top: 36%;
+        }
+      }
+    }
   }
 }

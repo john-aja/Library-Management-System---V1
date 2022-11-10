@@ -11,8 +11,23 @@
       [ngClass]="hideText ? '' : 'hidden'"
     />
   </div>
-
-  <div class="w-full flex flex-col justify-center gap-4 nav_items">
+  <ng-container>
+    <div class="menu_container z-50">
+      <div
+        class="toggle"
+        [ngClass]="menuContainer ? 'activeMenu' : ''"
+        (click)="openMenu()"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </ng-container>
+  <div
+    [ngClass]="menuContainer ? 'activeOne' : ''"
+    class="w-full flex flex-col justify-center gap-4 nav_items"
+  >
     <ng-container *ngFor="let item of navBarModule">
       <a
         [routerLink]="item.route"
@@ -40,3 +55,9 @@
     </ng-container>
   </div>
 </div>
+
+<div
+  *ngIf="menuContainer"
+  class="h-screen w-screen absolute top-0 left-0 bg-gray-600 bg-opacity-50 z-40 backdrop-blur-sm"
+  (click)="closeMenu()"
+></div>

@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { map } from 'rxjs';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-view-book',
@@ -8,7 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ViewBookComponent implements OnInit {
   @Input() receiver: any;
   @Input() allBooks: any;
-  @Input() availabilityBtn: any;
+
   selectedReceiver: any;
   bookView: boolean = false;
   addVotePopup: boolean = false;
@@ -16,19 +18,22 @@ export class ViewBookComponent implements OnInit {
 
   similarBooks: any;
   userInfo: any;
-  constructor() {}
+  // authorBook: any;
+
+  constructor(private fs: FirebaseService) {}
 
   ngOnInit(): void {
-    console.log(this.receiver);
+    console.log(this.receiver.authorName);
     this.userInfo = localStorage.getItem('user');
     this.userInfo = JSON.parse(this.userInfo);
 
-    this.similarBooks = this.allBooks.filter((v: any) => {
-      if (this.receiver.author === v.author) {
-        return v;
-      }
-    });
-    console.log(this.similarBooks);
+    this.similarBooks = this.fs.getAllBooks().pipe(
+      map((books: any) => {
+        return books.filter(
+          (book: any) => book.authorName === this.receiver.authorName
+        );
+      })
+    );
   }
 
   onSelect(event: any, item: any, row: any) {

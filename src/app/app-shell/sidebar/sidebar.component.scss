@@ -2,6 +2,65 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.menu_container {
+  position: absolute;
+  right: 2rem;
+  display: none;
+}
+
+.toggle {
+  position: relative;
+  width: 28px;
+  height: 25px;
+  // background: rgba(255, 255, 255, 0.247);
+
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.toggle span {
+  position: absolute;
+  width: 15px;
+  height: 3px;
+  border-radius: 4px;
+  left: 6px;
+
+  background: rgb(226, 226, 226);
+  transition: 0.5s;
+}
+
+.toggle span:nth-child(2) {
+  transform: translateY(-6px);
+  width: 10px;
+  left: 6px;
+}
+
+.toggle span:nth-child(3) {
+  transform: translateY(6px);
+  width: 8px;
+  left: 6.5px;
+}
+
+.toggle.activeMenu span:nth-child(1) {
+  transform: translateX(60px);
+}
+
+.toggle.activeMenu span:nth-child(2) {
+  width: 15px;
+  transform: translateX(0) rotate(45deg);
+  transition-delay: 0.2s;
+}
+
+.toggle.activeMenu span:nth-child(3) {
+  width: 15px;
+  transform: translateX(0) rotate(-45deg);
+  transition-delay: 0.4s;
+}
+
 @media only screen and (max-width: 900px) {
   .nav_items {
     flex-direction: row;
@@ -36,5 +95,33 @@
 @media only screen and (max-width: 650px) {
   .icons {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 510px) {
+  .icons {
+    display: block;
+  }
+  .menu_container {
+    display: block;
+  }
+  .nav_items {
+    display: none;
+  }
+  .nav_items.activeOne {
+    display: inline-flex;
+    flex-direction: column;
+    position: absolute;
+    top: 5.5rem;
+    right: 0rem;
+    width: auto;
+    z-index: 9999;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.754);
+    color: black !important;
+  }
+  .nav_items a {
+    padding: 0.5rem 2rem;
   }
 }

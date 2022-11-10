@@ -43,24 +43,24 @@
       </div>
       <div class="px-10 mt-10">
         <div
-          class="px-10 py-4 mb-4 bg-opacity-20 grid grid-cols-5 justify-around rounded-md text-white text-1xl font-bold"
+          class="px-10 py-4 mb-4 bg-opacity-20 flex justify-between gap-6 rounded-md text-white text-1xl font-bold"
           style="background-color: #28518a"
         >
-          <p>S.No</p>
-          <p>Name</p>
-          <p>Designation</p>
-          <p>Email</p>
-          <p class="pl-10 whitespace-nowrap">No. of books taken</p>
+          <p class="w-1/4">S.No</p>
+          <p class="w-1/2">Name</p>
+          <p class="w-1/2">Designation</p>
+          <p class="w-1/2">Email</p>
+          <p class="whitespace-nowrap w-1/2 pl-3">No. of books taken</p>
         </div>
         <div
           *ngFor="let item of usersList; index as i"
-          class="px-10 py-4 grid grid-cols-5 justify-around rounded-md text-white text-1xl font-light"
+          class="px-10 py-4 flex justify-between rounded-md gap-6 text-white text-1xl font-light"
         >
-          <p class="pl-3">{{ i + 1 }}</p>
-          <p>{{ item.name }}</p>
-          <p>{{ item.designation }}</p>
-          <p>{{ item.email }}</p>
-          <p class="pl-10">{{ item.numberOfBooksTaken }}</p>
+          <p class="w-1/4">{{ i + 1 }}</p>
+          <p class="w-1/2">{{ item.name }}</p>
+          <p class="w-1/2">{{ item.designation }}</p>
+          <p class="w-1/2">{{ item.email }}</p>
+          <p class="w-1/2 pl-3">{{ item.numberOfBooksTaken }}</p>
         </div>
       </div>
     </ng-container>
@@ -87,21 +87,21 @@
       </div>
       <div class="px-10 mt-10">
         <div
-          class="px-10 py-4 mb-4 bg-blue-900 bg-opacity-20 grid grid-cols-4 justify-around rounded-md text-white text-1xl font-bold"
+          class="px-10 py-4 mb-4 bg-blue-900 bg-opacity-20 flex justify-between rounded-md text-white text-1xl font-bold"
         >
-          <p>S.No</p>
-          <p>Name</p>
-          <p>Designation</p>
-          <p>Email</p>
+          <p class="w-1/4">S.No</p>
+          <p class="w-1/2">Name</p>
+          <p class="w-1/2">Designation</p>
+          <p class="w-1/2">Email</p>
         </div>
         <div
           *ngFor="let item of adminList; index as i"
-          class="px-10 py-4 grid grid-cols-4 justify-around rounded-md text-white text-1xl font-light"
+          class="px-10 py-4 flex justify-between rounded-md text-white text-1xl font-light"
         >
-          <p class="pl-3">{{ i + 1 }}</p>
-          <p>{{ item.name }}</p>
-          <p>{{ item.designation }}</p>
-          <p>{{ item.email }}</p>
+          <p class="w-1/4">{{ i + 1 }}</p>
+          <p class="w-1/2">{{ item.name }}</p>
+          <p class="w-1/2">{{ item.designation }}</p>
+          <p class="w-1/2">{{ item.email }}</p>
         </div>
       </div>
     </ng-container>
@@ -111,7 +111,7 @@
 
   <div
     *ngIf="newMember"
-    class="h-auto w-2/4 dark_theme text-white rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 drop-shadow-sm"
+    class="add-member-form h-auto w-2/4 dark_theme text-white rounded-md absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 drop-shadow-sm"
   >
     <div class="py-8 px-10">
       <p class="text-2xl">Add a new member</p>
@@ -150,7 +150,7 @@
       </div>
     </div>
 
-    <div class="absolute top-5 right-6">
+    <div class="absolute top-5 right-6 close_btn">
       <button class="item-1" (click)="close()">
         <span class="inner">
           <span class="label">Close</span>

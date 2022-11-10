@@ -1,6 +1,6 @@
 <div class="h-full w-full relative">
   <div class="overflow-hidden">
-    <div class="p-10 mt-36 add_form_container">
+    <div class="px-10 mt-28 add_form_container">
       <p class="text-white text-2xl">Complete the form to add book</p>
       <p class="text-gray-500 text-sm mt-4">
         Fill in each details to add book to the surfboard library
@@ -16,7 +16,7 @@
             <!-- bookName -->
 
             <div
-              class="pl-20 mr-9 gap-10 mt-14 relative"
+              class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -24,16 +24,16 @@
                 align-items: center;
               "
             >
-              <label class="text-white">
+              <label class="text-white pl-4">
                 <p class="text-right">Book name</p>
                 <p class="text-sm text-gray-500 text-right">*Browse and type</p>
               </label>
               <div
                 class="p-3 rounded-full track_line"
                 [ngClass]="
-                  stepTwo || stepThree || stepFour || stepFive
-                    ? 'before:bg-green-pallete green'
-                    : 'before:bg-gray-500 bg-gray-400'
+                  stepTwo || stepThree || stepFour || stepFive || stepSix
+                    ? 'before:bg-green-pallete green bg-opacity-40'
+                    : 'before:bg-gray-500 bg-gray-400 before:bg-opacity-40 bg-opacity-30'
                 "
               >
                 <img
@@ -47,7 +47,7 @@
             <!-- authorName  -->
 
             <div
-              class="pl-20 mr-9 gap-10 mt-14 relative"
+              class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -55,16 +55,16 @@
                 align-items: center;
               "
             >
-              <label class="text-white">
+              <label class="text-white pl-4">
                 <p class="text-right">Author name</p>
                 <p class="text-sm text-gray-500 text-right">*Browse and type</p>
               </label>
               <div
                 class="p-3 rounded-full track_line"
                 [ngClass]="
-                  stepThree || stepFour || stepFive
+                  stepThree || stepFour || stepFive || stepSix
                     ? 'before:bg-green-pallete green'
-                    : 'before:bg-gray-500 bg-gray-400'
+                    : 'before:bg-gray-500 bg-gray-400  before:bg-opacity-40 bg-opacity-30'
                 "
               >
                 <img
@@ -78,7 +78,7 @@
             <!-- imageUrl  -->
 
             <div
-              class="pl-20 mr-9 gap-10 mt-14 relative"
+              class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -86,32 +86,26 @@
                 align-items: center;
               "
             >
-              <label class="text-white">
-                <p class="text-right">Image Url</p>
-                <p class="text-sm text-gray-500 text-right">
-                  *Browse and paste
-                </p>
+              <label class="text-white pl-4">
+                <p class="text-right">Upload image</p>
+                <p class="text-sm text-gray-500 text-right">*Browse and add</p>
               </label>
               <div
                 class="p-3 rounded-full track_line"
                 [ngClass]="
-                  stepFour || stepFive
+                  (stepFour || stepFive || stepSix) && fileInfo
                     ? 'before:bg-green-pallete green'
-                    : 'before:bg-gray-500 bg-gray-400'
+                    : 'before:bg-gray-500 bg-gray-400  before:bg-opacity-40 bg-opacity-30'
                 "
               >
-                <img
-                  class="w-4 h-4 max-w-fit"
-                  src="../../assets/image_url.svg"
-                  alt=""
-                />
+                <img class="w-4 h-4" src="../../assets/file_type.svg" alt="" />
               </div>
             </div>
 
             <!-- Description  -->
 
             <div
-              class="pl-20 mr-9 gap-10 mt-14 relative"
+              class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -126,9 +120,9 @@
               <div
                 class="p-3 rounded-full track_line"
                 [ngClass]="
-                  stepFive
+                  stepFive || stepSix
                     ? 'before:bg-green-pallete green'
-                    : 'before:bg-gray-500 bg-gray-400'
+                    : 'before:bg-gray-500 bg-gray-400 before:bg-opacity-40 bg-opacity-30'
                 "
               >
                 <img
@@ -141,7 +135,7 @@
 
             <!-- bookGenre  -->
             <div
-              class="pl-20 mr-9 gap-10 my-14 relative"
+              class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -156,14 +150,48 @@
                 </p>
               </label>
               <div
-                class="p-3 rounded-full"
+                class="p-3 rounded-full track_line"
                 [ngClass]="
-                  genreValue !== '' && stepFive ? 'green' : 'bg-gray-400'
+                  genreValue !== '' && stepSix
+                    ? 'before:bg-green-pallete green'
+                    : 'before:bg-gray-500 bg-gray-400 before:bg-opacity-40 bg-opacity-30'
                 "
               >
                 <img
                   class="w-4 h-4 max-w-fit"
                   src="../../assets/book_genre.svg"
+                  alt=""
+                />
+              </div>
+            </div>
+
+            <!-- availability  -->
+            <div
+              class="pl-20 mr-9 gap-10 my-14 relative icon_info"
+              style="
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                justify-items: right;
+                align-items: center;
+              "
+            >
+              <label class="text-white">
+                <p class="text-right">Book Availability</p>
+                <p class="text-sm text-gray-500 text-right">
+                  *Select one from list
+                </p>
+              </label>
+              <div
+                class="p-3 rounded-full"
+                [ngClass]="
+                  availabilityValue !== '' && stepSix
+                    ? 'green'
+                    : 'bg-gray-400 bg-opacity-30'
+                "
+              >
+                <img
+                  class="w-4 h-4 max-w-fit"
+                  src="../../assets/check.svg"
                   alt=""
                 />
               </div>
@@ -178,10 +206,12 @@
             [formGroup]="addBookForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepOne"
-            class="text-white pl-20 mt-14 w-full"
+            class="text-white pl-20 mt-14 w-full form_container"
           >
-            <p class="text-2xl text-left">Enter exact name of the book</p>
-            <p class="text-sm text-gray-500">
+            <p class="text-2xl text-left enter_info">
+              Enter exact name of the book
+            </p>
+            <p class="text-sm text-gray-500 enter_info_hint">
               *If you are not sure about the book name, please browse and type
             </p>
             <input
@@ -217,12 +247,12 @@
             [formGroup]="addAuthorForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepTwo"
-            class="text-white pl-20 mt-14 w-full"
+            class="text-white pl-20 mt-14 w-full form_container"
           >
-            <p class="text-2xl text-left">
+            <p class="text-2xl text-left enter_info">
               Enter exact name of the book's author
             </p>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-gray-500 enter_info_hint">
               *If you are not sure about the author name, please browse and type
             </p>
             <input
@@ -264,36 +294,124 @@
             [formGroup]="addImageForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepThree"
-            class="text-white pl-20 mt-14 w-full"
+            class="text-white pl-20 mt-14 w-full form_container"
           >
-            <p class="text-2xl text-left">Browse and paste the image url</p>
-            <p class="text-sm text-gray-500">
-              *Browse, copy the image address and paste it here.
+            <p class="text-2xl text-left enter_info">
+              Browse, download and upload image.
             </p>
-            <input
-              class="mt-6 w-full h-10 rounded-md text-black pl-2"
-              type="text"
-              #imageUrl
-              maxlength="100"
-              formControlName="imageUrl"
-              placeholder="Paste the book's image url"
-            />
-            <p class="mt-2 flex justify-end w-full pr-2 text-sm text-gray-400">
-              {{ imageUrl.value.length }}/100
+            <p class="text-sm text-gray-500 enter_info_hint">
+              *Upload an image of the book with the dimension of 1.6:1 ratio.
             </p>
-            <div class="flex justify-end gap-8 mt-6 w-full">
+            <div
+              class="w-full h-4/6 mt-6 rounded-md border border-dashed border-gray-500 relative overflow-hidden px-6 pb-16 pt-6 drop_area"
+            >
+              <div
+                *ngIf="loading"
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              >
+                <app-loading></app-loading>
+              </div>
+              <ng-container *ngIf="!fileInfo && !loading">
+                <ngx-file-drop
+                  dropZoneLabel="Drop files here"
+                  dropZoneClassName="drop-zone-class"
+                  customstyle="filedrop"
+                  (onFileDrop)="dropped($event)"
+                >
+                  <ng-template
+                    ngx-file-drop-content-tmp
+                    let-openFileSelector="openFileSelector"
+                  >
+                    <button
+                      type="button"
+                      class="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-violet-500 rounded-full text-white"
+                      (click)="openFileSelector()"
+                    >
+                      Browse Files
+                    </button>
+
+                    <img
+                      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 opacity-40"
+                      src="../../assets/Upload.svg"
+                      alt=""
+                    />
+
+                    <p
+                      class="absolute top-2/3 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40 text-gray-400"
+                    >
+                      Drag and drop to upload
+                    </p>
+                  </ng-template>
+                </ngx-file-drop>
+              </ng-container>
+              <div
+                *ngIf="fileInfo"
+                class="flex justify-center h-full gap-10 mt-4 items-center uploaded_image_container"
+              >
+                <!-- <div class="flex items-center gap-30"> -->
+                <div>
+                  <img
+                    class="w-56 h-auto uploaded_img"
+                    [src]="fileInfo?.documentUrl"
+                    alt=""
+                  />
+                </div>
+                <div
+                  class="flex flex-col gap-6 bg-white bg-opacity-5 p-10 rounded-md backdrop-blur-sm upload_success"
+                >
+                  <!-- <img
+                    class="w-10"
+                    style="margin-left: 50%; transform: translateX(-50%)"
+                    src="../../assets/smile.svg"
+                  /> -->
+                  <p class="text-center text-yellow-200">
+                    Image uploaded successfully!
+                  </p>
+                  <p class="text-sm">
+                    <span class="text-gray-400">File Name:</span>
+                    {{ fileInfo.name }}
+                  </p>
+
+                  <p class="text-sm">
+                    <span class="text-gray-400">File Size:</span>
+                    {{ fileInfo.size }}
+                  </p>
+                  <p class="text-sm">
+                    <span class="text-gray-400">File Type:</span>
+                    {{ fileInfo.type }}
+                  </p>
+                </div>
+                <!-- </div> -->
+              </div>
+              <!-- <div
+                *ngIf="fileInfo"
+                class="p-2 inline-flex justify-center items-center bg-red-400 rounded-full absolute top-4 right-10"
+              >
+              
+              </div> -->
+            </div>
+
+            <div class="flex justify-end items-center gap-8 mt-6 w-full">
+              <button
+                *ngIf="fileInfo"
+                class="text-gray-400 font-bold hover:text-gray-300 transition-all"
+                (click)="removeImage()"
+              >
+                Remove Image
+              </button>
               <button
                 (click)="backBtnTwo()"
                 class="text-gray-400 font-bold hover:text-gray-300 transition-all"
               >
                 Back
               </button>
+
               <button
                 class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
                 (click)="stepThreeBtn()"
-                [disabled]="!addImageForm.valid"
+                [disabled]="!fileInfo"
                 [ngClass]="
-                  !addImageForm.valid
+                  !fileInfo
                     ? 'bg-gray-500 cursor-not-allowed'
                     : 'green hover:bg-green-500'
                 "
@@ -309,22 +427,22 @@
             [formGroup]="addDescriptionForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepFour"
-            class="text-white pl-20 mt-14 w-full"
+            class="text-white pl-20 mt-14 w-full form_container"
           >
-            <p class="text-2xl text-left">
+            <p class="text-2xl text-left enter_info">
               Browse and type short description of the book
             </p>
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-gray-500 enter_info_hint">
               *Browse, and enter short description of the book.
             </p>
-            <input
-              class="mt-6 w-full h-10 rounded-md text-black pl-2"
-              type="text"
+            <textarea
+              class="mt-6 w-full h-10 rounded-md text-black p-2 font-light description_area"
+              type=""
               #imageUrl
               maxlength="500"
               formControlName="description"
-              placeholder="Enter book description"
-            />
+              placeholder="Enter the description of the book (a minimum of 200 words would be appreciated)..."
+            ></textarea>
             <p class="mt-2 flex justify-end w-full pr-2 text-sm text-gray-400">
               {{ imageUrl.value.length }}/500
             </p>
@@ -356,32 +474,26 @@
             [formGroup]="addGenreForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepFive"
-            class="text-white pl-20 mt-14 w-full"
+            class="text-white pl-20 mt-14 w-full form_container"
           >
-            <p class="text-2xl text-left">Select the genre of the book</p>
-            <p class="text-sm text-gray-500">
+            <p class="text-2xl text-left enter_info">
+              Select the genre of the book
+            </p>
+            <p class="text-sm text-gray-500 enter_info_hint">
               *If you are not sure about the genre, please browse and select
             </p>
-            <!-- <input
-              class="mt-10 w-full h-10 rounded-md text-black pl-2"
-              type="select"
-              formControlName="bookGenre"
-            /> -->
             <select
               class="mt-6 w-full h-10 rounded-md text-black pl-2 cursor-pointer"
               formControlName="bookGenre"
               #genreDropDown
-              (change)="getGenre($event.target)"
+              (change)="getGenre()"
             >
               <option value="" selected>Select genre</option>
-              <option value="Action">Action</option>
-              <option value="Comedy">Comedy</option>
-              <option value="Drama">Drama</option>
-              <option value="Horror">Horror</option>
+              <option value="Biography">Biography</option>
+              <option value="Auto-Biography">Auto-Biography</option>
               <option value="Fiction">Fiction</option>
-              <option value="Mystery">Mystery</option>
-              <option value="Thriller">Thriller</option>
-              <option value="Technical">Technical</option>
+              <option value="Non-Fiction">Non-Fiction</option>
+              <option value="Education">Education</option>
             </select>
             <div class="flex justify-end gap-8 mt-6 w-full">
               <button
@@ -392,10 +504,56 @@
               </button>
               <button
                 class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
-                (click)="submitBtn()"
+                (click)="stepFiveBtn()"
                 [disabled]="genreDropDown.value === ''"
                 [ngClass]="
                   genreDropDown.value !== ''
+                    ? 'green hover:bg-green-400'
+                    : 'bg-gray-500 cursor-not-allowed'
+                "
+              >
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- availability -->
+
+          <div
+            [formGroup]="addAvailabilityForm"
+            (keydown.enter)="$event.preventDefault()"
+            *ngIf="stepSix"
+            class="text-white pl-20 mt-14 w-full form_container"
+          >
+            <p class="text-2xl text-left enter_info">
+              Select whether the book is available in library or not.
+            </p>
+            <p class="text-sm text-gray-500 enter_info_hint">
+              *If the book is available in library then select yes, if not no.
+            </p>
+            <select
+              class="mt-6 w-full h-10 rounded-md text-black pl-2 cursor-pointer"
+              formControlName="availability"
+              #availabilityDropDown
+              (change)="getAvailability()"
+            >
+              <option value="" selected>Select yes or no</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+            <div class="flex justify-end gap-8 mt-6 w-full">
+              <button
+                (click)="backBtnFive()"
+                class="text-gray-400 font-bold hover:text-gray-300 transition-all"
+              >
+                Back
+              </button>
+              <button
+                class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
+                (click)="submitBtn()"
+                [disabled]="availabilityDropDown.value === ''"
+                [ngClass]="
+                  availabilityDropDown.value !== ''
                     ? 'green hover:bg-green-400'
                     : 'bg-gray-500 cursor-not-allowed'
                 "
