@@ -14,7 +14,7 @@ export class AvailableBooksComponent implements OnInit {
   selectedReceiver: any;
   bookView: boolean = false;
   searchText: string;
-  bookLists: Observable<any>;
+
   bookList: any;
   books: any = [];
   sort: boolean = true;
@@ -25,25 +25,28 @@ export class AvailableBooksComponent implements OnInit {
   ngOnInit(): void {
     this.userInfo = localStorage.getItem('user');
     this.userInfo = JSON.parse(this.userInfo);
-    console.log(this.userInfo);
+    // console.log(this.userInfo);
     this.renderBook();
     // console.log(this.bookList);
   }
 
   renderBook() {
-    this.fs.getBooks();
-    this.bookLists = this.fs.getAllBooks().pipe(
+    this.books = this.fs.getAllBooks().pipe(
       map((books: any) => {
+        // console.log(books);
         return books?.filter((book: any) => book.availability === 'Yes');
       })
     );
+    this.bookList = this.books.subscribe((v: any) => {
+      this.totalBooks = v;
+      this.bookList = v;
+      return v;
+    });
   }
 
   onSelect(event: any, item: any, row: any) {
-    console.log(event);
     this.bookView = true;
     this.selectedReceiver = item;
-    console.log(this.selectedReceiver);
   }
   close() {
     this.bookView = false;
@@ -51,13 +54,11 @@ export class AvailableBooksComponent implements OnInit {
 
   filterByGenre(genre: any) {
     let currentGenre = genre.value;
-    this.bookList = this.totalBooks;
+    this.totalBooks = this.bookList;
     if (currentGenre === currentGenre) {
-      this.bookList = this.bookList?.filter((v: any) => {
+      this.totalBooks = this.bookList?.filter((v: any) => {
         if (v?.genre === currentGenre) {
           if (this.bookList.length !== 0) {
-            // this.bookList = v;
-            console.log(this.bookList);
             this.emptyState = false;
             return v;
           } else {
@@ -73,7 +74,7 @@ export class AvailableBooksComponent implements OnInit {
       });
     }
 
-    if (this.bookList.length === 0) {
+    if (this.totalBooks.length === 0) {
       this.emptyState = true;
     }
   }
@@ -81,12 +82,12 @@ export class AvailableBooksComponent implements OnInit {
   sortBooks() {
     this.sort = !this.sort;
     if (!this.sort) {
-      return this.bookList.sort((a: any, b: any) =>
+      return this.totalBooks.sort((a: any, b: any) =>
         a.bookName.localeCompare(b.bookName)
       );
     }
     if (this.sort) {
-      return this.bookList.sort((a: any, b: any) =>
+      return this.totalBooks.sort((a: any, b: any) =>
         b.bookName.localeCompare(a.bookName)
       );
     }

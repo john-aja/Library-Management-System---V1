@@ -23,7 +23,6 @@ export class ViewBookComponent implements OnInit {
   constructor(private fs: FirebaseService) {}
 
   ngOnInit(): void {
-    console.log(this.receiver.authorName);
     this.userInfo = localStorage.getItem('user');
     this.userInfo = JSON.parse(this.userInfo);
 
@@ -37,10 +36,8 @@ export class ViewBookComponent implements OnInit {
   }
 
   onSelect(event: any, item: any, row: any) {
-    console.log(event);
     this.bookView = true;
     this.selectedReceiver = item;
-    console.log(this.selectedReceiver);
   }
   close() {
     this.bookView = false;
@@ -56,6 +53,7 @@ export class ViewBookComponent implements OnInit {
     v['vote'] = v?.vote ? v.vote + 1 : 1;
     v['voters'] = this.userInfo.name;
     this.addVotePopup = false;
+    this.fs.vote(v);
     alert('Your vote has been added successfully for admin review.');
   }
   noVote() {

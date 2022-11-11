@@ -46,7 +46,7 @@
     <div class="overflow-y-scroll pb-6">
       <ng-container
         *ngFor="
-          let item of bookList
+          let item of totalBooks
             | searchFilter: searchText:'bookName':'authorName';
           let i = index
         "

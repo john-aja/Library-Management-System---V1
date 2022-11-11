@@ -26,10 +26,9 @@ export class DexieService {
         if (val)
           ddb.renderedBook
             .put(val)
-            .then((data) => console.log(data))
+            // .then((data) => console.log(data))
             .catch((err) => console.log(err));
       });
-      console.log(this.bookList);
     });
   }
 
@@ -45,5 +44,20 @@ export class DexieService {
       .add({ ...bookObj })
       .then((data) => console.log(data))
       .catch((err) => console.log(err.message));
+  }
+
+  async updateBook(id: any) {
+    console.log(id);
+    const db = getDatabase();
+    const bookInfo = ref(db, 'addedBooks/' + id);
+    ddb.renderedBook.update(id, { availability: 'No' });
+
+    const firebaseDb = this.db.list('/addedBooks');
+    firebaseDb.update(id, { availability: 'No' });
+  }
+
+  addVote(v: any) {
+    const firebaseDb = this.db.list('/addedBooks');
+    firebaseDb.update(v.keyId, { vote: 0 ? 1 : +1 });
   }
 }

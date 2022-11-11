@@ -1,15 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import * as firebase from 'firebase/compat';
-import {
-  getDatabase,
-  onValue,
-  orderByChild,
-  query,
-  ref,
-} from 'firebase/database';
-import { first, map } from 'rxjs';
+import { map } from 'rxjs';
 import { FirebaseService } from '../services/firebase.service';
 
 @Component({
@@ -32,6 +24,12 @@ export class RemoveBookComponent implements OnInit {
   addBookIdForm!: FormGroup<any>;
   bookObj: any;
   aflCategories: any;
+
+  totalBooks: any;
+  books: any = [];
+  bookList: any;
+  bookId: any;
+
   constructor(
     private fb: FormBuilder,
     public db: AngularFireDatabase,
@@ -40,7 +38,21 @@ export class RemoveBookComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
-    this.removeBookFunction();
+    this.renderBook();
+  }
+
+  renderBook() {
+    this.books = this.fbs.getAllBooks().pipe(
+      map((books: any) => {
+        // console.log(books);
+        return books?.filter((book: any) => book.availability === 'Yes');
+      })
+    );
+    this.bookList = this.books.subscribe((v: any) => {
+      this.totalBooks = v;
+      this.bookList = v;
+      return v;
+    });
   }
   stepOneBtn() {
     this.stepOne = false;
@@ -146,7 +158,7 @@ export class RemoveBookComponent implements OnInit {
 
   getGenre(event: any) {
     this.genreValue = this.genreDropDown.nativeElement.value;
-    console.log(this.genreValue);
+    // console.log(this.genreValue);
   }
 
   submitBtn() {
@@ -158,7 +170,7 @@ export class RemoveBookComponent implements OnInit {
       bookId: this.addBookIdForm.controls['bookId'].value,
     };
     this.removeBookFunction();
-    console.log(this.bookObj);
+    // console.log(this.bookObj);
     this.addBookForm.reset();
     this.addAuthorForm.reset();
     this.removeReasonForm.reset();
@@ -173,28 +185,18 @@ export class RemoveBookComponent implements OnInit {
   }
 
   removeBookFunction() {
-    //   const db = getDatabase();
-    //   const bookInfo = ref(db, 'addedBooks/');
-    //   onValue(bookInfo, (snapshot) => {
-    //     let obj = [];
-    //     const data = snapshot.val();
-    //     obj.push(data);
-    //     console.log(obj);
-    //     console.log(Object.values(obj[0]));
-    //   });
-    //   let theThing = this.db
-    //     .list('/addedBooks', (ref) =>
-    //       ref
-    //         .orderByChild('bookName')
-    //         .equalTo(this.bookObj.bookName)
-    //         .limitToFirst(1)
-    //     )
-    //     .valueChanges()
-    //     .pipe(first())
-    //     .toPromise()
-    //     .then((snapshots: any) => {
-    //       console.log(snapshots);
-    //       theThing = snapshots[0];
-    //     });
+    let bookToRemove = this.bookObj.bookName;
+    // console.log(bookToRemove);
+    // console.log(this.totalBooks);
+    this.totalBooks.filter((v: any) => {
+      console.log(v);
+      if (bookToRemove === v.bookName) {
+        console.log(v.keyId);
+        this.bookId = v.keyId;
+        return v.keyId;
+      }
+    });
+    console.log(this.bookId);
+    this.fbs.updatingBookInfo(this.bookId);
   }
 }

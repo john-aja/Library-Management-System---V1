@@ -58,7 +58,6 @@ export class SidebarComponent implements OnInit {
     }
     this.menuContainer = false;
     this.highlight = event;
-    console.log(event);
   }
   openMenu() {
     this.menuContainer = !this.menuContainer;

@@ -23,4 +23,11 @@ export class FirebaseService {
   getAllBooks() {
     return from(liveQuery(async () => await ddb.renderedBook.toArray()));
   }
+
+  updatingBookInfo(id: any) {
+    return this.ds.updateBook(id);
+  }
+  vote(v: any) {
+    return this.ds.addVote(v);
+  }
 }

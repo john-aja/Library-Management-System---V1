@@ -31,15 +31,14 @@ export class LibraryComponent implements OnInit {
     this.books = this.fs.getAllBooks().pipe(map((books: any) => books));
     this.books.subscribe((v: any) => {
       this.bookList = v;
+      this.totalBooks = v;
       return this.bookList;
     });
   }
 
   onSelect(event: any, item: any, row: any) {
-    console.log(event);
     this.bookView = true;
     this.selectedReceiver = item;
-    console.log(this.selectedReceiver);
   }
 
   close() {
@@ -48,14 +47,14 @@ export class LibraryComponent implements OnInit {
 
   filterByGenre(genre: any) {
     let currentGenre = genre.value;
-
-    console.log(this.bookList);
+    this.totalBooks = this.bookList;
+    // console.log(this.bookList);
     if (currentGenre === currentGenre) {
-      this.bookList = this.bookList?.filter((v: any) => {
+      this.totalBooks = this.bookList?.filter((v: any) => {
         if (v?.genre === currentGenre) {
           if (this.bookList.length !== 0) {
             // this.bookList = v;
-            console.log(this.bookList);
+            // console.log(this.bookList);
             this.emptyState = false;
             return v;
           } else {
@@ -71,7 +70,7 @@ export class LibraryComponent implements OnInit {
       });
     }
 
-    if (this.bookList?.length === 0) {
+    if (this.totalBooks?.length === 0) {
       this.emptyState = true;
     }
   }
