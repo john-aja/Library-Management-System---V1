@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { ref, onValue, getDatabase } from 'firebase/database';
-import { filter, map, Observable } from 'rxjs';
+import { map } from 'rxjs';
 import { FirebaseService } from '../services/firebase.service';
 
 @Component({
@@ -20,17 +18,16 @@ export class AvailableBooksComponent implements OnInit {
   sort: boolean = true;
   emptyState: boolean = false;
   totalBooks: any;
-  constructor(private db: AngularFireDatabase, private fs: FirebaseService) {}
+  constructor(private fs: FirebaseService) {}
 
   ngOnInit(): void {
     this.userInfo = localStorage.getItem('user');
     this.userInfo = JSON.parse(this.userInfo);
-    // console.log(this.userInfo);
     this.renderBook();
-    // console.log(this.bookList);
   }
 
   renderBook() {
+    this.fs.getBooks();
     this.books = this.fs.getAllBooks().pipe(
       map((books: any) => {
         // console.log(books);

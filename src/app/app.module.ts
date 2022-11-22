@@ -10,7 +10,6 @@ import { FormsModule } from '@angular/forms';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { LibraryComponent } from './library/library.component';
 import { ViewBookComponent } from './view-book/view-book.component';
-// import { AddBookComponent } from './add-book/add-book.component';
 import { AvailableBooksComponent } from './available-books/available-books.component';
 import { RemoveBookComponent } from './remove-book/remove-book.component';
 import { UsersComponent } from './users/users.component';
@@ -23,7 +22,6 @@ import { AngularFireModule } from '@angular/fire/compat';
     LibraryComponent,
     ViewBookComponent,
     SearchFilterPipe,
-    // AddBookComponent,
     AvailableBooksComponent,
     RemoveBookComponent,
     UsersComponent,

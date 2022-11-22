@@ -30,4 +30,19 @@ export class FirebaseService {
   vote(v: any) {
     return this.ds.addVote(v);
   }
+  addUser(user: any) {
+    return this.ds.addUserToDb(user);
+  }
+
+  getAllUser() {
+    return this.ds.getUsers();
+  }
+
+  getUsersDataFromDexie() {
+    return from(liveQuery(async () => await ddb.usersData.toArray()));
+  }
+
+  bookTaken(takenData: any) {
+    return this.ds.takenBook(takenData);
+  }
 }

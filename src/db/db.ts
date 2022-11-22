@@ -20,14 +20,32 @@ export interface renderedBook {
   keyId: string;
 }
 
+export interface usersData {
+  name: string;
+  email: string;
+  picture: string;
+  userId: string;
+}
+
+export interface currentUser {
+  name: string;
+  email: string;
+  picture: string;
+  userId: string;
+}
+
 export class AppDB extends Dexie {
   bookData: Table<BookInfo, number>;
   renderedBook: Table<renderedBook, number>;
+  currentUser: Table<currentUser, number>;
+  usersData: Table<usersData, number>;
   constructor() {
     super('DexieDB');
-    this.version(19).stores({
+    this.version(27).stores({
       bookData: '++bookId',
       renderedBook: 'keyId,book',
+      currentUser: 'userId',
+      usersData: 'userId',
     });
     this.open()
       .then((data) => console.log(data, 'DB Opened'))

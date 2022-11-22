@@ -78,7 +78,7 @@
             <!-- Reason for removing  -->
 
             <div
-              class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
+              class="pl-20 mr-9 gap-10 my-14 relative icon_info"
               style="
                 display: grid;
                 grid-template-columns: 1fr 2fr;
@@ -93,7 +93,7 @@
                 </p>
               </label>
               <div
-                class="p-3 rounded-full track_line"
+                class="p-3 rounded-full"
                 [ngClass]="
                   stepFour || stepFive
                     ? 'before:bg-green-pallete green'
@@ -110,7 +110,7 @@
 
             <!-- Description  -->
 
-            <div
+            <!-- <div
               class="pl-20 mr-9 gap-10 mt-14 relative icon_info"
               style="
                 display: grid;
@@ -139,10 +139,10 @@
                   alt=""
                 />
               </div>
-            </div>
+            </div> -->
 
             <!-- bookGenre  -->
-            <div
+            <!-- <div
               class="pl-20 mr-9 gap-10 my-14 relative icon_info"
               style="
                 display: grid;
@@ -171,7 +171,7 @@
                   alt=""
                 />
               </div>
-            </div>
+            </div> -->
           </div>
 
           <!-- input fields /////////////////////////////////////////////////////// -->
@@ -298,7 +298,7 @@
               </button>
               <button
                 class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
-                (click)="stepThreeBtn()"
+                (click)="submitBtn()"
                 [disabled]="!removeReasonForm.valid"
                 [ngClass]="
                   !removeReasonForm.valid
@@ -306,14 +306,14 @@
                     : 'green hover:bg-green-500'
                 "
               >
-                Next
+                Submit
               </button>
             </div>
           </div>
 
           <!-- BookId -->
 
-          <div
+          <!-- <div
             [formGroup]="addBookIdForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepFour"
@@ -355,11 +355,11 @@
                 Next
               </button>
             </div>
-          </div>
+          </div> -->
 
           <!-- bookGenre -->
 
-          <div
+          <!-- <div
             [formGroup]="addGenreForm"
             (keydown.enter)="$event.preventDefault()"
             *ngIf="stepFive"
@@ -404,7 +404,7 @@
                 Submit
               </button>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

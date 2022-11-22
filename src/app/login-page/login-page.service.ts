@@ -1,6 +1,7 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
+import { FirebaseService } from '../services/firebase.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,11 @@ import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 export class LoginPageService {
   decodedToken: any | null = null;
   token: any;
-  constructor(private ngZone: NgZone, private router: Router) {}
+  constructor(
+    private ngZone: NgZone,
+    private router: Router,
+    private fs: FirebaseService
+  ) {}
   isLoggedIn() {
     // @ts-ignore
     google.accounts.id.initialize({
@@ -51,14 +56,13 @@ export class LoginPageService {
     console.log(response);
     let decodedToken = JSON.parse(atob(token.split('.')[1]));
     console.log(decodedToken);
+    let userInfo: any = {
+      name: decodedToken.name,
+      email: decodedToken.email,
+      picture: decodedToken.picture,
+    };
+    this.fs.addUser(userInfo);
     localStorage.setItem('user', JSON.stringify(decodedToken));
     JSON.stringify(localStorage.setItem('lms-token', token));
-    // console.log(localStorage.getItem('lms-token'));
-    // if (localStorage.getItem('lms-token')) {
-    //   console.log('from service');
-    // this.router.navigate(['/home'], {
-    //   replaceUrl: true,
-    // });
-    // }
   }
 }

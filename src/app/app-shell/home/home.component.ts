@@ -14,11 +14,7 @@ export class HomeComponent implements OnInit {
   userInfo: any;
   changeWidth: boolean = false;
   profileBox: boolean = false;
-  constructor(
-    private router: Router,
-    private as: AppShellService,
-    private ds: DexieService
-  ) {}
+  constructor(private as: AppShellService) {}
 
   ngOnInit(): void {
     this.userInfo = localStorage.getItem('user');

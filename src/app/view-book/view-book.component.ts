@@ -65,9 +65,12 @@ export class ViewBookComponent implements OnInit {
   }
   takeYes() {
     this.takeBookPopup = false;
-    alert(
-      'This book has been marked as taken by you, you can take this book from library.'
-    );
+    let bookName = this.receiver.bookName;
+    let email = this.userInfo.email;
+    let takenTime = Date.now();
+    const taken = { bookName: bookName, userEmail: email, time: takenTime };
+
+    return this.fs.bookTaken({ ...taken });
   }
   takeNo() {
     this.takeBookPopup = false;

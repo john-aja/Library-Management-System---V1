@@ -281,6 +281,5 @@ export class AddBookComponent implements OnInit {
     this.stepFour = false;
     this.stepFive = false;
     this.stepSix = false;
-    alert('Successfully added book to the library');
   }
 }
