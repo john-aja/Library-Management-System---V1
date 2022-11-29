@@ -14,58 +14,7 @@ export class UsersComponent implements OnInit {
   newMember: boolean = false;
   newAdmin: boolean = false;
   usersList: any;
-  // usersList = [
-  //   {
-  //     name: 'Tommy',
-  //     designation: 'Software Developer',
-  //     role: 'User',
-  //     email: 'tommy@surfboard.se',
-  //     numberOfBooksTaken: '4',
-  //   },
-  //   {
-  //     name: 'Shelby',
-  //     designation: 'Designer',
-  //     role: 'User',
-  //     email: 'shelby@surfboard.se',
-  //     numberOfBooksTaken: '2',
-  //   },
-  //   {
-  //     name: 'Arthur',
-  //     designation: 'Quality Analyst',
-  //     role: 'User',
-  //     email: 'arthur@surfboard.se',
-  //     numberOfBooksTaken: '5',
-  //   },
-  //   {
-  //     name: 'Tyrion',
-  //     designation: 'Software Developer',
-  //     role: 'User',
-  //     email: 'tyrion@surfboard.se',
-  //     numberOfBooksTaken: '7',
-  //   },
-
-  //   {
-  //     name: 'Shelby',
-  //     designation: 'Designer',
-  //     role: 'User',
-  //     email: 'shelby@surfboard.se',
-  //     numberOfBooksTaken: '2',
-  //   },
-  //   {
-  //     name: 'Arthur',
-  //     designation: 'Quality Analyst',
-  //     role: 'User',
-  //     email: 'arthur@surfboard.se',
-  //     numberOfBooksTaken: '5',
-  //   },
-  //   {
-  //     name: 'Tyrion',
-  //     designation: 'Software Developer',
-  //     role: 'User',
-  //     email: 'tyrion@surfboard.se',
-  //     numberOfBooksTaken: '7',
-  //   },
-  // ];
+  userProfile: boolean = false;
 
   adminList = [
     {
@@ -75,6 +24,7 @@ export class UsersComponent implements OnInit {
       email: 'dexter@surfboard.se',
     },
   ];
+  selectedReceiver: any;
   constructor(private fs: FirebaseService) {}
 
   ngOnInit(): void {
@@ -114,5 +64,15 @@ export class UsersComponent implements OnInit {
 
   close() {
     this.newMember = false;
+  }
+  closeProfile() {
+    this.userProfile = false;
+  }
+
+  onSelect(event: any, data: any) {
+    console.log(event);
+    console.log(data);
+    this.selectedReceiver = data;
+    this.userProfile = true;
   }
 }
