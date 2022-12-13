@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ddb } from './db';
-import { ref, onValue, getDatabase } from 'firebase/database';
+import { ref, onValue, getDatabase, update } from 'firebase/database';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 
 @Injectable({
@@ -9,10 +9,10 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 export class DexieService {
   bookList: any = [];
   usersList: any = [];
-  userId: string;
   userValues: any;
+  bookTaken: any[];
   db = getDatabase();
-  constructor(public aft: AngularFireDatabase) {}
+  constructor(public afd: AngularFireDatabase) {}
 
   getBooks() {
     const db = getDatabase();
@@ -38,7 +38,7 @@ export class DexieService {
 
   addBook(bookObj: any) {
     const id = 'id' + Math.random().toString(16).slice(8);
-    this.aft
+    this.afd
       .list('/addedBooks')
       .set(`${id}`, { ...bookObj, keyId: `${id}` })
       .then((v: any) => console.log(v));
@@ -57,10 +57,10 @@ export class DexieService {
     const bookInfo = ref(db, 'addedBooks/' + id);
     ddb.renderedBook.update(id, { availability: 'No' });
 
-    const firebaseDb = this.aft.list('/addedBooks');
+    const firebaseDb = this.afd.list('/addedBooks');
     try {
       await firebaseDb.update(id, { availability: 'No' });
-      return alert('Successfully removed book from library');
+      return alert('Successfully removed book from Surboard library');
     } catch (err) {
       return {
         err,
@@ -89,7 +89,7 @@ export class DexieService {
       );
       console.log('user', userExists);
       if (!userExists)
-        this.aft.list('users/').set(currentUser.userId, { ...currentUser });
+        this.afd.list('users/').set(currentUser.userId, { ...currentUser });
       else return;
     });
   }
@@ -116,49 +116,125 @@ export class DexieService {
     });
   }
 
-  takenBook(data: any) {
-    // const id = 'id' + Math.random().toString(16).slice(8);
+  async takenBook(data: any) {
+    console.log(data);
+    let userId: any;
+    let bookTaken: any[] = [];
+    const takenBookId = data.bookInfo.keyId;
+
     const userRef = ref(this.db, 'users/');
-    const firebaseDbBooks = this.aft.list('/addedBooks');
-    const firebaseDbUsers = this.aft.list('/users');
-    const bookTaken = data.bookName;
+    const firebaseDbBooks = this.afd.list('/addedBooks');
+    const firebaseDbUsers = this.afd.list('/users');
+
+    bookTaken.push({ bookInfo: data.bookInfo, time: data.time });
+
+    // user update
+
     onValue(userRef, async (snapshot) => {
       const users = snapshot?.val();
       let usersList = Object.values(users);
 
       usersList.filter((v: any) => {
+        console.log(v);
         if (v.email === data.userEmail) {
-          this.userId = v.userId;
-          // return this.userId;
+          v.booksTaken?.map((s: any) => {
+            console.log(s);
+            return bookTaken.push(s);
+          });
         }
-        return;
+        return bookTaken;
       });
-      console.log(this.userId);
 
-      try {
-        await firebaseDbUsers.update(this.userId, { booksTaken: bookTaken });
-        return alert(
-          'This book has been marked as taken by you, you can take this book from library.'
-        );
-      } catch (err) {
-        return {
-          err,
-          errorMessage: 'Something went wrong',
-        };
-      }
+      usersList.filter((v: any) => {
+        if (v.email === data.userEmail) {
+          return (userId = v.userId);
+        }
+        return userId;
+      });
 
-      // const userExists = usersList.find((v: any) => {
-      //   if (v.email === data.userEmail) return v;
-      // });
-      // console.log(userExists);
-      // if (userExists) {
-      //   await firebaseDb.update(id, { takenBy: data.email });
-      // } else return;
+      console.log(bookTaken);
+      console.log(userId);
+      console.log(takenBookId);
     });
+
+    try {
+      await firebaseDbBooks.update(takenBookId, {
+        isBookTaken: true,
+      });
+      await firebaseDbUsers.update(userId, { booksTaken: bookTaken });
+
+      // ddb.usersData.update(userId, { booksTaken: bookTaken });
+      return {
+        status: 'SUCCESS',
+        message:
+          'Book has marked as taken. Please take a book from the library',
+        data: data.bookInfo.bookName,
+      };
+    } catch (err) {
+      return {
+        err,
+        errorMessage: 'Something went wrong',
+      };
+    }
   }
 
   addVote(v: any) {
-    const firebaseDb = this.aft.list('/addedBooks');
-    firebaseDb.update(v.keyId, { vote: 0 ? 1 : +1 });
+    console.log(v);
+    let voterArr: any = [];
+    v.voters.map((voter: any) => {
+      voterArr.push(voter);
+    });
+
+    const firebaseDb = this.afd.list('/addedBooks');
+    const refFirebaseDbBooks = ref(this.db, 'addedBooks/');
+    onValue(refFirebaseDbBooks, async (snapshot) => {
+      const books = snapshot?.val();
+      let bookList = Object.values(books);
+
+      bookList.filter((book: any) => {
+        if (v.bookName === book.bookName) {
+          book.voters?.map((voter: string) => {
+            v.voters.map((isExist: any) => {
+              if (isExist !== voter) {
+                voterArr.push(voter);
+              }
+            });
+          });
+        }
+      });
+    });
+
+    console.log(voterArr);
+
+    firebaseDb.update(v.keyId, { vote: v.vote, voters: voterArr });
+  }
+
+  async makeBookAvailable(bookId: any, userId: any) {
+    console.log(bookId, userId);
+    let updatedBookList: any = [];
+    const firebaseDbBooks = this.afd.list('/addedBooks');
+    const firebaseDbUsers = this.afd.list('/users');
+    const userRef = ref(this.db, 'users/');
+
+    onValue(userRef, async (snapshot) => {
+      const users = snapshot?.val();
+      let userList = Object.values(users);
+
+      userList.filter((user: any) => {
+        if (user.userId === userId) {
+          user.booksTaken.map((v: any) => {
+            console.log(v);
+            if (v.bookInfo.keyId !== bookId) {
+              console.log(v);
+              updatedBookList.push(v);
+              return updatedBookList;
+            }
+          });
+        }
+      });
+      console.log(updatedBookList);
+    });
+    await firebaseDbBooks.update(bookId, { isBookTaken: false });
+    await firebaseDbUsers.update(userId, { booksTaken: updatedBookList });
   }
 }

@@ -185,26 +185,42 @@ export class RemoveBookComponent implements OnInit {
 
   removeBookFunction() {
     let bookToRemove = this.bookObj.bookName;
-    // console.log(bookToRemove);
+    console.log(bookToRemove);
     // console.log(this.totalBooks);
+
+    // return this.fbs.getAllBooks().pipe(
+    //   map((books: any) => {
+    //     console.log(books);
+    //     books.filter((v: any) => {
+    //       console.log(v);
+    //       if (bookToRemove === v.bookName) {
+    //         if (v.availability === 'Yes') {
+    //           console.log(v.keyId);
+    //           this.bookId = v.keyId;
+    //           return this.fbs.updatingBookInfo(this.bookId);
+    //         } else {
+    //           return alert(
+    //             'Book is not available in surfboard library, please check and type an exact name of the book.'
+    //           );
+    //         }
+    //       }
+    //     });
+    //   })
+    // );
+
     this.totalBooks.filter((v: any) => {
       console.log(v);
       if (bookToRemove === v.bookName) {
         if (v.availability === 'Yes') {
           console.log(v.keyId);
           this.bookId = v.keyId;
-          this.fbs.updatingBookInfo(this.bookId);
-          return v.keyId;
+          return this.fbs.updatingBookInfo(this.bookId);
         } else {
+          console.log('not available');
           return alert(
             'Book is not available in surfboard library, please check and type an exact name of the book.'
           );
         }
-      }
-      if (bookToRemove !== v.bookName) {
-        return alert(
-          'Book is not available in library at all, please check and type an exact name of the book.'
-        );
       }
     });
   }

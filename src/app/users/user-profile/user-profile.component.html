@@ -1,5 +1,8 @@
-<div class="p-10">
-  <div class="flex gap-4 items-center">
+<div class="px-10 pb-10">
+  <div
+    class="flex gap-4 items-center pt-10 pb-6 sticky top-0 w-full"
+    style="background: rgb(6 5 53)"
+  >
     <img class="w-20 rounded-full" src="{{ receiver.picture }}" alt="" />
     <div class="flex flex-col gap-1">
       <p class="text-2xl text-gray-200">{{ receiver.name }}</p>
@@ -8,10 +11,10 @@
   </div>
   <div class="mt-10">
     <p class="text-gray-300 text-2xl">Books Taken</p>
-    <ng-container *ngIf="receiver.booksTaken">
-      <ng-container *ngFor="let item of receiver.booksTaken">
-        <div class="flex gap-6">
-          <div class="mt-8 flex gap-8 items-center">
+    <ng-container *ngIf="userBooks | async as data">
+      <ng-container *ngFor="let item of data[0].booksTaken">
+        <div class="flex gap-6 justify-between items-center">
+          <div class="mt-8 flex gap-8 items-center justify-between">
             <img
               class="w-32 rounded-md"
               src="{{ item.bookInfo.imageUrl }}"
@@ -26,8 +29,18 @@
             <div class="flex flex-col gap-3">
               <p class="text-gray-200 ml-2">{{ item.bookInfo.bookName }}</p>
               <p class="text-gray-200 ml-2">{{ item.bookInfo.authorName }}</p>
-              <p class="text-gray-200 ml-2">{{ item.time | date: "medium" }}</p>
+              <p class="text-gray-200 ml-2">
+                {{ item.time | date : "medium" }}
+              </p>
             </div>
+          </div>
+          <div>
+            <p
+              class="text-white px-4 py-2 bg-green rounded-full cursor-pointer text-center text-sm"
+              (click)="onSelect($event, item)"
+            >
+              Make it available for users
+            </p>
           </div>
         </div>
       </ng-container>

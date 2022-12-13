@@ -14,6 +14,8 @@ import { AvailableBooksComponent } from './available-books/available-books.compo
 import { RemoveBookComponent } from './remove-book/remove-book.component';
 import { UsersComponent } from './users/users.component';
 import { AngularFireModule } from '@angular/fire/compat';
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { AngularFireModule } from '@angular/fire/compat';
     AvailableBooksComponent,
     RemoveBookComponent,
     UsersComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,

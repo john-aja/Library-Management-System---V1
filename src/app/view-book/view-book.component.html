@@ -1,87 +1,112 @@
 <div>
   <div>
-    <div class="p-10 pt-12 flex gap-6 text-white items-center">
-      <img class="w-44 rounded-md" src="{{ receiver.imageUrl }}" alt="" />
-      <div class="flex flex-col gap-3">
-        <p class="text-4xl">{{ receiver.bookName }}</p>
+    <ng-container *ngIf="selectedBook | async as data">
+      <ng-container *ngFor="let item of $any(data)">
+        <div class="p-10 pt-12 flex gap-6 text-white items-center">
+          <img class="w-44 rounded-md" src="{{ item.imageUrl }}" alt="" />
+          <div class="flex flex-col gap-3">
+            <p class="text-4xl">{{ item.bookName }}</p>
 
-        <p class="text-2xl text-gray-400">{{ receiver.authorName }}</p>
-        <p class="text-gray-500">Genre : {{ receiver.genre }}</p>
-        <p class="text-gray-300">{{ receiver.description }}</p>
-        <div>
-          <p
-            *ngIf="receiver?.availability === 'No'"
-            class="px-4 py-2 bg-red-500 inline-block rounded-full text-white text-xs mt-2"
-          >
-            Book not available in library
-          </p>
-
-          <p
-            *ngIf="receiver?.availability === 'Yes'"
-            class="px-4 py-2 bg-green-400 inline-block rounded-full text-white text-xs mt-2"
-          >
-            Book available in library
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="border-b-2 border-gray-700 border-opacity-30 pb-6 ml-10 mr-10">
-      <div class="flex-col inline-flex" *ngIf="receiver?.availability === 'No'">
-        <p
-          class="px-10 py-2 bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
-          (click)="addVote()"
-        >
-          Request admin to add +
-        </p>
-
-        <p class="mt-2 w-64 text-gray-400 text-xs pl-4 text-left">
-          *Once requested admin will review your request to add book to the
-          library
-        </p>
-      </div>
-      <div
-        class="flex-col inline-flex"
-        *ngIf="receiver?.availability === 'Yes'"
-      >
-        <p
-          class="px-10 py-2 text-center bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
-          (click)="takeBook()"
-        >
-          Take book
-        </p>
-
-        <p class="mt-2 w-64 text-gray-400 text-xs pl-4 text-left">
-          *Once taken, you should return it within a month or two.
-        </p>
-      </div>
-    </div>
-
-    <div class="pl-10 mt-6">
-      <p class="text-white text-2xl">
-        Books from author {{ receiver.authorName }}
-      </p>
-      <div class="flex w-full overflow-x-scroll gap-8 pb-12 similar_books">
-        <ng-container *ngIf="similarBooks | async as authorBook">
-          <ng-container *ngFor="let item of $any(authorBook); let i = index">
-            <div
-              class="flex flex-col gap-4 items-center"
-              (click)="onSelect($event, item, i)"
-            >
-              <img
-                class="w-40 h-64 mt-4 cursor-pointer rounded-md book_img"
-                src="{{ item.imageUrl }}"
-              />
+            <p class="text-2xl text-gray-400">{{ item.authorName }}</p>
+            <p class="text-gray-500">Genre : {{ item.genre }}</p>
+            <p class="text-gray-300">{{ item.description }}</p>
+            <div>
               <p
-                class="w-40 text-md cursor-pointer text-center text-white leading-none font-black"
+                *ngIf="item?.availability === 'No' || item.isBookTaken === true"
+                class="px-4 py-2 bg-red-500 inline-block rounded-full text-white text-xs mt-2"
               >
-                {{ item.bookName }}
+                Book not available in library
+              </p>
+
+              <p
+                *ngIf="
+                  item?.availability === 'Yes' && item.isBookTaken !== true
+                "
+                class="px-4 py-2 bg-green-400 inline-block rounded-full text-white text-xs mt-2"
+              >
+                Book available in library
               </p>
             </div>
-          </ng-container>
-        </ng-container>
-      </div>
-    </div>
+          </div>
+        </div>
+
+        <div
+          class="border-b-2 border-gray-700 border-opacity-30 pb-6 ml-10 mr-10"
+        >
+          <div class="flex-col inline-flex" *ngIf="item?.availability === 'No'">
+            <p
+              class="px-10 py-2 bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
+              (click)="addVote()"
+            >
+              Request admin to add +
+            </p>
+
+            <p class="mt-2 w-64 text-gray-400 text-xs pl-4 text-left">
+              *Once requested admin will review your request to add book to the
+              library
+            </p>
+          </div>
+          <div
+            class="flex-col inline-flex"
+            *ngIf="item?.availability === 'Yes' && !item.isBookTaken"
+          >
+            <p
+              class="px-10 py-2 text-center bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
+              (click)="takeBook()"
+            >
+              Take book
+            </p>
+
+            <p class="mt-2 w-64 text-gray-400 text-xs pl-4 text-left">
+              *Once taken, you should return it within a month or two.
+            </p>
+          </div>
+
+          <div
+            class="flex-col inline-flex"
+            *ngIf="item?.availability === 'Yes' && item.isBookTaken === true"
+          >
+            <p
+              class="px-10 py-2 text-center bg-red-400 inline-block rounded-full text-white cursor-pointer"
+            >
+              Book already taken
+            </p>
+
+            <p class="mt-2 w-64 text-gray-400 text-xs pl-4 text-left">
+              *Please contact admin for more info regarding book status.
+            </p>
+          </div>
+        </div>
+
+        <div class="pl-10 mt-6">
+          <p class="text-white text-2xl">
+            Books from author {{ item.authorName }}
+          </p>
+          <div class="flex w-full overflow-x-scroll gap-8 pb-12 similar_books">
+            <ng-container *ngIf="similarBooks | async as authorBook">
+              <ng-container
+                *ngFor="let data of $any(authorBook); let i = index"
+              >
+                <div
+                  class="flex flex-col gap-4 items-center"
+                  (click)="onSelect($event, data, i)"
+                >
+                  <img
+                    class="w-40 h-64 mt-4 cursor-pointer rounded-md book_img"
+                    src="{{ data.imageUrl }}"
+                  />
+                  <p
+                    class="w-40 text-md cursor-pointer text-center text-white leading-none font-black"
+                  >
+                    {{ data.bookName }}
+                  </p>
+                </div>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
 </div>
 <ng-container *ngIf="bookView">

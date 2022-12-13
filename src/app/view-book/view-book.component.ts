@@ -18,11 +18,15 @@ export class ViewBookComponent implements OnInit {
 
   similarBooks: any;
   userInfo: any;
+
   // authorBook: any;
+  selectedBook: any;
 
   constructor(private fs: FirebaseService) {}
 
   ngOnInit(): void {
+    console.log(this.receiver);
+
     this.userInfo = localStorage.getItem('user');
     this.userInfo = JSON.parse(this.userInfo);
 
@@ -31,6 +35,17 @@ export class ViewBookComponent implements OnInit {
         return books.filter(
           (book: any) => book.authorName === this.receiver.authorName
         );
+      })
+    );
+
+    this.selectedBook = this.fs.getAllBooks().pipe(
+      map((books: any) => {
+        return books.filter((book: any) => {
+          if (book.keyId === this.receiver.keyId) {
+            console.log(book);
+            return book;
+          }
+        });
       })
     );
   }
@@ -51,7 +66,7 @@ export class ViewBookComponent implements OnInit {
   yesVote(v: any) {
     console.log(v);
     v['vote'] = v?.vote ? v.vote + 1 : 1;
-    v['voters'] = this.userInfo.name;
+    v['voters'] = [this.userInfo.name];
     this.addVotePopup = false;
     this.fs.vote(v);
     alert('Your vote has been added successfully for admin review.');
@@ -65,10 +80,13 @@ export class ViewBookComponent implements OnInit {
   }
   takeYes() {
     this.takeBookPopup = false;
-    let bookName = this.receiver.bookName;
     let email = this.userInfo.email;
     let takenTime = Date.now();
-    const taken = { bookName: bookName, userEmail: email, time: takenTime };
+    const taken = {
+      bookInfo: this.receiver,
+      userEmail: email,
+      time: takenTime,
+    };
 
     return this.fs.bookTaken({ ...taken });
   }

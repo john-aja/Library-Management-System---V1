@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-profile-info',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class ProfileInfoComponent implements OnInit {
   userInfo: any;
 
-  constructor(private router: Router) {}
+  constructor(private fs: FirebaseService) {}
 
   ngOnInit(): void {
     this.userInfo = localStorage.getItem('user');
@@ -17,8 +18,6 @@ export class ProfileInfoComponent implements OnInit {
     console.log(this.userInfo);
   }
   logout() {
-    this.router.navigate(['login']);
-    localStorage.removeItem('user');
-    localStorage.removeItem('lms-token');
+    return this.fs.logoutUser();
   }
 }
