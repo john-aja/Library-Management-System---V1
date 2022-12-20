@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ddb } from './db';
-import { ref, onValue, getDatabase, update } from 'firebase/database';
+import { ref, onValue, getDatabase, update, Database } from 'firebase/database';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
+import * as firebase from 'firebase/compat';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,10 +13,13 @@ export class DexieService {
   usersList: any = [];
   userValues: any;
   bookTaken: any[];
+  userId: any;
   db = getDatabase();
   constructor(public afd: AngularFireDatabase) {}
 
-  getBooks() {
+  // Put books data in dexie
+
+  async getBooks() {
     const db = getDatabase();
     const bookInfo = ref(db, 'addedBooks/');
     onValue(bookInfo, (snapshot) => {
@@ -24,17 +29,17 @@ export class DexieService {
 
       this.bookList = data ? Object.values(data) : '';
 
-      this.bookList.map((val: any) => {
+      this.bookList.map(async (val: any) => {
         if (val)
-          ddb.renderedBook
+          await ddb.renderedBook
             .put(val)
             .then((data) => console.log('data'))
             .catch((err) => console.log(err));
       });
-      // console.log(ddb.renderedBook);
-      console.log(this.bookList);
     });
   }
+
+  // Update added books to dexie
 
   addBook(bookObj: any) {
     const id = 'id' + Math.random().toString(16).slice(8);
@@ -50,13 +55,11 @@ export class DexieService {
       .catch((err) => console.log(err.message));
   }
 
+  // Change availability status of the book and update in dexie
+
   async updateBook(id: any) {
     console.log(id);
-
-    const db = getDatabase();
-    const bookInfo = ref(db, 'addedBooks/' + id);
     ddb.renderedBook.update(id, { availability: 'No' });
-
     const firebaseDb = this.afd.list('/addedBooks');
     try {
       await firebaseDb.update(id, { availability: 'No' });
@@ -68,6 +71,8 @@ export class DexieService {
       };
     }
   }
+
+  // Adding new user to dexie and firebase
 
   addUserToDb(userInfo: any) {
     const id = 'user_' + Math.random().toString(16).slice(8);
@@ -87,34 +92,35 @@ export class DexieService {
       const userExists = usersList.find(
         (v: any) => v.email === currentUser.email
       );
-      console.log('user', userExists);
       if (!userExists)
         this.afd.list('users/').set(currentUser.userId, { ...currentUser });
       else return;
     });
   }
 
-  getUsers() {
+  // Put users data in dexie
+
+  async getUsers() {
     const db = getDatabase();
     const bookInfo = ref(db, 'users/');
-    onValue(bookInfo, (snapshot) => {
+    onValue(bookInfo, async (snapshot) => {
       let obj = [];
       const data = snapshot?.val();
       obj.push(data);
 
       this.usersList = data ? Object.values(data) : '';
 
-      this.usersList.map((val: any) => {
+      await this.usersList.map((val: any) => {
         if (val)
           ddb.usersData
             .put(val)
             .then((data) => console.log('data'))
             .catch((err) => console.log(err));
       });
-      // console.log(ddb.renderedBook);
-      console.log(this.usersList);
     });
   }
+
+  // Updating book taken info
 
   async takenBook(data: any) {
     console.log(data);
@@ -128,8 +134,6 @@ export class DexieService {
 
     bookTaken.push({ bookInfo: data.bookInfo, time: data.time });
 
-    // user update
-
     onValue(userRef, async (snapshot) => {
       const users = snapshot?.val();
       let usersList = Object.values(users);
@@ -137,19 +141,17 @@ export class DexieService {
       usersList.filter((v: any) => {
         console.log(v);
         if (v.email === data.userEmail) {
-          v.booksTaken?.map((s: any) => {
+          return v.booksTaken?.map((s: any) => {
             console.log(s);
             return bookTaken.push(s);
           });
         }
-        return bookTaken;
       });
 
       usersList.filter((v: any) => {
         if (v.email === data.userEmail) {
           return (userId = v.userId);
         }
-        return userId;
       });
 
       console.log(bookTaken);
@@ -158,12 +160,11 @@ export class DexieService {
     });
 
     try {
-      await firebaseDbBooks.update(takenBookId, {
-        isBookTaken: true,
-      });
+      await ddb.renderedBook.update(takenBookId, { isBookTaken: true });
+      await ddb.usersData.update(userId, { booksTaken: bookTaken });
+      await firebaseDbBooks.update(takenBookId, { isBookTaken: true });
       await firebaseDbUsers.update(userId, { booksTaken: bookTaken });
 
-      // ddb.usersData.update(userId, { booksTaken: bookTaken });
       return {
         status: 'SUCCESS',
         message:
@@ -178,36 +179,65 @@ export class DexieService {
     }
   }
 
-  addVote(v: any) {
-    console.log(v);
-    let voterArr: any = [];
-    v.voters.map((voter: any) => {
-      voterArr.push(voter);
-    });
+  // Adding vote data for user and book
 
-    const firebaseDb = this.afd.list('/addedBooks');
-    const refFirebaseDbBooks = ref(this.db, 'addedBooks/');
-    onValue(refFirebaseDbBooks, async (snapshot) => {
-      const books = snapshot?.val();
-      let bookList = Object.values(books);
+  async addVote(v: any, userId: any, votedBookArr: any) {
+    console.log(votedBookArr);
+    console.log('call from dexie service');
+    console.log(userId);
+    let voterArr: any[] = [];
+    let votedBooks: any[] = [];
+    const firebaseDbBook = this.afd.list('/addedBooks');
 
-      bookList.filter((book: any) => {
-        if (v.bookName === book.bookName) {
-          book.voters?.map((voter: string) => {
-            v.voters.map((isExist: any) => {
-              if (isExist !== voter) {
-                voterArr.push(voter);
-              }
-            });
-          });
+    const firebaseDbUser = this.afd.list('/users');
+
+    votedBooks.push(v);
+
+    if (votedBookArr) {
+      votedBookArr?.filter((alreadyVoted: any) => {
+        console.log(alreadyVoted);
+        if (alreadyVoted?.bookName !== v.bookName) {
+          votedBooks.push(alreadyVoted);
+          console.log(votedBooks);
+          ddb.usersData.update(userId, { votedBooks: votedBooks });
+          firebaseDbUser.update(userId, { votedBooks: votedBooks });
         }
       });
-    });
+    } else {
+      ddb.usersData.update(userId, { votedBooks: votedBooks });
+      firebaseDbUser.update(userId, { votedBooks: votedBooks });
+    }
+    console.log(votedBooks);
 
-    console.log(voterArr);
+    const getUser: any = localStorage.getItem('user');
+    const getCurrentUser = JSON.parse(getUser);
+    console.log(getCurrentUser);
 
-    firebaseDb.update(v.keyId, { vote: v.vote, voters: voterArr });
+    // v.voters?.map((voter: any) => {
+    //   return voterArr.push(voter);
+    // });
+    // console.log(voterArr);
+
+    // if (voterArr.length > 0) {
+    //   return voterArr.filter((name: any) => {
+    //     if (name !== getCurrentUser.name) {
+    //       return voterArr.push(getCurrentUser.name);
+    //     }
+    //   });
+    // } else {
+    //   voterArr.push(getCurrentUser.name);
+    // }
+
+    // console.log(votedBooks);
+    // console.log(voterArr);
+
+    await firebaseDbBook.update(v.keyId, { vote: v.vote, voters: voterArr });
+    await firebaseDbUser.update(userId, { votedBooks: votedBooks });
+    await ddb.usersData.update(userId, { votedBooks: votedBooks });
+    await ddb.renderedBook.update(v.keyId, { vote: v.vote, voters: voterArr });
   }
+
+  // Making book available for users
 
   async makeBookAvailable(bookId: any, userId: any) {
     console.log(bookId, userId);
@@ -220,20 +250,25 @@ export class DexieService {
       const users = snapshot?.val();
       let userList = Object.values(users);
 
-      userList.filter((user: any) => {
+      userList?.filter((user: any) => {
         if (user.userId === userId) {
-          user.booksTaken.map((v: any) => {
+          console.log(user.booksTaken);
+          return user.booksTaken?.filter((v: any) => {
             console.log(v);
             if (v.bookInfo.keyId !== bookId) {
-              console.log(v);
               updatedBookList.push(v);
+              console.log(updatedBookList);
               return updatedBookList;
             }
           });
         }
       });
       console.log(updatedBookList);
+      return updatedBookList;
     });
+    await ddb.usersData.update(userId, { booksTaken: updatedBookList });
+    await ddb.renderedBook.update(bookId, { isBookTaken: false });
+
     await firebaseDbBooks.update(bookId, { isBookTaken: false });
     await firebaseDbUsers.update(userId, { booksTaken: updatedBookList });
   }

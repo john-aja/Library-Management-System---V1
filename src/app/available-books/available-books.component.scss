@@ -21,6 +21,10 @@ input::placeholder {
   background: linear-gradient(180deg, rgba(5, 4, 47, 1) 0%, rgb(6, 5, 62) 100%);
 }
 
+.library_filter_container {
+  background: rgb(6 5 53);
+}
+
 // closebtn
 
 .item-1 {
@@ -80,6 +84,12 @@ input::placeholder {
   }
 }
 
+@media only screen and (max-width: 1240px) {
+  .book-container {
+    width: 25%;
+  }
+}
+
 @media only screen and (max-width: 1000px) {
   .item-1 {
     height: 43px;
@@ -102,6 +112,7 @@ input::placeholder {
 @media only screen and (max-width: 900px) {
   .library_filter_container {
     padding-top: 3rem;
+    background: rgb(12 10 78);
   }
   .dark_theme_bg {
     background: rgb(5, 4, 47);
@@ -187,6 +198,15 @@ input::placeholder {
         }
       }
     }
+  }
+
+  .book_img {
+    width: 12rem;
+    height: 18rem;
+  }
+
+  .book-container {
+    width: 33%;
   }
 }
 

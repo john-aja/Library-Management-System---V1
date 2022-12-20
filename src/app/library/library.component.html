@@ -2,7 +2,6 @@
   <div class="px-10 h-full overflow-scroll">
     <div
       class="flex flex-col gap-10 pb-10 sticky top-0 pt-28 library_filter_container"
-      style="background: rgb(6 5 53)"
     >
       <div class="flex w-full justify-between">
         <div class="relative w-2/4 h-10">
@@ -46,39 +45,42 @@
       </div>
     </div>
     <div class="overflow-y-scroll pb-6">
-      <ng-container
-        *ngFor="
-          let item of totalBooks
-            | searchFilter: searchText:'bookName':'authorName';
-          let i = index
-        "
-      >
-        <div
-          class="mt-6 flex-col w-1/5 items-center gap-2 inline-flex transition-all duration-500 delay-500"
-          (click)="onSelect($event, item, i)"
+      <ng-container *ngIf="books | async; let bookItems; else: emptyState">
+        <ng-container
+          *ngFor="
+            let item of bookItems
+              | searchFilter : searchText : 'bookName' : 'authorName';
+            let i = index
+          "
         >
-          <img
-            class="w-40 h-64 cursor-pointer rounded-md book_img"
-            src="{{ item?.imageUrl }}"
-          />
-          <div class="flex flex-col justify-center items-center">
-            <p class="text-lg text-center cursor-pointer text-gray-50">
-              {{ item?.bookName }}
-            </p>
-            <p class="text-sm text-gray-500 text-center cursor-pointer">
-              {{ item?.authorName }}
-            </p>
+          <div
+            class="mt-6 flex-col w-1/5 items-center gap-2 inline-flex transition-all duration-500 delay-500 book-container"
+            (click)="onSelect($event, item, i)"
+          >
+            <img
+              class="w-40 h-64 cursor-pointer rounded-md book_img"
+              src="{{ item?.imageUrl }}"
+            />
+            <div class="flex flex-col justify-center items-center">
+              <p class="text-lg text-center cursor-pointer text-gray-50">
+                {{ item?.bookName }}
+              </p>
+              <p class="text-sm text-gray-500 text-center cursor-pointer">
+                {{ item?.authorName }}
+              </p>
+            </div>
           </div>
-        </div>
+        </ng-container>
       </ng-container>
-
-      <ng-container *ngIf="emptyState || bookList?.length === 0" #emptyState>
+      <ng-template #emptyState>
+        <!-- <ng-container> -->
         <div
           class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-16"
         >
           <img class="w-96" src="../../assets/no_result.png" alt="" />
         </div>
-      </ng-container>
+        <!-- </ng-container> -->
+      </ng-template>
     </div>
   </div>
 

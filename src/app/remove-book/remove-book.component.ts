@@ -221,6 +221,9 @@ export class RemoveBookComponent implements OnInit {
             'Book is not available in surfboard library, please check and type an exact name of the book.'
           );
         }
+      } else {
+        console.log('not a book');
+        return;
       }
     });
   }

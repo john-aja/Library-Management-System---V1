@@ -30,6 +30,7 @@
         <img
           (click)="openProfile()"
           class="w-12 rounded-full z-50 relative profile_pic border-2"
+          onerror="this.onerror=null; this.src='../../../assets/user_err.png'"
           src="{{ userInfo.picture }}"
         />
 
@@ -48,7 +49,7 @@
 </div>
 <ng-container *ngIf="profileBox">
   <div
-    class="h-full w-full absolute top-0 left-0 bg-black bg-opacity-30 z-10 backdrop-blur-sm"
+    class="h-full w-full absolute top-0 left-0 bg-black bg-opacity-30 z-0 backdrop-blur-sm"
     (click)="close()"
   ></div>
 </ng-container>

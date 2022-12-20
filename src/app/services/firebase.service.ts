@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import {
-  AngularFireDatabase,
-  listChanges,
-} from '@angular/fire/compat/database';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { provideProtractorTestingSupport } from '@angular/platform-browser';
 import { DexieService } from 'src/db/dexie.service';
 import { liveQuery } from 'dexie';
-import { from, map } from 'rxjs';
+import { from, map, tap } from 'rxjs';
 import { ddb } from 'src/db/db';
-import { of } from 'rxjs';
 import { Router } from '@angular/router';
+import { getDatabase, onValue, ref } from 'firebase/database';
+import { getLocaleId } from '@angular/common';
+// import { ConsoleReporter } from 'jasmine';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,45 +20,191 @@ export class FirebaseService {
     private router: Router
   ) {}
 
+  // Add book to db
+
   add(obj: any) {
     return this.ds.addBook(obj);
   }
+
+  // Get books from db
   getBooks() {
     return this.ds.getBooks();
   }
 
-  getAllBooks() {
-    return from(liveQuery(async () => await ddb.renderedBook.toArray()));
+  getUsers() {
+    return this.getAllUser();
   }
+  // Get all books stored in dexie if not available in dexie call db
+
+  getAllBooks() {
+    return from(
+      liveQuery(async () => {
+        const books = await ddb.renderedBook.toArray();
+        if (books.length === 0) {
+          return await this.ds.getBooks();
+        }
+        return ddb.renderedBook.toArray();
+      })
+    );
+  }
+
+  // Get seleted book using bookId
+
+  getSelectedBook(keyId: any) {
+    console.log(keyId);
+    return from(
+      liveQuery(async () => {
+        const books = await ddb.renderedBook.toArray();
+        return books.filter((v: any) => {
+          if (v.keyId === keyId) {
+            console.log(v);
+            return v;
+          }
+        });
+      })
+    );
+  }
+
+  // Get particular author's book using author name
+
+  getAuthorsBook(authorName: any, bookName: any) {
+    return from(
+      liveQuery(async () => {
+        const books = await ddb.renderedBook.toArray();
+        return books.filter((v: any) => {
+          if (v.authorName === authorName) {
+            return v;
+          }
+        });
+      })
+    );
+  }
+
+  // Changing availablility status of the book
 
   updatingBookInfo(id: any) {
     return this.ds.updateBook(id);
   }
-  vote(v: any) {
-    console.log(v);
-    return this.ds.addVote(v);
+
+  // Get already voted books for user
+
+  getVotedBooks(email: any) {
+    return from(
+      liveQuery(async () => {
+        console.log('livequery calles voted book');
+        const userData = await ddb.usersData.toArray();
+        if (userData) {
+          const getUserId = userData.filter((user: any) => {
+            if (user.email === email) {
+              return user;
+            }
+          });
+          const alreadyVotedBooks = getUserId.map((voted: any) => {
+            console.log(voted);
+            return voted.votedBooks;
+          });
+          console.log(alreadyVotedBooks);
+          return alreadyVotedBooks.map((v) => {
+            return v;
+          });
+        }
+      })
+    );
   }
+
+  // Get user Id with email
+
+  getUserIdWithEmail(email: any) {
+    console.log('getUserIdWithEmail calles');
+    return from(
+      liveQuery(async () => {
+        console.log('livequery calles');
+        const userData = await ddb.usersData.toArray();
+
+        const getUserId = userData.filter((user: any) => {
+          if (user.email === email) {
+            return user;
+          }
+        });
+        const userId = getUserId.map((id: any) => {
+          return id.userId;
+        });
+        console.log(userId);
+
+        return userId;
+      })
+    );
+  }
+
+  // Updating user with votedbooks
+
+  async vote(book: any, email: any) {
+    console.log('call from firebase service');
+    let votedBookArr: any;
+    let id: any[] = [];
+    console.log(this.getVotedBooks(email));
+    const data = this.getVotedBooks(email).subscribe((v: any) => {
+      v?.map((y: any) => {
+        console.log(y);
+        votedBookArr = y;
+        votedBookArr;
+      });
+      data.unsubscribe();
+    });
+    const item = this.getUserIdWithEmail(email).subscribe((v: any) => {
+      v.map((z: any) => {
+        id.push(z);
+        this.ds.addVote(book, z, votedBookArr);
+      });
+      item.unsubscribe();
+    });
+  }
+
+  // Adding user to the db
+
   addUser(user: any) {
     return this.ds.addUserToDb(user);
   }
 
+  // Get all users stored in dexie if not available in dexie call db
+
   getAllUser() {
-    return this.ds.getUsers();
+    return from(
+      liveQuery(async () => {
+        const users = await ddb.usersData.toArray();
+        if (users.length === 0) {
+          this.ds.getUsers();
+        }
+        return await ddb.usersData.toArray();
+      })
+    );
   }
 
+  // Get user data from dexie
+
   getUsersDataFromDexie() {
-    return from(liveQuery(async () => await ddb.usersData.toArray()));
+    return from(
+      liveQuery(async () => {
+        return await ddb.usersData.toArray();
+      })
+    );
   }
+
+  // Upading book taken info
 
   bookTaken(takenData: any) {
     console.log('from firebase service!');
     return this.ds.takenBook(takenData);
   }
 
+  // Making book available for users
+
   makeItAvailable(item: any, userId: any) {
     const bookId = item.bookInfo.keyId;
     return this.ds.makeBookAvailable(bookId, userId);
   }
+
+  // Logging out the user
 
   logoutUser() {
     this.router.navigate(['login']);

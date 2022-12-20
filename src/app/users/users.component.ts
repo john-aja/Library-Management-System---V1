@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs';
-import { DexieService } from 'src/db/dexie.service';
+import { map, Observable } from 'rxjs';
 import { FirebaseService } from '../services/firebase.service';
 
 @Component({
@@ -15,6 +14,7 @@ export class UsersComponent implements OnInit {
   newAdmin: boolean = false;
   usersList: any;
   userProfile: boolean = false;
+  userLength: any;
 
   adminList = [
     {
@@ -25,6 +25,7 @@ export class UsersComponent implements OnInit {
     },
   ];
   selectedReceiver: any;
+  userData: Observable<any>;
   constructor(private fs: FirebaseService) {}
 
   ngOnInit(): void {
@@ -32,17 +33,16 @@ export class UsersComponent implements OnInit {
   }
 
   getUsersFromDb() {
-    this.fs.getAllUser();
-    const userData = this.fs.getUsersDataFromDexie().pipe(
+    this.userData = this.fs.getAllUser().pipe(
       map((users: any) => {
         return users;
       })
     );
-    userData.subscribe((user) => {
-      this.usersList = user;
-      console.log(this.usersList);
-      return this.usersList;
+    this.userData.subscribe((user) => {
+      this.userLength = user;
+      return this.userLength;
     });
+    return this.userData;
   }
 
   membersTab() {

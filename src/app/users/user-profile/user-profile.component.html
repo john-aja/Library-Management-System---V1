@@ -1,56 +1,163 @@
-<div class="px-10 pb-10">
-  <div
-    class="flex gap-4 items-center pt-10 pb-6 sticky top-0 w-full"
-    style="background: rgb(6 5 53)"
-  >
-    <img class="w-20 rounded-full" src="{{ receiver.picture }}" alt="" />
-    <div class="flex flex-col gap-1">
-      <p class="text-2xl text-gray-200">{{ receiver.name }}</p>
-      <p class="text-1xl text-gray-400">{{ receiver.userId }}</p>
+<div class="pb-10">
+  <div class="h-full w-full sticky top-0 profile-container">
+    <div class="px-10 flex gap-4 items-center pt-10 pb-6 w-full">
+      <img
+        class="w-20 rounded-full"
+        src="{{ receiver.picture }}"
+        onerror="this.onerror=null; this.src='../../../assets/user_err.png'"
+        alt=""
+      />
+      <!-- <img src="../../../assets/user_err.png" alt=""> -->
+      <div class="flex flex-col gap-1">
+        <p class="text-2xl text-gray-200">{{ receiver.name }}</p>
+        <p class="text-1xl text-gray-400">{{ receiver.userId }}</p>
+      </div>
     </div>
   </div>
   <div class="mt-10">
-    <p class="text-gray-300 text-2xl">Books Taken</p>
-    <ng-container *ngIf="userBooks | async as data">
-      <ng-container *ngFor="let item of data[0].booksTaken">
-        <div class="flex gap-6 justify-between items-center">
-          <div class="mt-8 flex gap-8 items-center justify-between">
-            <img
-              class="w-32 rounded-md"
-              src="{{ item.bookInfo.imageUrl }}"
-              alt=""
-            />
-            <div class="flex flex-col gap-3">
-              <p class="text-gray-500 text-1xl">Book Name:</p>
-              <p class="text-gray-500 text-1xl">Author Name:</p>
-              <p class="text-gray-500 text-1xl">Time:</p>
-            </div>
+    <div class="flex gap-6 px-10">
+      <p
+        class="text-gray-300 text-xl px-4 py-2 rounded-t-md cursor-pointer"
+        [ngClass]="
+          booksTakenContainer
+            ? 'bg-white bg-opacity-5 font-semibold'
+            : 'font-normal'
+        "
+        (click)="booksTaken()"
+      >
+        Books Taken
+      </p>
+      <p
+        class="text-gray-300 text-xl px-4 py-2 rounded-t-md cursor-pointer"
+        [ngClass]="
+          booksVotedContainer
+            ? 'bg-white bg-opacity-5 font-semibold'
+            : 'font-normal'
+        "
+        (click)="booksVoted()"
+      >
+        Books Voted
+      </p>
+    </div>
 
-            <div class="flex flex-col gap-3">
-              <p class="text-gray-200 ml-2">{{ item.bookInfo.bookName }}</p>
-              <p class="text-gray-200 ml-2">{{ item.bookInfo.authorName }}</p>
-              <p class="text-gray-200 ml-2">
-                {{ item.time | date : "medium" }}
+    <div
+      *ngIf="booksTakenContainer"
+      class="overflow-scroll book-container bg-white bg-opacity-5 px-10"
+    >
+      <ng-container *ngIf="userBooks | async as data">
+        <ng-container *ngFor="let item of data[0].booksTaken">
+          <div class="flex gap-6 justify-between items-center book-row pb-2">
+            <div class="mt-8 flex gap-8 items-center justify-between">
+              <img
+                class="w-32 rounded-md"
+                src="{{ item.bookInfo.imageUrl }}"
+                alt=""
+              />
+              <div class="flex flex-col gap-3">
+                <p class="text-gray-500 text-1xl">Book Name:</p>
+                <p class="text-gray-500 text-1xl">Author Name:</p>
+                <p class="text-gray-500 text-1xl">Time:</p>
+              </div>
+
+              <div class="flex flex-col gap-3">
+                <p class="text-gray-200 ml-2">{{ item.bookInfo.bookName }}</p>
+                <p class="text-gray-200 ml-2">{{ item.bookInfo.authorName }}</p>
+                <p class="text-gray-200 ml-2">
+                  {{ item.time | date : "medium" }}
+                </p>
+              </div>
+            </div>
+            <div>
+              <p
+                class="text-white px-4 py-2 bg-green rounded-full cursor-pointer text-center text-sm"
+                (click)="onSelect($event, item)"
+              >
+                Make it available for users
               </p>
             </div>
           </div>
-          <div>
-            <p
-              class="text-white px-4 py-2 bg-green rounded-full cursor-pointer text-center text-sm"
-              (click)="onSelect($event, item)"
+
+          <ng-container *ngIf="changeAvailability">
+            <div
+              class="alert_box w-auto h-auto light_dark_theme absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-md"
             >
-              Make it available for users
-            </p>
-          </div>
-        </div>
+              <div class="flex justify-center items-center flex-col px-10 py-6">
+                <p class="text-1xl">
+                  Are you sure you want to make this book available to users.
+                </p>
+                <p class="text-xs text-gray-400 mt-2">
+                  *Once make it available user will be able to see the book in
+                  available section.
+                </p>
+                <div class="flex w-full justify-center gap-20 mt-8">
+                  <button
+                    class="px-10 py-2 bg-green rounded-md text-white transition-all hover:bg-green-600"
+                    (click)="changeYes($event, item)"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    class="px-10 py-2 bg-red-400 rounded-md text-white transition-all hover:bg-red-600"
+                    (click)="changeNo()"
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
       </ng-container>
-    </ng-container>
-    <ng-container *ngIf="!receiver.booksTaken">
-      <div class="mt-10">
+    </div>
+    <div
+      *ngIf="booksVotedContainer"
+      class="overflow-scroll book-container bg-white bg-opacity-5 px-10"
+    >
+      <ng-container *ngIf="userBooks | async as data">
+        <ng-container *ngFor="let item of data[0].votedBooks">
+          <div class="flex gap-6 justify-between items-center book-row pb-2">
+            <div class="mt-8 flex gap-8 items-center justify-between">
+              <img class="w-32 rounded-md" src="{{ item.imageUrl }}" alt="" />
+              <div class="flex flex-col gap-3">
+                <p class="text-gray-500 text-1xl">Book Name:</p>
+                <p class="text-gray-500 text-1xl">Author Name:</p>
+              </div>
+
+              <div class="flex flex-col gap-3">
+                <p class="text-gray-200 ml-2">{{ item.bookName }}</p>
+                <p class="text-gray-200 ml-2">
+                  {{ item.authorName }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+    <ng-container *ngIf="!receiver.booksTaken && booksTakenContainer">
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-20"
+      >
         <p class="px-6 py-3 bg-gray-400 text-center rounded-md">
           No book has been picked up by the user yet...
         </p>
       </div>
+    </ng-container>
+    <ng-container *ngIf="!receiver.votedBooks && booksVotedContainer">
+      <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-20"
+      >
+        <p class="px-6 py-3 bg-gray-400 text-center rounded-md">
+          No book has been voted by the user yet...
+        </p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="changeAvailability">
+      <div
+        class="h-full w-full absolute top-0 left-0 bg-black bg-opacity-30 z-20 backdrop-blur-sm"
+        (click)="close()"
+      ></div>
     </ng-container>
   </div>
 </div>

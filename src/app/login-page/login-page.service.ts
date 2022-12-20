@@ -9,6 +9,7 @@ import { FirebaseService } from '../services/firebase.service';
 export class LoginPageService {
   decodedToken: any | null = null;
   token: any;
+  userEmail: any;
   constructor(
     private ngZone: NgZone,
     private router: Router,
@@ -61,6 +62,7 @@ export class LoginPageService {
       email: decodedToken.email,
       picture: decodedToken.picture,
     };
+    this.userEmail = decodedToken.email;
     this.fs.addUser(userInfo);
     localStorage.setItem('user', JSON.stringify(decodedToken));
     JSON.stringify(localStorage.setItem('lms-token', token));

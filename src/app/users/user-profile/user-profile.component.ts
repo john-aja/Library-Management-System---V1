@@ -12,7 +12,12 @@ import { ddb } from 'src/db/db';
 export class UserProfileComponent implements OnInit {
   @Input() receiver: any;
   userId: any;
+  changeAvailability: boolean = false;
+  booksTakenContainer: boolean = true;
+  booksVotedContainer: boolean = false;
   userBooks: Observable<any>;
+  selectedBook: any;
+  userVoted: any;
   constructor(private fs: FirebaseService) {}
 
   ngOnInit(): void {
@@ -31,11 +36,42 @@ export class UserProfileComponent implements OnInit {
         });
       })
     );
+
+    // this.userVoted = this.fs.getUsersDataFromDexie().pipe(map((v:any)=>{
+    //   return v.filter((voted:any)=>{
+    //     if(this.userId === voted.userId) {
+
+    //     }
+    //   })
+    // }))
   }
 
   onSelect(event: any, book: any) {
     console.log(book);
-    const userId = this.receiver.userId;
-    return this.fs.makeItAvailable(book, userId);
+    this.selectedBook = book;
+    // return this.fs.makeItAvailable(book, userId);
+    this.changeAvailability = true;
+  }
+
+  changeYes(event: any, item: any) {
+    console.log(item);
+    this.changeAvailability = false;
+    return this.fs.makeItAvailable(this.selectedBook, this.userId);
+  }
+  changeNo() {
+    this.changeAvailability = false;
+  }
+  close() {
+    this.changeAvailability = false;
+  }
+
+  booksTaken() {
+    this.booksTakenContainer = true;
+    this.booksVotedContainer = false;
+  }
+  booksVoted() {
+    console.log(this.userBooks.subscribe((v) => console.log(v)));
+    this.booksVotedContainer = true;
+    this.booksTakenContainer = false;
   }
 }

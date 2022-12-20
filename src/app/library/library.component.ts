@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { map } from 'rxjs';
+import { Router } from '@angular/router';
+import { map, Observable } from 'rxjs';
 import { DexieService } from 'src/db/dexie.service';
 import { FirebaseService } from '../services/firebase.service';
 
@@ -17,28 +18,45 @@ export class LibraryComponent implements OnInit {
   bookList: any = [];
   sort: boolean = true;
   emptyState: boolean = false;
+
   totalBooks: any;
   dataId: any;
-  books: any;
-  constructor(public afd: AngularFireDatabase, private fs: FirebaseService) {}
+  books: Observable<any>;
+
+  constructor(
+    public afd: AngularFireDatabase,
+    private fs: FirebaseService,
+    private router: Router,
+    private ds: DexieService
+  ) {}
 
   ngOnInit(): void {
     this.renderBook();
+    this.ds.getUsers();
   }
 
-  renderBook() {
-    this.fs.getBooks();
-    this.books = this.fs.getAllBooks().pipe(map((books: any) => books));
-    this.books.subscribe((v: any) => {
-      this.bookList = v;
-      this.totalBooks = v;
-      return this.bookList;
-    });
+  async renderBook() {
+    this.books = this.fs.getAllBooks().pipe(
+      map((v: any) => {
+        console.log(v);
+        this.totalBooks = v;
+        this.bookList = v;
+        return v;
+      })
+    );
+    console.log(this.books);
+    return this.books;
   }
 
   onSelect(event: any, item: any, row: any) {
     this.bookView = true;
     this.selectedReceiver = item;
+    console.log(this.router.url);
+    const valueUrl = this.router.url.replace(
+      '/',
+      `/${this.selectedReceiver.keyId}`
+    );
+    console.log(valueUrl);
   }
 
   close() {
@@ -47,43 +65,41 @@ export class LibraryComponent implements OnInit {
 
   filterByGenre(genre: any) {
     let currentGenre = genre.value;
-    this.totalBooks = this.bookList;
-    // console.log(this.bookList);
-    if (currentGenre === currentGenre) {
-      this.totalBooks = this.bookList?.filter((v: any) => {
-        if (v?.genre === currentGenre) {
-          if (this.bookList.length !== 0) {
-            // this.bookList = v;
-            // console.log(this.bookList);
-            this.emptyState = false;
-            return v;
-          } else {
-            return (this.emptyState = true);
-          }
-        }
-        if (currentGenre === '') {
-          if (this.bookList.length !== 0) {
-            this.emptyState = false;
-            return this.bookList;
-          } else this.emptyState = true;
-        } else return;
-      });
+    console.log(currentGenre);
+    if (currentGenre) {
+      this.books = this.fs.getAllBooks().pipe(
+        map((v: any) => {
+          this.emptyState = false;
+          return v.filter((w: any) => {
+            if (w.genre === currentGenre) {
+              return w;
+            }
+          });
+        })
+      );
     }
-
-    if (this.totalBooks?.length === 0) {
-      this.emptyState = true;
+    if (currentGenre === '') {
+      this.books = this.fs.getAllBooks().pipe(
+        map((v: any) => {
+          return v.map((w: any) => {
+            return w;
+          });
+        })
+      );
     }
   }
 
   sortBooks() {
     this.sort = !this.sort;
+    console.log(this.totalBooks);
     if (!this.sort) {
-      this.bookList?.sort((a: any, b: any) =>
-        a.bookName.localeCompare(b.bookName)
-      );
+      this.totalBooks?.sort((a: any, b: any) => {
+        console.log(a, b);
+        a.bookName.localeCompare(b.bookName);
+      });
     }
     if (this.sort) {
-      this.bookList?.sort((a: any, b: any) =>
+      this.totalBooks?.sort((a: any, b: any) =>
         b.bookName.localeCompare(a.bookName)
       );
     }

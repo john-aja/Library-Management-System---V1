@@ -30,22 +30,18 @@ export class ViewBookComponent implements OnInit {
     this.userInfo = localStorage.getItem('user');
     this.userInfo = JSON.parse(this.userInfo);
 
-    this.similarBooks = this.fs.getAllBooks().pipe(
-      map((books: any) => {
-        return books.filter(
-          (book: any) => book.authorName === this.receiver.authorName
-        );
-      })
-    );
+    this.similarBooks = this.fs
+      .getAuthorsBook(this.receiver.authorName, this.receiver.bookName)
+      .pipe(
+        map((v: any) => {
+          return v;
+        })
+      );
 
-    this.selectedBook = this.fs.getAllBooks().pipe(
-      map((books: any) => {
-        return books.filter((book: any) => {
-          if (book.keyId === this.receiver.keyId) {
-            console.log(book);
-            return book;
-          }
-        });
+    this.selectedBook = this.fs.getSelectedBook(this.receiver.keyId).pipe(
+      map((v: any) => {
+        console.log(v);
+        return v;
       })
     );
   }
@@ -64,11 +60,9 @@ export class ViewBookComponent implements OnInit {
     this.addVotePopup = true;
   }
   yesVote(v: any) {
-    console.log(v);
     v['vote'] = v?.vote ? v.vote + 1 : 1;
-    v['voters'] = [this.userInfo.name];
+    this.fs.vote(v, this.userInfo.email);
     this.addVotePopup = false;
-    this.fs.vote(v);
     alert('Your vote has been added successfully for admin review.');
   }
   noVote() {
