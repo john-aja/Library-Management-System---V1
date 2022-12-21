@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
-@Injectable()
-export class AuthGuard implements CanActivate {
+@Injectable({
+  providedIn: 'root',
+})
+export class AdminAuthGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(
@@ -20,10 +22,13 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (localStorage.getItem('user')) {
+    const userData: any = localStorage.getItem('user');
+    const userInfo = JSON.parse(userData);
+    if (userInfo.email === 'janakiram@surfboard.se') {
       return true;
+    } else {
+      this.router.navigate(['']);
+      return false;
     }
-    this.router.navigate(['/login']);
-    return false;
   }
 }

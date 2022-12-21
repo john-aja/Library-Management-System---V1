@@ -124,7 +124,7 @@ export class RemoveBookComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(80),
         ],
       ],
     });
@@ -185,6 +185,8 @@ export class RemoveBookComponent implements OnInit {
 
   removeBookFunction() {
     let bookToRemove = this.bookObj.bookName;
+    let authorName = this.bookObj.author;
+    console.log(authorName);
     console.log(bookToRemove);
     // console.log(this.totalBooks);
 
@@ -210,8 +212,8 @@ export class RemoveBookComponent implements OnInit {
 
     this.totalBooks.filter((v: any) => {
       console.log(v);
-      if (bookToRemove === v.bookName) {
-        if (v.availability === 'Yes') {
+      if (bookToRemove === v.bookName && authorName === v.authorName) {
+        if (v.availability === 'Yes' && !v.isBookTaken) {
           console.log(v.keyId);
           this.bookId = v.keyId;
           return this.fbs.updatingBookInfo(this.bookId);

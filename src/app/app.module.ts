@@ -15,7 +15,7 @@ import { RemoveBookComponent } from './remove-book/remove-book.component';
 import { UsersComponent } from './users/users.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BnNgIdleService } from 'bn-ng-idle';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
-  providers: [],
+  providers: [BnNgIdleService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

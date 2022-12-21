@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppShellService } from '../app-shell.service';
 import { DexieService } from 'src/db/dexie.service';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-home',
@@ -14,11 +15,12 @@ export class HomeComponent implements OnInit {
   userInfo: any;
   changeWidth: boolean = false;
   profileBox: boolean = false;
-  constructor(private as: AppShellService) {}
+  constructor(private as: AppShellService, private act: AppComponent) {}
 
   ngOnInit(): void {
     this.userInfo = localStorage.getItem('user');
     this.userInfo = JSON.parse(this.userInfo);
+    this.act.ngOnInit();
   }
 
   openProfile() {
