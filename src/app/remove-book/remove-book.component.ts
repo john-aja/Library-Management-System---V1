@@ -20,8 +20,6 @@ export class RemoveBookComponent implements OnInit {
   addBookForm!: FormGroup<any>;
   addAuthorForm!: FormGroup<any>;
   removeReasonForm!: FormGroup<any>;
-  // addGenreForm!: FormGroup<any>;
-  // addBookIdForm!: FormGroup<any>;
   bookObj: any;
   aflCategories: any;
 
@@ -70,22 +68,6 @@ export class RemoveBookComponent implements OnInit {
     this.stepFive = false;
   }
 
-  // stepThreeBtn() {
-  //   this.stepOne = false;
-  //   this.stepTwo = false;
-  //   this.stepThree = false;
-  //   this.stepFour = true;
-  //   this.stepFive = false;
-  // }
-
-  // stepFourBtn() {
-  //   this.stepOne = false;
-  //   this.stepTwo = false;
-  //   this.stepThree = false;
-  //   this.stepFour = false;
-  //   this.stepFive = true;
-  // }
-
   backBtnOne() {
     this.stepOne = true;
     this.stepTwo = false;
@@ -100,22 +82,6 @@ export class RemoveBookComponent implements OnInit {
     this.stepFour = false;
     this.stepFive = false;
   }
-
-  // backBtnThree() {
-  //   this.stepOne = false;
-  //   this.stepTwo = false;
-  //   this.stepThree = true;
-  //   this.stepFour = false;
-  //   this.stepFive = false;
-  // }
-
-  // backBtnFour() {
-  //   this.stepOne = false;
-  //   this.stepTwo = false;
-  //   this.stepThree = false;
-  //   this.stepFour = true;
-  //   this.stepFive = false;
-  // }
 
   initializeForm() {
     this.addBookForm = this.fb.group({
@@ -148,34 +114,18 @@ export class RemoveBookComponent implements OnInit {
         ],
       ],
     });
-    // this.addBookIdForm = this.fb.group({
-    //   bookId: [''],
-    // });
-    // this.addGenreForm = this.fb.group({
-    //   bookGenre: ['', [Validators.required]],
-    // });
   }
-
-  // getGenre(event: any) {
-  //   this.genreValue = this.genreDropDown.nativeElement.value;
-  // console.log(this.genreValue);
-  // }
 
   submitBtn() {
     this.bookObj = {
       bookName: this.addBookForm.controls['bookName'].value,
       author: this.addAuthorForm.controls['authorName'].value,
       reason: this.removeReasonForm.controls['reason'].value,
-      // genre: this.genreValue,
-      // bookId: this.addBookIdForm.controls['bookId'].value,
     };
     this.removeBookFunction();
-    // console.log(this.bookObj);
     this.addBookForm.reset();
     this.addAuthorForm.reset();
     this.removeReasonForm.reset();
-    // this.addBookIdForm.reset();
-    // this.addGenreForm.reset();
     this.stepOne = true;
     this.stepTwo = false;
     this.stepThree = false;
@@ -188,27 +138,6 @@ export class RemoveBookComponent implements OnInit {
     let authorName = this.bookObj.author;
     console.log(authorName);
     console.log(bookToRemove);
-    // console.log(this.totalBooks);
-
-    // return this.fbs.getAllBooks().pipe(
-    //   map((books: any) => {
-    //     console.log(books);
-    //     books.filter((v: any) => {
-    //       console.log(v);
-    //       if (bookToRemove === v.bookName) {
-    //         if (v.availability === 'Yes') {
-    //           console.log(v.keyId);
-    //           this.bookId = v.keyId;
-    //           return this.fbs.updatingBookInfo(this.bookId);
-    //         } else {
-    //           return alert(
-    //             'Book is not available in surfboard library, please check and type an exact name of the book.'
-    //           );
-    //         }
-    //       }
-    //     });
-    //   })
-    // );
 
     this.totalBooks.filter((v: any) => {
       console.log(v);
@@ -223,9 +152,6 @@ export class RemoveBookComponent implements OnInit {
             'Book is not available in surfboard library, please check and type an exact name of the book.'
           );
         }
-      } else {
-        console.log('not a book');
-        return;
       }
     });
   }

@@ -224,33 +224,49 @@ export class AddBookComponent implements OnInit {
     if (!file.name) {
       file = file.target.files[0];
     }
+
     let name = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
     let type = file.type.split('/')[1].toUpperCase();
     let size = file.size;
-    console.log(size);
+    console.log(size, type);
     const filePath = `files/${name}`;
-    this.fileRef = this.afs.ref(filePath);
-    this.task = this.afs.upload(filePath, file);
 
-    this.task
-      .snapshotChanges()
-      .pipe(
-        finalize(() => {
-          const downloadUrl = this.fileRef.getDownloadURL();
-          downloadUrl.subscribe((url) => {
-            this.fileInfo = {
-              documentUrl: url,
-              name: name,
-              type: type,
-              size: size,
-            };
-            console.log('doc', this.fileInfo);
-            this.loading = false;
-            return this.fileInfo;
-          });
-        })
-      )
-      .subscribe();
+    if (
+      (type === 'PNG' || type === 'JPG' || type === 'JPEG') &&
+      (type !== 'MP4' ||
+        type !== 'PDF' ||
+        type !== 'ZIP' ||
+        type !== 'MP3' ||
+        type !== 'GIF')
+    ) {
+      console.log('correct type', type);
+
+      this.fileRef = this.afs.ref(filePath);
+      this.task = this.afs.upload(filePath, file);
+
+      this.task
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            const downloadUrl = this.fileRef.getDownloadURL();
+            downloadUrl.subscribe((url) => {
+              this.fileInfo = {
+                documentUrl: url,
+                name: name,
+                type: type,
+                size: size,
+              };
+              console.log('doc', this.fileInfo);
+              this.loading = false;
+              return this.fileInfo;
+            });
+          })
+        )
+        .subscribe();
+    } else {
+      this.loading = false;
+      alert('Upload a PNG or JPEG or JPG file');
+    }
   }
 
   removeImage() {
