@@ -1,5 +1,7 @@
 # LmsPortalV1
 
+The library web application is used to mark the book as taken if the user is going to take the book from the library and vote for the book if the book is not available in the library, also the administrator will have access to check which books have been taken and by whom. 
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.
 
 ## Development server
