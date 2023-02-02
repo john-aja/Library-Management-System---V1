@@ -12,7 +12,7 @@ export class AppComponent {
   title = 'lms-portal-v1';
 
   ngOnInit(): void {
-    this.bnIdle.startWatching(200).subscribe((res) => {
+    this.bnIdle.startWatching(2000).subscribe((res) => {
       if (res) {
         console.log('session expired');
         this.fs.logoutUser();
