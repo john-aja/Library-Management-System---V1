@@ -80,8 +80,8 @@
     margin-bottom: 1.7rem;
     width: auto;
   }
-  .sidebar_logo_container img {
-    width: 12rem;
+  .sidebar_logo_container p {
+    display: none;
   }
   .logo-ic {
     width: 6rem !important;
@@ -119,13 +119,13 @@
     right: -2rem;
     width: 60%;
     height: 100vh;
+    overflow: hidden;
     z-index: 9 !important;
     padding: 2rem 0;
-    // background: rgba(0, 0, 0, 0.9);
     background: linear-gradient(
       180deg,
-      rgba(5, 4, 47, 1) 0%,
-      rgba(4, 14, 76, 1) 100%
+      rgb(15, 15, 15) 0%,
+      rgb(19, 19, 21) 100%
     );
     color: black !important;
   }

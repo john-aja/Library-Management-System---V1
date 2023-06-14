@@ -1,15 +1,17 @@
 <div class="flex flex-col items-center sidebar_content z-50">
-  <div class="w-full flex justify-center my-10 sidebar_logo_container">
+  <div
+    class="w-full flex flex-col items-center justify-center my-10 gap-4 sidebar_logo_container"
+  >
     <img
-      src="../../assets/Surfboard_library_logo.svg"
-      class="w-48 transition-all duration-700 p-2"
-      [ngClass]="!hideText ? '' : 'hidden'"
+      src="../../../assets/logo_v2.png"
+      class="w-20 transition-all duration-700"
     />
-    <img
-      src="../../assets/logo_library.svg"
-      class="w-16 transition-all duration-700 logo-ic"
-      [ngClass]="hideText ? '' : 'hidden'"
-    />
+    <p
+      *ngIf="!hideText"
+      class="text-white -pt-3 font-bold text-1xl text-center"
+    >
+      Library Management
+    </p>
   </div>
   <ng-container>
     <div class="menu_container z-50">

@@ -3,7 +3,7 @@
     <div class="px-10 mt-28 add_form_container">
       <p class="text-white text-2xl">Complete the form to remove book</p>
       <p class="text-gray-500 text-sm mt-4">
-        Fill in each details to remove book from the surfboard library
+        Fill in each details to remove book from the library
       </p>
 
       <!-- label fields -->
@@ -310,101 +310,6 @@
               </button>
             </div>
           </div>
-
-          <!-- BookId -->
-
-          <!-- <div
-            [formGroup]="addBookIdForm"
-            (keydown.enter)="$event.preventDefault()"
-            *ngIf="stepFour"
-            class="text-white pl-20 mt-14 w-full form_container"
-          >
-            <p class="text-2xl text-left enter_book">
-              Enter the book id (Surfboard Library Book Id)
-            </p>
-            <p class="text-sm text-gray-500 enter_book_hint">
-              *If you are not sure about the Id, please leave it blank.
-            </p>
-            <input
-              class="mt-6 w-full h-10 rounded-md text-black pl-2"
-              type="text"
-              #imageUrl
-              maxlength="10"
-              formControlName="bookId"
-              placeholder="Enter book id"
-            />
-            <p class="mt-2 flex justify-end w-full pr-2 text-sm text-gray-400">
-              {{ imageUrl.value.length }}/500
-            </p>
-            <div class="flex justify-end gap-8 mt-6 w-full">
-              <button
-                (click)="backBtnThree()"
-                class="text-gray-400 font-bold hover:text-gray-300 transition-all"
-              >
-                Back
-              </button>
-              <button
-                class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
-                (click)="stepFourBtn()"
-                [ngClass]="
-                  !addBookIdForm.valid
-                    ? 'bg-gray-500 cursor-not-allowed'
-                    : 'green hover:bg-green-500'
-                "
-              >
-                Next
-              </button>
-            </div>
-          </div> -->
-
-          <!-- bookGenre -->
-
-          <!-- <div
-            [formGroup]="addGenreForm"
-            (keydown.enter)="$event.preventDefault()"
-            *ngIf="stepFive"
-            class="text-white pl-20 mt-14 w-full form_container"
-          >
-            <p class="text-2xl text-left enter_book">
-              Select the genre of the book
-            </p>
-            <p class="text-sm text-gray-500 enter_book_hint">
-              *If you are not sure about the genre, please browse and select
-            </p>
-            <select
-              class="mt-6 w-full h-10 rounded-md text-black pl-2 cursor-pointer"
-              formControlName="bookGenre"
-              #genreDropDown
-              (change)="getGenre($event)"
-            >
-              <option value="" selected>Select genre</option>
-              <option value="Biography">Biography</option>
-              <option value="Auto-Biography">Auto-Biography</option>
-              <option value="Fiction">Fiction</option>
-              <option value="Non-Fiction">Non-Fiction</option>
-              <option value="Education">Education</option>
-            </select>
-            <div class="flex justify-end gap-8 mt-6 w-full">
-              <button
-                (click)="backBtnFour()"
-                class="text-gray-400 font-bold hover:text-gray-300 transition-all"
-              >
-                Back
-              </button>
-              <button
-                class="px-6 py-2 rounded-full inline-block cursor-pointer transition-all"
-                (click)="submitBtn()"
-                [disabled]="genreDropDown.value === ''"
-                [ngClass]="
-                  genreDropDown.value !== ''
-                    ? 'green hover:bg-green-400'
-                    : 'bg-gray-500 cursor-not-allowed'
-                "
-              >
-                Submit
-              </button>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>

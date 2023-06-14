@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginPageService } from './login-page.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -8,13 +9,12 @@ import { LoginPageService } from './login-page.service';
 })
 export class LoginPageComponent implements OnInit {
   userInfo: any;
-  constructor(private ls: LoginPageService) {}
+  isLoggedin?: boolean;
+  constructor(private ls: LoginPageService, private router: Router) {}
 
   ngOnInit(): void {}
 
-  isLoggedIn() {
-    const res: any = this.ls.isLoggedIn();
-    console.log(res);
-    return res;
+  signInWithGoogle() {
+    return this.ls.isLoggedIn();
   }
 }

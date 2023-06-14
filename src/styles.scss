@@ -17,17 +17,11 @@ select:focus {
 }
 
 .dark_theme {
-  background: rgb(5, 4, 47);
-  background: linear-gradient(
-    180deg,
-    rgba(5, 4, 47, 1) 0%,
-    rgba(4, 14, 76, 1) 100%
-  );
+  background: linear-gradient(180deg, rgb(15, 15, 15) 0%, rgb(19, 19, 21) 100%);
 }
 
 .light_dark_theme {
   background: #eeeeee;
-  // background: linear-gradient(180deg, rgb(4, 15, 54) 0%, rgb(12, 49, 113) 100%);
 }
 
 .highlight {

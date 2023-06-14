@@ -149,7 +149,7 @@ export class RemoveBookComponent implements OnInit {
         } else {
           console.log('not available');
           return alert(
-            'Book is not available in surfboard library, please check and type an exact name of the book.'
+            'Book is not available in library, please check and type an exact name of the book.'
           );
         }
       }

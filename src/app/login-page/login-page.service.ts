@@ -1,8 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
-import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
+import { CredentialResponse } from 'google-one-tap';
 import { FirebaseService } from '../services/firebase.service';
 
+declare const google: any;
 @Injectable({
   providedIn: 'root',
 })
@@ -10,53 +11,34 @@ export class LoginPageService {
   decodedToken: any | null = null;
   token: any;
   userEmail: any;
+
   constructor(
     private ngZone: NgZone,
     private router: Router,
     private fs: FirebaseService
   ) {}
-  isLoggedIn() {
-    // @ts-ignore
-    google.accounts.id.initialize({
-      // Ref: https://developers.google.com/identity/gsi/web/reference/js-reference#IdConfiguration
-      client_id:
-        '1062987206467-rs3f2p347c36t21k1a9rmvfjfb7qoahd.apps.googleusercontent.com',
-      callback:
-        // (this.handleCredentialResponse.bind(this),
-        (token) => {
-          this.signin(token.credential, token);
-        },
-      auto_select: true,
-      cancel_on_tap_outside: false,
-    });
 
-    // @ts-ignore
-    google.accounts.id.prompt((notification: PromptMomentNotification) => {
-      if (notification.getDismissedReason() === 'credential_returned') {
+  async isLoggedIn() {
+    google.accounts.id.initialize({
+      client_id:
+        '1086641789904-vlo22kcc17fpp525odo4bo4e3ghae5l4.apps.googleusercontent.com',
+      callback: (token: CredentialResponse) => {
+        // this.signin(token.credential, token);
         this.ngZone.run(() => {
-          this.router.navigate(['']);
+          this.signin(token.credential, token);
         });
-      }
+      },
+      ux_mode: 'popup',
     });
+    google.accounts.id.prompt();
   }
 
-  // handleCredentialResponse(response: CredentialResponse) {
-  //   let decodedToken: any | null = null;
-  //   try {
-  //     decodedToken = JSON.parse(atob(response?.credential.split('.')[1]));
-  //     console.log(decodedToken);
-  //     // this.router.navigate(['']);
-  //   } catch (e) {
-  //     console.error('Error while trying to decode token', e);
-  //   }
-  //   console.log('decodedToken', decodedToken);
-  //   localStorage.setItem('token', decodedToken.jti);
-  // }
-
   signin(token: any, response: CredentialResponse) {
-    console.log(response);
+    console.log(response, token);
     let decodedToken = JSON.parse(atob(token.split('.')[1]));
-    console.log(decodedToken);
+    if (decodedToken) {
+      this.router.navigateByUrl('');
+    }
     let userInfo: any = {
       name: decodedToken.name,
       email: decodedToken.email,
@@ -66,5 +48,6 @@ export class LoginPageService {
     this.fs.addUser(userInfo);
     localStorage.setItem('user', JSON.stringify(decodedToken));
     JSON.stringify(localStorage.setItem('lms-token', token));
+    console.log('Signed in:', userInfo);
   }
 }

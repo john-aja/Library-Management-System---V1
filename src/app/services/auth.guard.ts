@@ -5,8 +5,9 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { SocialAuthService, SocialUser } from 'angularx-social-login';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

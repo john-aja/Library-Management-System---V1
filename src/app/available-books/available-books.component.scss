@@ -17,12 +17,11 @@ input::placeholder {
 }
 
 .dark_theme_bg {
-  background: rgb(5, 4, 47);
   background: linear-gradient(180deg, rgba(5, 4, 47, 1) 0%, rgb(6, 5, 62) 100%);
 }
 
-.library_filter_container {
-  background: rgb(6 5 53);
+.library_container {
+  background: rgba(5, 4, 47, 1);
 }
 
 // closebtn
@@ -110,16 +109,15 @@ input::placeholder {
 }
 
 @media only screen and (max-width: 900px) {
-  .library_filter_container {
+  .library_container {
     padding-top: 3rem;
-    background: rgb(12 10 78);
+    background: rgba(5, 4, 47, 1);
   }
   .dark_theme_bg {
-    background: rgb(5, 4, 47);
     background: linear-gradient(
       180deg,
-      rgba(4, 14, 76, 1) 0%,
-      rgba(4, 14, 76, 1) 100%
+      rgba(5, 4, 47, 1) 0%,
+      rgb(6, 5, 62) 100%
     );
   }
 }
