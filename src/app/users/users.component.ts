@@ -70,8 +70,6 @@ export class UsersComponent implements OnInit {
   }
 
   onSelect(event: any, data: any) {
-    console.log(event);
-    console.log(data);
     this.selectedReceiver = data;
     this.userProfile = true;
   }

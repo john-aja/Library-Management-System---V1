@@ -21,40 +21,24 @@ export class UserProfileComponent implements OnInit {
   constructor(private fs: FirebaseService) {}
 
   ngOnInit(): void {
-    console.log(this.receiver);
     this.userId = this.receiver.userId;
-    console.log(this.userId);
-    // this.fs.getUsersDataFromDexie();
     this.userBooks = this.fs.getUsersDataFromDexie().pipe(
       map((v: any) => {
-        console.log(v);
         return v.filter((user: any) => {
           if (this.userId === user.userId) {
-            console.log(user);
             return user;
           }
         });
       })
     );
-
-    // this.userVoted = this.fs.getUsersDataFromDexie().pipe(map((v:any)=>{
-    //   return v.filter((voted:any)=>{
-    //     if(this.userId === voted.userId) {
-
-    //     }
-    //   })
-    // }))
   }
 
   onSelect(event: any, book: any) {
-    console.log(book);
     this.selectedBook = book;
-    // return this.fs.makeItAvailable(book, userId);
     this.changeAvailability = true;
   }
 
   changeYes(event: any, item: any) {
-    console.log(item);
     this.changeAvailability = false;
     return this.fs.makeItAvailable(this.selectedBook, this.userId);
   }
@@ -70,7 +54,6 @@ export class UserProfileComponent implements OnInit {
     this.booksVotedContainer = false;
   }
   booksVoted() {
-    console.log(this.userBooks.subscribe((v) => console.log(v)));
     this.booksVotedContainer = true;
     this.booksTakenContainer = false;
   }

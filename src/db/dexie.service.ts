@@ -33,7 +33,7 @@ export class DexieService {
         if (val)
           await ddb.renderedBook
             .put(val)
-            .then((data) => console.log('data'))
+            .then((data) => console.log('Retrieved book from db'))
             .catch((err) => console.log(err));
       });
     });
@@ -46,7 +46,7 @@ export class DexieService {
     this.afd
       .list('/addedBooks')
       .set(`${id}`, { ...bookObj, keyId: `${id}` })
-      .then((v: any) => console.log(v));
+      .then((v: any) => console.log('Added book to db'));
 
     ddb
       .table('bookData')
@@ -58,7 +58,6 @@ export class DexieService {
   // Change availability status of the book and update in dexie
 
   async updateBook(id: any) {
-    console.log(id);
     ddb.renderedBook.update(id, { availability: 'No' });
     const firebaseDb = this.afd.list('/addedBooks');
     try {
@@ -77,8 +76,6 @@ export class DexieService {
   addUserToDb(userInfo: any) {
     const id = 'user_' + Math.random().toString(16).slice(8);
     const currentUser = { ...userInfo, userId: id };
-    console.log(currentUser);
-
     ddb.currentUser
       .add({ ...currentUser })
       .then((data) => console.log('Current user addded successfully to db'))
@@ -88,7 +85,6 @@ export class DexieService {
     onValue(userRef, (snapshot) => {
       const users = snapshot?.val();
       let usersList = Object.values(users);
-      console.log(usersList);
       const userExists = usersList.find(
         (v: any) => v.email === currentUser.email
       );
@@ -114,7 +110,7 @@ export class DexieService {
         if (val)
           ddb.usersData
             .put(val)
-            .then((data) => console.log('data'))
+            .then((data) => console.log('Retrieved user from db'))
             .catch((err) => console.log(err));
       });
     });
@@ -123,7 +119,6 @@ export class DexieService {
   // Updating book taken info
 
   async takenBook(data: any) {
-    console.log(data);
     let userId: any;
     let bookTaken: any[] = [];
     const takenBookId = data.bookInfo.keyId;
@@ -139,10 +134,8 @@ export class DexieService {
       let usersList = Object.values(users);
 
       usersList.filter((v: any) => {
-        console.log(v);
         if (v.email === data.userEmail) {
           return v.booksTaken?.map((s: any) => {
-            console.log(s);
             return bookTaken.push(s);
           });
         }
@@ -153,10 +146,6 @@ export class DexieService {
           return (userId = v.userId);
         }
       });
-
-      console.log(bookTaken);
-      console.log(userId);
-      console.log(takenBookId);
     });
 
     try {
@@ -182,9 +171,6 @@ export class DexieService {
   // Adding vote data for user and book
 
   async addVote(v: any, userId: any, votedBookArr: any) {
-    console.log(votedBookArr);
-    console.log('call from dexie service');
-    console.log(userId);
     let voterArr: any[] = [];
     let votedBooks: any[] = [];
     const firebaseDbBook = this.afd.list('/addedBooks');
@@ -195,10 +181,8 @@ export class DexieService {
 
     if (votedBookArr) {
       votedBookArr?.filter((alreadyVoted: any) => {
-        console.log(alreadyVoted);
         if (alreadyVoted?.bookName !== v.bookName) {
           votedBooks.push(alreadyVoted);
-          console.log(votedBooks);
           ddb.usersData.update(userId, { votedBooks: votedBooks });
           firebaseDbUser.update(userId, { votedBooks: votedBooks });
         }
@@ -207,30 +191,9 @@ export class DexieService {
       ddb.usersData.update(userId, { votedBooks: votedBooks });
       firebaseDbUser.update(userId, { votedBooks: votedBooks });
     }
-    console.log(votedBooks);
 
     const getUser: any = localStorage.getItem('user');
     const getCurrentUser = JSON.parse(getUser);
-    console.log(getCurrentUser);
-
-    // v.voters?.map((voter: any) => {
-    //   return voterArr.push(voter);
-    // });
-    // console.log(voterArr);
-
-    // if (voterArr.length > 0) {
-    //   return voterArr.filter((name: any) => {
-    //     if (name !== getCurrentUser.name) {
-    //       return voterArr.push(getCurrentUser.name);
-    //     }
-    //   });
-    // } else {
-    //   voterArr.push(getCurrentUser.name);
-    // }
-
-    // console.log(votedBooks);
-    // console.log(voterArr);
-
     await firebaseDbBook.update(v.keyId, { vote: v.vote, voters: voterArr });
     await firebaseDbUser.update(userId, { votedBooks: votedBooks });
     await ddb.usersData.update(userId, { votedBooks: votedBooks });
@@ -240,7 +203,6 @@ export class DexieService {
   // Making book available for users
 
   async makeBookAvailable(bookId: any, userId: any) {
-    console.log(bookId, userId);
     let updatedBookList: any = [];
     const firebaseDbBooks = this.afd.list('/addedBooks');
     const firebaseDbUsers = this.afd.list('/users');
@@ -252,18 +214,14 @@ export class DexieService {
 
       userList?.filter((user: any) => {
         if (user.userId === userId) {
-          console.log(user.booksTaken);
           return user.booksTaken?.filter((v: any) => {
-            console.log(v);
             if (v.bookInfo.keyId !== bookId) {
               updatedBookList.push(v);
-              console.log(updatedBookList);
               return updatedBookList;
             }
           });
         }
       });
-      console.log(updatedBookList);
       return updatedBookList;
     });
     await ddb.usersData.update(userId, { booksTaken: updatedBookList });

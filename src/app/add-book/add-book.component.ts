@@ -208,7 +208,6 @@ export class AddBookComponent implements OnInit {
 
   public dropped(files: NgxFileDropEntry[]) {
     this.files = files;
-    console.log(this.files);
     for (const droppedFile of files) {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
@@ -224,11 +223,9 @@ export class AddBookComponent implements OnInit {
     if (!file.name) {
       file = file.target.files[0];
     }
-
     let name = file.name.substring(0, file.name.lastIndexOf('.')) || file.name;
     let type = file.type.split('/')[1].toUpperCase();
     let size = file.size;
-    console.log(size, type);
     const filePath = `files/${name}`;
 
     if (
@@ -239,8 +236,6 @@ export class AddBookComponent implements OnInit {
         type !== 'MP3' ||
         type !== 'GIF')
     ) {
-      console.log('correct type', type);
-
       this.fileRef = this.afs.ref(filePath);
       this.task = this.afs.upload(filePath, file);
 
@@ -256,7 +251,6 @@ export class AddBookComponent implements OnInit {
                 type: type,
                 size: size,
               };
-              console.log('doc', this.fileInfo);
               this.loading = false;
               return this.fileInfo;
             });

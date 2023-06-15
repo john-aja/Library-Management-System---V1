@@ -31,7 +31,6 @@ export class HomeComponent implements OnInit {
   }
 
   navCollapse() {
-    console.log(this.sideNavBar.nativeElement);
     this.changeWidth = !this.changeWidth;
     this.as.sendClickEvent();
     this.sideNavBar.nativeElement.style.width = this.changeWidth ? '8%' : '18%';

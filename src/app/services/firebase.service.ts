@@ -51,13 +51,11 @@ export class FirebaseService {
   // Get seleted book using bookId
 
   getSelectedBook(keyId: any) {
-    console.log(keyId);
     return from(
       liveQuery(async () => {
         const books = await ddb.renderedBook.toArray();
         return books.filter((v: any) => {
           if (v.keyId === keyId) {
-            console.log(v);
             return v;
           }
         });
@@ -91,7 +89,6 @@ export class FirebaseService {
   getVotedBooks(email: any) {
     return from(
       liveQuery(async () => {
-        console.log('livequery calles voted book');
         const userData = await ddb.usersData.toArray();
         if (userData) {
           const getUserId = userData.filter((user: any) => {
@@ -100,10 +97,8 @@ export class FirebaseService {
             }
           });
           const alreadyVotedBooks = getUserId.map((voted: any) => {
-            console.log(voted);
             return voted.votedBooks;
           });
-          console.log(alreadyVotedBooks);
           return alreadyVotedBooks.map((v) => {
             return v;
           });
@@ -115,10 +110,8 @@ export class FirebaseService {
   // Get user Id with email
 
   getUserIdWithEmail(email: any) {
-    console.log('getUserIdWithEmail calles');
     return from(
       liveQuery(async () => {
-        console.log('livequery calles');
         const userData = await ddb.usersData.toArray();
 
         const getUserId = userData.filter((user: any) => {
@@ -129,8 +122,6 @@ export class FirebaseService {
         const userId = getUserId.map((id: any) => {
           return id.userId;
         });
-        console.log(userId);
-
         return userId;
       })
     );
@@ -139,13 +130,10 @@ export class FirebaseService {
   // Updating user with votedbooks
 
   async vote(book: any, email: any) {
-    console.log('call from firebase service');
     let votedBookArr: any;
     let id: any[] = [];
-    console.log(this.getVotedBooks(email));
     const data = this.getVotedBooks(email).subscribe((v: any) => {
       v?.map((y: any) => {
-        console.log(y);
         votedBookArr = y;
         votedBookArr;
       });
@@ -193,7 +181,6 @@ export class FirebaseService {
   // Upading book taken info
 
   bookTaken(takenData: any) {
-    console.log('from firebase service!');
     return this.ds.takenBook(takenData);
   }
 

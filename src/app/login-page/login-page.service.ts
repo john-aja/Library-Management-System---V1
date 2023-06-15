@@ -23,18 +23,18 @@ export class LoginPageService {
       client_id:
         '1086641789904-vlo22kcc17fpp525odo4bo4e3ghae5l4.apps.googleusercontent.com',
       callback: (token: CredentialResponse) => {
-        // this.signin(token.credential, token);
+        this.signin(token.credential, token);
         this.ngZone.run(() => {
           this.signin(token.credential, token);
         });
       },
       ux_mode: 'popup',
+      prompt: 'select_account',
     });
     google.accounts.id.prompt();
   }
 
   signin(token: any, response: CredentialResponse) {
-    console.log(response, token);
     let decodedToken = JSON.parse(atob(token.split('.')[1]));
     if (decodedToken) {
       this.router.navigateByUrl('');
@@ -48,6 +48,5 @@ export class LoginPageService {
     this.fs.addUser(userInfo);
     localStorage.setItem('user', JSON.stringify(decodedToken));
     JSON.stringify(localStorage.setItem('lms-token', token));
-    console.log('Signed in:', userInfo);
   }
 }

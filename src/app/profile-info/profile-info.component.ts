@@ -15,7 +15,6 @@ export class ProfileInfoComponent implements OnInit {
   ngOnInit(): void {
     this.userInfo = localStorage.getItem('user');
     this.userInfo = JSON.parse(this.userInfo);
-    console.log(this.userInfo);
   }
   logout() {
     return this.fs.logoutUser();

@@ -25,8 +25,6 @@ export class ViewBookComponent implements OnInit {
   constructor(private fs: FirebaseService) {}
 
   ngOnInit(): void {
-    console.log(this.receiver);
-
     this.userInfo = localStorage.getItem('user');
     this.userInfo = JSON.parse(this.userInfo);
 
@@ -40,7 +38,6 @@ export class ViewBookComponent implements OnInit {
 
     this.selectedBook = this.fs.getSelectedBook(this.receiver.keyId).pipe(
       map((v: any) => {
-        console.log(v);
         return v;
       })
     );

@@ -1,4 +1,4 @@
-<div class="w-screen h-screen relative">
+<!-- <div class="w-screen h-screen relative">
   <img src="../../assets/bg_home.jpeg" class="w-full h-full" alt="" />
   <div class="absolute top-0 left-0 bg-black bg-opacity-50 h-full w-full"></div>
   <div
@@ -22,5 +22,61 @@
       <div class="wave"></div>
       <div class="wave"></div>
     </div>
+  </div>
+</div> -->
+
+<div class="w-screen h-screen flex relative login-container">
+  <img
+    src="../../assets/main-bg.jpg"
+    class="absolute w-screen h-screen"
+    alt=""
+  />
+  <div
+    class="w-1/2 relative z-50 flex flex-col justify-between py-6 main-container"
+    style="background-color: #409f7d"
+  >
+    <img src="../../assets/logo_v2.png" class="w-24 ml-10" alt="" />
+    <div class="header-content">
+      <p class="hello_text text-6xl px-10 pr-6">Hello! Welcome to the</p>
+      <p class="text-6xl pt-6 pl-10 pr-6 text-white font-bold">
+        Library Management Platform
+      </p>
+    </div>
+    <img
+      class="w-10/12 self-end book-img"
+      src="../../assets/book-3d.png"
+      alt=""
+    />
+  </div>
+  <div
+    class="w-1/2 relative flex flex-col gap-8 items-center justify-center px-20 main-container-2"
+  >
+    <div
+      class="w-full h-full bg-black bg-opacity-80 absolute top-0 left-0"
+    ></div>
+    <p class="text-white text-3xl text-center z-50 text-mobile">
+      Welcome to our Books Management App! Our app offers an efficient and
+      user-friendly solution for managing and borrowing books. As a registered
+      user, you can explore our extensive library catalog, featuring a wide
+      range of books across various genres.
+    </p>
+    <p class="text-white text-3xl text-center z-50">
+      Join us today and embark on a journey through the captivating world of
+      literature with our Books Management App. Happy reading!
+    </p>
+
+    <p class="text-1xl text-gray-400 z-50">Let's start</p>
+    <button
+      class="g-button text-white flex gap-3 justify-center items-center px-6 py-2 rounded-full z-50"
+      style="background-color: #409f7d"
+      (click)="signInWithGoogle()"
+    >
+      Sign in with Google
+      <img
+        class="p-1 w-6 rounded-full bg-white"
+        src="../../assets/google icon.svg"
+        alt=""
+      />
+    </button>
   </div>
 </div>

@@ -61,7 +61,6 @@ export class SidebarComponent implements OnInit {
     });
     let userInfo: any = localStorage.getItem('user');
     this.userData = JSON.parse(userInfo);
-    console.log(this.userData);
     if (this.userData.email === 'janakiram@surfboard.se') {
       return this.navBarModule;
     } else {

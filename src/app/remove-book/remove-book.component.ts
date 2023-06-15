@@ -42,7 +42,6 @@ export class RemoveBookComponent implements OnInit {
   renderBook() {
     this.books = this.fbs.getAllBooks().pipe(
       map((books: any) => {
-        // console.log(books);
         return books?.filter((book: any) => book.availability === 'Yes');
       })
     );
@@ -136,18 +135,13 @@ export class RemoveBookComponent implements OnInit {
   removeBookFunction() {
     let bookToRemove = this.bookObj.bookName;
     let authorName = this.bookObj.author;
-    console.log(authorName);
-    console.log(bookToRemove);
 
     this.totalBooks.filter((v: any) => {
-      console.log(v);
       if (bookToRemove === v.bookName && authorName === v.authorName) {
         if (v.availability === 'Yes' && !v.isBookTaken) {
-          console.log(v.keyId);
           this.bookId = v.keyId;
           return this.fbs.updatingBookInfo(this.bookId);
         } else {
-          console.log('not available');
           return alert(
             'Book is not available in library, please check and type an exact name of the book.'
           );

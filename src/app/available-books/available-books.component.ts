@@ -29,7 +29,6 @@ export class AvailableBooksComponent implements OnInit {
   renderBook() {
     this.books = this.fs.getAllBooks().pipe(
       map((books: any) => {
-        // console.log(books);
         this.totalBooks = books;
         return books?.filter((book: any) => {
           if (book.availability === 'Yes') {
@@ -38,7 +37,6 @@ export class AvailableBooksComponent implements OnInit {
         });
       })
     );
-    console.log(this.books);
     return this.books;
   }
 
@@ -52,7 +50,6 @@ export class AvailableBooksComponent implements OnInit {
 
   filterByGenre(genre: any) {
     let currentGenre = genre.value;
-    console.log(currentGenre);
     if (currentGenre) {
       this.books = this.fs.getAllBooks().pipe(
         map((v: any) => {
@@ -77,8 +74,6 @@ export class AvailableBooksComponent implements OnInit {
   }
 
   async sortBooks() {
-    console.log('sorting');
-    console.log(this.totalBooks);
     this.sort = !this.sort;
 
     this.totalBooks = this.totalBooks.filter((v: any) => {
@@ -86,10 +81,8 @@ export class AvailableBooksComponent implements OnInit {
         return v;
       }
     });
-    console.log(this.books);
     if (!this.sort) {
       this.books = this.totalBooks?.sort((a: any, b: any) => {
-        console.log(a, b);
         let data = a.bookName.localeCompare(b.bookName);
         return data;
       });
