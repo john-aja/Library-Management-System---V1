@@ -13,7 +13,6 @@
   width: 28px;
   height: 25px;
   // background: rgba(255, 255, 255, 0.247);
-
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
   border-radius: 7px;
   display: flex;
@@ -100,6 +99,17 @@
   }
 }
 
+@media only screen and (max-width: 540px) {
+  .nav-text {
+    font-size: 1.8rem;
+  }
+  .icons img {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 2rem;
+  }
+}
+
 @media only screen and (max-width: 510px) {
   .icons {
     display: block;
@@ -138,10 +148,10 @@
     border-radius: 0;
   }
 
-  .nav_items a img {
-    width: 5rem;
-    height: 1.6rem;
-  }
+  // .nav_items a img {
+  //   width: 5rem;
+  //   height: 1.6rem;
+  // }
 
   .nav_items a:nth-child(1) {
     margin-top: 90%;

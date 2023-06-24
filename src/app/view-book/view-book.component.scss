@@ -166,6 +166,83 @@
       }
     }
   }
+  .selected_book_img_container {
+    flex-direction: column;
+  }
+  .text-one {
+    font-size: 20px;
+    text-align: center;
+    width: 100%;
+  }
+  .text-two {
+    font-size: 14px;
+    text-align: center;
+  }
+  .text-three,
+  .text-four {
+    font-size: 10px;
+    text-align: center;
+  }
+  .text-five-container {
+    display: flex;
+    justify-content: center;
+  }
+  .text-five {
+    font-size: 7px;
+  }
+  .text-six-a {
+    font-size: 12px;
+    text-align: center;
+  }
+  .text-six-b {
+    font-size: 7px;
+    width: 100%;
+  }
+  .text-seven {
+    font-size: 14px;
+  }
+  .text-eight {
+    font-size: 10px;
+  }
+  .author_book_image {
+    width: 20rem;
+  }
+  .text-nine {
+    font-size: 16px;
+  }
+  .text-ten {
+    font-size: 10px;
+  }
+  .button-container div {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .selected_book_img {
+    width: 14rem;
+  }
+  .book_img {
+    width: 10.5rem;
+    height: 15rem;
+  }
+  .alert_box {
+    width: 75%;
+  }
+  .alert_box button {
+    font-size: 1.5rem;
+  }
+  .confirm_text-one {
+    font-size: 1.7rem;
+    line-height: 1.3;
+  }
+  .confirm_text-hint {
+    font-size: 1.3rem;
+    line-height: 1.3;
+  }
+  .view_container {
+    max-height: 87vh;
+    overflow: scroll;
+  }
 }
 
 @media only screen and (max-width: 500px) {

@@ -85,16 +85,18 @@ export class LibraryComponent implements OnInit {
   }
 
   sortBooks() {
-    this.sort = !this.sort;
-    if (!this.sort) {
-      this.totalBooks?.sort((a: any, b: any) => {
-        a.bookName.localeCompare(b.bookName);
-      });
-    }
     if (this.sort) {
-      this.totalBooks?.sort((a: any, b: any) =>
-        b.bookName.localeCompare(a.bookName)
-      );
+      this.sort = false;
+      this.totalBooks = this.totalBooks?.sort((a: any, b: any) => {
+        return a.bookName.toLowerCase().localeCompare(b.bookName.toLowerCase());
+      });
+      return this.totalBooks;
+    } else {
+      this.sort = true;
+      this.totalBooks = this.totalBooks?.sort((a: any, b: any) => {
+        return b.bookName.toLowerCase().localeCompare(a.bookName.toLowerCase());
+      });
+      return this.totalBooks;
     }
   }
 }

@@ -1,26 +1,26 @@
 <div class="pb-10">
-  <div class="h-full w-full sticky top-0">
+  <div class="h-full w-full sticky top-0" style="background: rgb(15, 15, 15)">
     <div class="px-10 flex gap-4 items-center pt-10 pb-6 w-full">
       <img
-        class="w-20 rounded-full"
+        class="w-20 rounded-full profile_img"
         src="{{ receiver.picture }}"
         onerror="this.onerror=null; this.src='../../../assets/user_err.png'"
         alt=""
       />
       <!-- <img src="../../../assets/user_err.png" alt=""> -->
       <div class="flex flex-col gap-1">
-        <p class="text-2xl text-gray-200">{{ receiver.name }}</p>
-        <p class="text-1xl text-gray-400">{{ receiver.userId }}</p>
+        <p class="text-2xl text-gray-200 user_name">{{ receiver.name }}</p>
+        <p class="text-1xl text-gray-400 user_id">{{ receiver.userId }}</p>
       </div>
     </div>
   </div>
   <div class="mt-10">
     <div class="flex gap-6 px-10">
       <p
-        class="text-gray-300 text-xl px-4 py-2 rounded-t-md cursor-pointer"
+        class="books_one text-gray-300 text-xl px-4 py-2 rounded-t-md cursor-pointer"
         [ngClass]="
           booksTakenContainer
-            ? 'bg-white bg-opacity-5 font-semibold'
+            ? 'bg-white bg-opacity-5 font-semibold padding_header'
             : 'font-normal'
         "
         (click)="booksTaken()"
@@ -28,10 +28,10 @@
         Books Taken
       </p>
       <p
-        class="text-gray-300 text-xl px-4 py-2 rounded-t-md cursor-pointer"
+        class="books_one text-gray-300 text-xl px-4 py-2 rounded-t-md cursor-pointer"
         [ngClass]="
           booksVotedContainer
-            ? 'bg-white bg-opacity-5 font-semibold'
+            ? 'bg-white bg-opacity-5 font-semibold padding_header'
             : 'font-normal'
         "
         (click)="booksVoted()"
@@ -49,7 +49,7 @@
           <div class="flex gap-6 justify-between items-center book-row pb-2">
             <div class="mt-8 flex gap-8 items-center justify-between">
               <img
-                class="w-32 rounded-md"
+                class="w-32 rounded-md taken_book_img"
                 src="{{ item.bookInfo.imageUrl }}"
                 alt=""
               />
@@ -117,7 +117,11 @@
         <ng-container *ngFor="let item of data[0].votedBooks">
           <div class="flex gap-6 justify-between items-center book-row pb-2">
             <div class="mt-8 flex gap-8 items-center justify-between">
-              <img class="w-32 rounded-md" src="{{ item.imageUrl }}" alt="" />
+              <img
+                class="w-32 rounded-md taken_book_img"
+                src="{{ item.imageUrl }}"
+                alt=""
+              />
               <div class="flex flex-col gap-3">
                 <p class="text-gray-500 text-1xl">Book Name:</p>
                 <p class="text-gray-500 text-1xl">Author Name:</p>

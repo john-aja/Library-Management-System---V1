@@ -73,24 +73,26 @@ export class AvailableBooksComponent implements OnInit {
     }
   }
 
-  async sortBooks() {
-    this.sort = !this.sort;
-
+  sortBooks() {
     this.totalBooks = this.totalBooks.filter((v: any) => {
       if (v.availability === 'Yes') {
         return v;
       }
     });
-    if (!this.sort) {
-      this.books = this.totalBooks?.sort((a: any, b: any) => {
-        let data = a.bookName.localeCompare(b.bookName);
-        return data;
+    if (this.sort) {
+      this.totalBooks = this.totalBooks?.sort((a: any, b: any) => {
+        return a.bookName.toLowerCase().localeCompare(b.bookName.toLowerCase());
       });
+      this.sort = false;
+      this.books = of(this.totalBooks);
+      return this.totalBooks;
     } else {
-      this.books = this.totalBooks?.sort((a: any, b: any) => {
-        let data = b.bookName.localeCompare(a.bookName);
-        return data;
+      this.totalBooks = this.totalBooks?.sort((a: any, b: any) => {
+        return b.bookName.toLowerCase().localeCompare(a.bookName.toLowerCase());
       });
+      this.sort = true;
+      this.books = of(this.totalBooks);
+      return this.totalBooks;
     }
   }
 }

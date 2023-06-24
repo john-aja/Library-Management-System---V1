@@ -41,16 +41,15 @@ export class DexieService {
 
   // Update added books to dexie
 
-  addBook(bookObj: any) {
+  async addBook(bookObj: any) {
     const id = 'id' + Math.random().toString(16).slice(8);
     this.afd
       .list('/addedBooks')
       .set(`${id}`, { ...bookObj, keyId: `${id}` })
       .then((v: any) => console.log('Added book to db'));
 
-    ddb
-      .table('bookData')
-      .add({ ...bookObj })
+    return await ddb.renderedBook
+      .put({ ...bookObj, keyId: id })
       .then((data) => alert('Successfully added book to the library'))
       .catch((err) => console.log(err.message));
   }
@@ -180,16 +179,16 @@ export class DexieService {
     votedBooks.push(v);
 
     if (votedBookArr) {
-      votedBookArr?.filter((alreadyVoted: any) => {
+      votedBookArr?.filter(async (alreadyVoted: any) => {
         if (alreadyVoted?.bookName !== v.bookName) {
           votedBooks.push(alreadyVoted);
-          ddb.usersData.update(userId, { votedBooks: votedBooks });
-          firebaseDbUser.update(userId, { votedBooks: votedBooks });
+          await ddb.usersData.update(userId, { votedBooks: votedBooks });
+          await firebaseDbUser.update(userId, { votedBooks: votedBooks });
         }
       });
     } else {
-      ddb.usersData.update(userId, { votedBooks: votedBooks });
-      firebaseDbUser.update(userId, { votedBooks: votedBooks });
+      await ddb.usersData.update(userId, { votedBooks: votedBooks });
+      await firebaseDbUser.update(userId, { votedBooks: votedBooks });
     }
 
     const getUser: any = localStorage.getItem('user');

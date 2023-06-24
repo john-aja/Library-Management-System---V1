@@ -1,5 +1,5 @@
 <div class="h-full w-full relative">
-  <div class="overflow-hidden">
+  <div class="overflow-hidden container">
     <div class="px-10 mt-28 add_form_container">
       <p class="text-white text-2xl">Complete the form to add book</p>
       <p class="text-gray-500 text-sm mt-4">
@@ -9,9 +9,9 @@
       <!-- label fields -->
 
       <div class="mt-10 border-y-2 border-style h-full">
-        <div class="flex justify-start">
+        <div class="add_book_container flex justify-start">
           <div
-            class="border-r-2 border-style h-full flex flex-col items-end whitespace-nowrap"
+            class="header_container border-r-2 border-style h-full flex flex-col items-end whitespace-nowrap"
           >
             <!-- bookName -->
 
@@ -25,7 +25,7 @@
               "
             >
               <label class="text-white pl-4">
-                <p class="text-right">Book name</p>
+                <p class="text-right text-one">Book name</p>
                 <p class="text-sm text-gray-500 text-right">*Browse and type</p>
               </label>
               <div
@@ -56,7 +56,7 @@
               "
             >
               <label class="text-white pl-4">
-                <p class="text-right">Author name</p>
+                <p class="text-right text-one">Author name</p>
                 <p class="text-sm text-gray-500 text-right">*Browse and type</p>
               </label>
               <div
@@ -87,7 +87,7 @@
               "
             >
               <label class="text-white pl-4">
-                <p class="text-right">Upload image</p>
+                <p class="text-right text-one">Upload image</p>
                 <p class="text-sm text-gray-500 text-right">*Browse and add</p>
               </label>
               <div
@@ -98,7 +98,11 @@
                     : 'before:bg-gray-500 bg-gray-400  before:bg-opacity-40 bg-opacity-30'
                 "
               >
-                <img class="w-4 h-4" src="../../assets/file_type.svg" alt="" />
+                <img
+                  class="w-4 h-4 max-w-fit"
+                  src="../../assets/file_upload.svg"
+                  alt=""
+                />
               </div>
             </div>
 
@@ -114,7 +118,7 @@
               "
             >
               <label class="text-white">
-                <p class="text-right">Book Description</p>
+                <p class="text-right text-one">Book Description</p>
                 <p class="text-sm text-gray-500 text-right">*Browse and type</p>
               </label>
               <div
@@ -144,7 +148,7 @@
               "
             >
               <label class="text-white">
-                <p class="text-right">Book Genre</p>
+                <p class="text-right text-one">Book Genre</p>
                 <p class="text-sm text-gray-500 text-right">
                   *Browse and select
                 </p>
@@ -176,7 +180,7 @@
               "
             >
               <label class="text-white">
-                <p class="text-right">Book Availability</p>
+                <p class="text-right text-one">Book Availability</p>
                 <p class="text-sm text-gray-500 text-right">
                   *Select one from list
                 </p>

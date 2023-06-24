@@ -1,19 +1,25 @@
 <div>
-  <div>
+  <div class="view_container">
     <ng-container *ngIf="selectedBook | async as data">
       <ng-container *ngFor="let item of $any(data)">
-        <div class="p-10 pt-12 flex gap-6 text-white items-center">
-          <img class="w-44 rounded-md" src="{{ item.imageUrl }}" alt="" />
+        <div
+          class="p-10 pt-12 flex gap-6 text-white items-center selected_book_img_container"
+        >
+          <img
+            class="w-44 rounded-md selected_book_img"
+            src="{{ item.imageUrl }}"
+            alt=""
+          />
           <div class="flex flex-col gap-3">
-            <p class="text-4xl w-11/12">{{ item.bookName }}</p>
+            <p class="text-4xl w-11/12 text-one">{{ item.bookName }}</p>
 
-            <p class="text-2xl text-gray-400">{{ item.authorName }}</p>
-            <p class="text-gray-500">Genre : {{ item.genre }}</p>
-            <p class="text-gray-300">{{ item.description }}</p>
-            <div>
+            <p class="text-2xl text-gray-400 text-two">{{ item.authorName }}</p>
+            <p class="text-gray-500 text-three">Genre : {{ item.genre }}</p>
+            <p class="text-gray-300 text-four">{{ item.description }}</p>
+            <div class="text-five-container">
               <p
                 *ngIf="item?.availability === 'No' || item.isBookTaken === true"
-                class="px-4 py-2 bg-red-500 inline-block rounded-full text-white text-xs mt-2"
+                class="text-five px-4 py-2 bg-red-500 inline-block rounded-md text-red-900 text-xs mt-2"
               >
                 Book not available in library
               </p>
@@ -22,7 +28,7 @@
                 *ngIf="
                   item?.availability === 'Yes' && item.isBookTaken !== true
                 "
-                class="px-4 py-2 bg-green-400 inline-block rounded-full text-white text-xs mt-2"
+                class="text-five px-4 py-2 bg-green-400 inline-block rounded-md text-green-900 text-xs mt-2"
               >
                 Book available in library
               </p>
@@ -31,17 +37,19 @@
         </div>
 
         <div
-          class="border-b-2 border-gray-700 border-opacity-30 pb-6 ml-10 mr-10"
+          class="border-b-2 border-gray-700 border-opacity-30 pb-6 ml-10 mr-10 button-container"
         >
           <div class="flex-col inline-flex" *ngIf="item?.availability === 'No'">
             <p
-              class="px-10 py-2 bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
+              class="text-six-a px-10 py-2 bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
               (click)="addVote()"
             >
               Request admin to add +
             </p>
 
-            <p class="mt-2 w-64 text-gray-400 text-xs pl-4 text-left">
+            <p
+              class="text-six-b mt-2 w-64 text-gray-400 text-xs pl-4 text-left"
+            >
               *Once requested admin will review your request to add book to the
               library
             </p>
@@ -51,13 +59,15 @@
             *ngIf="item?.availability === 'Yes' && !item.isBookTaken"
           >
             <p
-              class="px-10 py-2 text-center bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
+              class="text-six-a px-10 py-2 text-center bg-emerald-400 inline-block rounded-full text-blue-900 cursor-pointer"
               (click)="takeBook()"
             >
               Take book
             </p>
 
-            <p class="mt-2 w-64 text-gray-400 text-xs pl-4 text-left">
+            <p
+              class="text-six-b mt-2 w-64 text-gray-400 text-xs pl-4 text-left"
+            >
               *Once taken, you should return it within a month or two.
             </p>
           </div>
@@ -67,19 +77,21 @@
             *ngIf="item?.availability === 'Yes' && item.isBookTaken === true"
           >
             <p
-              class="px-10 py-2 text-center bg-red-400 inline-block rounded-full text-white cursor-pointer"
+              class="text-six-a px-10 py-2 text-center bg-red-400 inline-block rounded-full text-white cursor-pointer"
             >
               Book already taken
             </p>
 
-            <p class="mt-2 w-64 text-gray-400 text-xs pl-4 text-left">
+            <p
+              class="text-six-b mt-2 w-64 text-gray-400 text-xs pl-4 text-left"
+            >
               *Please contact admin for more info regarding book status.
             </p>
           </div>
         </div>
 
         <div class="pl-10 mt-6">
-          <p class="text-white text-2xl">
+          <p class="text-white text-2xl text-seven">
             Books from author {{ item.authorName }}
           </p>
           <div class="flex w-full overflow-x-scroll gap-8 pb-12 similar_books">
@@ -96,7 +108,7 @@
                     src="{{ data.imageUrl }}"
                   />
                   <p
-                    class="w-40 text-md cursor-pointer text-center text-white leading-none font-black"
+                    class="text-eight w-40 text-md cursor-pointer text-center text-white leading-none font-black"
                   >
                     {{ data.bookName }}
                   </p>
@@ -115,14 +127,14 @@
   >
     <div class="flex flex-col justify-center items-center gap-4 p-6">
       <img
-        class="w-48 rounded-md"
+        class="w-48 rounded-md author_book_image"
         src="{{ selectedReceiver.imageUrl }}"
         alt=""
       />
-      <p class="text-2xl text-color-blue font-bold">
+      <p class="text-2xl text-color-blue font-bold text-nine">
         {{ selectedReceiver.bookName }}
       </p>
-      <p class="text-center">{{ selectedReceiver.description }}</p>
+      <p class="text-center text-ten">{{ selectedReceiver.description }}</p>
 
       <div class="absolute top-4 right-6">
         <button class="item-1" (click)="close()">
@@ -146,8 +158,10 @@
     class="alert_box w-auto h-auto light_dark_theme absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-md"
   >
     <div class="flex justify-center items-center flex-col px-10 py-6">
-      <p class="text-1xl">Are you sure you want to add a vote for this book.</p>
-      <p class="text-xs text-gray-400 mt-2">
+      <p class="text-1xl confirm_text-one">
+        Are you sure you want to add a vote for this book.
+      </p>
+      <p class="text-xs text-gray-400 mt-2 confirm_text-hint">
         *Most voted book will be added to the library after review.
       </p>
       <div class="flex w-full justify-center gap-20 mt-8">
@@ -173,8 +187,10 @@
     class="alert_box w-auto h-auto light_dark_theme absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 rounded-md"
   >
     <div class="flex justify-center items-center flex-col px-10 py-6">
-      <p class="text-1xl">Are you sure you want to take this book.</p>
-      <p class="text-xs text-gray-400 mt-2">
+      <p class="text-1xl confirm_text-one">
+        Are you sure you want to take this book.
+      </p>
+      <p class="text-xs text-gray-400 mt-2 confirm_text-hint">
         *Once taken, you should return it within a month or two.
       </p>
       <div class="flex w-full justify-center gap-20 mt-8">

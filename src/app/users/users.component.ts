@@ -42,6 +42,7 @@ export class UsersComponent implements OnInit {
       this.userLength = user;
       return this.userLength;
     });
+
     return this.userData;
   }
 

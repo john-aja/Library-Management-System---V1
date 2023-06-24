@@ -161,7 +161,8 @@ export class FirebaseService {
       liveQuery(async () => {
         const users = await ddb.usersData.toArray();
         if (users.length === 0) {
-          this.ds.getUsers();
+          await this.ds.getUsers();
+          return await ddb.usersData.toArray();
         }
         return await ddb.usersData.toArray();
       })

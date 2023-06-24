@@ -55,7 +55,26 @@
 
 @media only screen and (max-width: 540px) {
   .book-container {
-    height: 54rem;
+    // height: 54rem;
+    padding-bottom: 18rem;
+  }
+  .profile_img {
+    width: 7rem;
+  }
+  .user_name {
+    font-size: 2rem;
+  }
+  .user_id {
+    font-size: 1.2rem;
+  }
+  .books_one {
+    font-size: 1.6rem;
+  }
+  .taken_book_img {
+    width: 11rem;
+  }
+  .padding_header {
+    padding: 1rem 2rem;
   }
 }
 

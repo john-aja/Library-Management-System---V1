@@ -1,5 +1,5 @@
 .profile_pic {
-  border-color: #01005e;
+  border-color: rgb(13 13 14);
 }
 
 .profile_name {
@@ -35,5 +35,24 @@
   }
   .profile_picture_div {
     top: 10rem;
+  }
+}
+
+@media only screen and (max-width: 540px) {
+  .profile_name {
+    font-size: 13px;
+    padding-left: 2rem;
+    padding-right: 4rem;
+  }
+  .profile_pic {
+    width: 4rem;
+  }
+  .profile_picture_div {
+    top: 10rem;
+    right: 2rem;
+  }
+  .profile_box {
+    width: 62vw;
+    top: 6rem;
   }
 }

@@ -1,11 +1,11 @@
 <div class="relative h-full overflow-scroll">
-  <div class="px-10">
+  <div class="px-10 h-full overflow-scroll">
     <div
-      class="flex flex-col gap-10 pb-10 sticky top-0 pt-28"
+      class="flex flex-col gap-10 pb-10 sticky top-0 pt-32 z-20"
       style="background: rgb(13 13 14)"
     >
       <div class="flex w-full justify-between">
-        <div class="relative w-2/4 h-10">
+        <div class="relative w-2/4 h-10 search_input_container">
           <input
             [(ngModel)]="searchText"
             class="w-full h-full rounded-full pl-4 font-extralight"
@@ -13,7 +13,7 @@
             placeholder=" Search by book name or author..."
           />
           <div
-            class="absolute right-1 cursor-pointer top-1/2 -translate-y-1/2 rounded-full p-2 dark_theme"
+            class="absolute right-1 cursor-pointer top-1/2 -translate-y-1/2 rounded-full p-2 dark_theme search_img_container"
           >
             <img src="../../../assets/Search_.svg" class="w-4" />
           </div>
@@ -21,7 +21,7 @@
       </div>
       <div class="relative flex gap-8">
         <select
-          class="w-1/4 h-10 rounded-full pl-4 cursor-pointer font-extralight"
+          class="w-1/4 h-10 rounded-full pl-4 cursor-pointer font-extralight select_container"
           (change)="filterByGenre($event.target)"
         >
           <option value="" selected>Select genre</option>
@@ -34,7 +34,7 @@
         </select>
 
         <div
-          class="flex gap-2 items-center whitespace-nowrap font-light text-gray-300"
+          class="flex gap-2 items-center whitespace-nowrap font-light text-gray-300 sort_container"
         >
           Sort by name
           <img

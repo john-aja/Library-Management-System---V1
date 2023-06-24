@@ -1,6 +1,10 @@
 .add-button {
   background-color: #17b794;
 }
+.user_list_container {
+  height: 65vh;
+  overflow: scroll;
+}
 select {
   appearance: none;
   background: url(../../assets/add_drop.svg) white 96% 55% / 14px no-repeat;
@@ -189,6 +193,21 @@ input:focus {
         }
       }
     }
+  }
+  .user_list_container {
+    font-size: 1.2rem;
+  }
+  .main_nav {
+    font-size: 1.5rem;
+  }
+  .sub_nav {
+    font-size: 1.2rem;
+  }
+  .header_nav {
+    font-size: 1.3rem;
+  }
+  .container {
+    padding-top: 6rem;
   }
 }
 

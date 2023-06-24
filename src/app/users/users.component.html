@@ -1,18 +1,18 @@
 <div class="h-full w-full relative">
-  <div class="overflow-hidden">
+  <div class="overflow-hidden container">
     <div class="mt-28 pt-2 pl-10 user_container">
       <div
         class="inline-flex bg-white text-black bg-opacity-70 rounded-md px-4 gap-10"
       >
         <p
-          class="px-4 py-3 cursor-pointer"
+          class="px-4 py-3 cursor-pointer main_nav"
           [ngClass]="members ? 'border-b-4 border_blue' : ''"
           (click)="membersTab()"
         >
           Members
         </p>
         <p
-          class="px-4 py-3 cursor-pointer"
+          class="px-4 py-3 cursor-pointer main_nav"
           [ngClass]="admin ? 'border-b-4 border_blue' : ''"
           (click)="adminsTab()"
         >
@@ -26,7 +26,7 @@
     <ng-container *ngIf="members">
       <div class="mt-8 px-14 flex justify-between items-center">
         <div class="flex items-center gap-10">
-          <p class="text-white text-2xl">Members</p>
+          <p class="text-white text-2xl main_nav">Members</p>
           <!-- <p
             class="px-8 py-2 rounded-md text-white bg-green cursor-pointer"
             (click)="addMember()"
@@ -35,34 +35,35 @@
           </p> -->
         </div>
         <div class="flex flex-col gap-4 text-right pr-6">
-          <p class="text-gray-400">
+          <p class="text-gray-400 sub_nav">
             Total Members:
             <span class="text-white">{{ userLength?.length }}</span>
           </p>
         </div>
       </div>
-      <div class="px-10 mt-10">
+      <div class="px-10 mt-10 user_list_container">
         <div
-          class="px-10 py-4 mb-4 bg-opacity-20 flex justify-between gap-6 rounded-md text-white text-1xl font-bold"
-          style="background-color: #414141"
+          class="header_nav px-10 py-4 mb-4 bg-opacity-20 grid grid-cols-4 justify-between gap-6 rounded-md text-white text-1xl font-bold"
+          style="background-color: #414141; overflow-wrap: anywhere"
         >
-          <p class="w-1/4">S.No</p>
-          <p class="w-1/2">Name</p>
+          <p class="w-1/4 whitespace-nowrap">S.No</p>
+          <p class="w-full">Name</p>
           <!-- <p class="w-1/2">Designation</p> -->
-          <p class="w-1/2">Email</p>
-          <p class="whitespace-nowrap w-1/2 pl-3">No. of books taken</p>
+          <p class="w-full">Email</p>
+          <p class="whitespace-nowrap w-full pl-3">No. of books taken</p>
         </div>
         <ng-container *ngIf="userData | async as usersList">
           <div
             *ngFor="let item of usersList; index as i"
-            class="px-10 py-4 flex justify-between rounded-md gap-6 text-white text-1xl font-light cursor-pointer"
+            class="header_nav px-10 py-4 grid grid-cols-4 justify-between rounded-md gap-6 text-white text-1xl font-light cursor-pointer"
             (click)="onSelect($event, item)"
+            style="overflow-wrap: anywhere"
           >
-            <p class="w-1/4">{{ i + 1 }}</p>
-            <p class="w-1/2">{{ item?.name }}</p>
-            <!-- <p class="w-1/2">{{ item.designation }}</p> -->
-            <p class="w-1/2">{{ item?.email }}</p>
-            <p class="w-1/2 pl-3">
+            <p class="w-1/4 whitespace-nowrap">{{ i + 1 }}</p>
+            <p class="w-full">{{ item?.name }}</p>
+            <!-- <p class="w-full">{{ item.designation }}</p> -->
+            <p class="w-full">{{ item?.email }}</p>
+            <p class="w-full pl-3">
               {{ item?.booksTaken?.length ? item?.booksTaken?.length : "0" }}
             </p>
           </div>
@@ -75,7 +76,7 @@
     <ng-container *ngIf="admin">
       <div class="mt-8 px-14 flex justify-between items-center">
         <div class="flex items-center gap-10">
-          <p class="text-white text-2xl">Admins</p>
+          <p class="text-white text-2xl main_nav">Admins</p>
           <!-- <p
             class="px-8 py-2 rounded-md text-white bg-green cursor-pointer"
             (click)="addAdmin()"
@@ -84,30 +85,30 @@
           </p> -->
         </div>
         <div class="flex flex-col gap-4 text-right pr-6">
-          <p class="text-gray-400">
+          <p class="text-gray-400 sub_nav">
             Total Admins:
             <span class="text-white">{{ adminList.length }}</span>
           </p>
         </div>
       </div>
-      <div class="px-10 mt-10">
+      <div class="px-10 mt-10 user_list_container">
         <div
           style="background-color: #414141"
-          class="px-10 py-4 mb-4 bg-opacity-20 flex justify-between rounded-md text-white text-1xl font-bold"
+          class="header_nav px-10 py-4 mb-4 bg-opacity-20 grid grid-cols-4 justify-between rounded-md text-white text-1xl font-bold"
         >
-          <p class="w-1/4">S.No</p>
-          <p class="w-1/2">Name</p>
-          <p class="w-1/2">Designation</p>
-          <p class="w-1/2">Email</p>
+          <p class="w-1/4 whitespace-nowrap">S.No</p>
+          <p class="w-full">Name</p>
+          <p class="w-full">Designation</p>
+          <p class="w-full">Email</p>
         </div>
         <div
           *ngFor="let item of adminList; index as i"
-          class="px-10 py-4 flex justify-between rounded-md text-white text-1xl font-light"
+          class="header_nav px-10 py-4 grid grid-cols-4 justify-between rounded-md text-white text-1xl font-light"
         >
-          <p class="w-1/4">{{ i + 1 }}</p>
-          <p class="w-1/2">{{ item.name }}</p>
-          <p class="w-1/2">{{ item.designation }}</p>
-          <p class="w-1/2">{{ item.email }}</p>
+          <p class="w-1/4 whitespace-nowrap">{{ i + 1 }}</p>
+          <p class="w-full">{{ item.name }}</p>
+          <p class="w-full">{{ item.designation }}</p>
+          <p class="w-full">{{ item.email }}</p>
         </div>
       </div>
     </ng-container>
