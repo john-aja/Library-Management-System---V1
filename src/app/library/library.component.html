@@ -51,7 +51,7 @@
       </div>
     </div>
     <div class="overflow-y-scroll pb-6">
-      <ng-container *ngIf="books | async; let bookItems; else: emptyState">
+      <ng-container *ngIf="books | async; let bookItems">
         <ng-container
           *ngFor="
             let item of bookItems
@@ -78,15 +78,14 @@
           </div>
         </ng-container>
       </ng-container>
-      <ng-template #emptyState>
-        <!-- <ng-container> -->
+
+      <ng-container *ngIf="emptyState">
         <div
           class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mt-16"
         >
           <img class="w-96" src="../../assets/no_result.png" alt="" />
         </div>
-        <!-- </ng-container> -->
-      </ng-template>
+      </ng-container>
     </div>
   </div>
 

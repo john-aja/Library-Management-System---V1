@@ -43,6 +43,9 @@ export class LibraryComponent implements OnInit {
         this.bookList = v;
         if (v?.length >= 0) {
           this.loading = false;
+          if (v?.length === 0) {
+            this.emptyState = true;
+          } else this.emptyState = false;
           return v;
         }
         return v;

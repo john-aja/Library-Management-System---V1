@@ -61,7 +61,11 @@ export class SidebarComponent implements OnInit {
     });
     let userInfo: any = localStorage.getItem('user');
     this.userData = JSON.parse(userInfo);
-    if (this.userData.email === 'janakiram@surfboard.se') {
+    if (
+      this.userData.email === 'janakiram@surfboard.se' ||
+      this.userData.email === 'janakiram.0695@gmail.com' ||
+      this.userData.email === 'vendorlistingcompany@gmail.com'
+    ) {
       return this.navBarModule;
     } else {
       this.navBarModule = this.navBarModule.splice(0, 2);

@@ -24,7 +24,11 @@ export class AdminAuthGuard implements CanActivate {
     | UrlTree {
     const userData: any = localStorage.getItem('user');
     const userInfo = JSON.parse(userData);
-    if (userInfo.email === 'janakiram@surfboard.se') {
+    if (
+      userInfo.email === 'janakiram@surfboard.se' ||
+      userInfo.email === 'janakiram.0695@gmail.com' ||
+      userInfo.email === 'vendorlistingcompany@gmail.com'
+    ) {
       return true;
     } else {
       this.router.navigate(['']);

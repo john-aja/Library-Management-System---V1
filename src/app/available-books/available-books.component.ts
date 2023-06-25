@@ -31,8 +31,10 @@ export class AvailableBooksComponent implements OnInit {
     this.loading = true;
     this.books = this.fs.getAllBooks().pipe(
       map((books: any) => {
-        console.log(books);
         this.totalBooks = books;
+        if (books?.length === 0) {
+          this.emptyState = true;
+        } else this.emptyState = false;
         return books?.filter((book: any) => {
           if (book.availability === 'Yes') {
             this.loading = false;
