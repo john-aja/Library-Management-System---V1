@@ -43,7 +43,7 @@ export class AvailableBooksComponent implements OnInit {
         });
       })
     );
-    console.log(this.totalBooks);
+
     return this.books;
   }
 
