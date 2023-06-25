@@ -43,7 +43,7 @@ export class FirebaseService {
         if (books.length === 0) {
           return await this.ds.getBooks();
         }
-        return ddb.renderedBook.toArray();
+        return await ddb.renderedBook.toArray();
       })
     );
   }

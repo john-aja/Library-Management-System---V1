@@ -18,6 +18,7 @@ export class AvailableBooksComponent implements OnInit {
   books: Observable<any>;
   sort: boolean = true;
   emptyState: boolean = false;
+  loading: boolean = false;
   totalBooks: any;
   constructor(private fs: FirebaseService, private ds: DexieService) {}
 
@@ -27,16 +28,20 @@ export class AvailableBooksComponent implements OnInit {
   }
 
   renderBook() {
+    this.loading = true;
     this.books = this.fs.getAllBooks().pipe(
       map((books: any) => {
+        console.log(books);
         this.totalBooks = books;
         return books?.filter((book: any) => {
           if (book.availability === 'Yes') {
+            this.loading = false;
             return book;
           }
         });
       })
     );
+    console.log(this.totalBooks);
     return this.books;
   }
 

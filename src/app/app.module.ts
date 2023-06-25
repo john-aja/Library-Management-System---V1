@@ -16,6 +16,7 @@ import { UsersComponent } from './users/users.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { BnNgIdleService } from 'bn-ng-idle';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { BnNgIdleService } from 'bn-ng-idle';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
+    LoadingComponent,
     AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [BnNgIdleService],

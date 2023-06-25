@@ -109,7 +109,7 @@ export class DexieService {
         if (val)
           ddb.usersData
             .put(val)
-            .then((data) => console.log('Retrieved user from db'))
+            .then((data) => console.log(''))
             .catch((err) => console.log(err));
       });
     });

@@ -18,7 +18,7 @@ export class LibraryComponent implements OnInit {
   bookList: any = [];
   sort: boolean = true;
   emptyState: boolean = false;
-
+  loading: boolean = false;
   totalBooks: any;
   dataId: any;
   books: Observable<any>;
@@ -31,6 +31,7 @@ export class LibraryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.renderBook();
     this.ds.getUsers();
   }
@@ -40,6 +41,10 @@ export class LibraryComponent implements OnInit {
       map((v: any) => {
         this.totalBooks = v;
         this.bookList = v;
+        if (v?.length >= 0) {
+          this.loading = false;
+          return v;
+        }
         return v;
       })
     );
@@ -59,10 +64,10 @@ export class LibraryComponent implements OnInit {
     this.bookView = false;
   }
 
-  filterByGenre(genre: any) {
+  async filterByGenre(genre: any) {
     let currentGenre = genre.value;
     if (currentGenre) {
-      this.books = this.fs.getAllBooks().pipe(
+      this.books = (await this.fs.getAllBooks()).pipe(
         map((v: any) => {
           this.emptyState = false;
           return v.filter((w: any) => {
@@ -74,7 +79,7 @@ export class LibraryComponent implements OnInit {
       );
     }
     if (currentGenre === '') {
-      this.books = this.fs.getAllBooks().pipe(
+      this.books = (await this.fs.getAllBooks()).pipe(
         map((v: any) => {
           return v.map((w: any) => {
             return w;
