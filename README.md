@@ -71,7 +71,7 @@ To use the Library Management Web Application, follow these steps:
 
     ![#1589F0](https://www.iconsdb.com/icons/download/color/1589F0/circle-16.png) ng serve --port=4000
 
-   *Open your web browser and visit http://localhost:4200 to access the application.*
+   *Open your web browser and visit http://localhost:4000 to access the application.*
 
 ## Configuration
 
