@@ -30,7 +30,7 @@ The Library Management Web Application offers the following features:
 
 - ***Admin Privileges:*** Administrators have additional privileges, including adding and removing books, as well as accessing user details and voting activity.
 
-- ***Google One Tap Sign-In:*** Users can sign in using their Google credentials. The application verifies whether the user is an admin or a regular user based on their sign-in credentials.
+- ***Google One Tap Sign-In:*** Users can sign in using their Google credentials. The application verifies whether the user is an admin or a regular user based on their sign-in details.
 
 ## Usage
 
@@ -113,7 +113,8 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 For any inquiries or support regarding the Scheme Welfare Web Application, please contact:
 
-Your Name : ***John***
+***John***
+
 Email: ***janakiram.0695@gmail.com***
 
 Feel free to reach out with any questions, feedback, or suggestions. Your input is highly appreciated!
