@@ -111,7 +111,7 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 ## Contact
 
-For any inquiries or support regarding the Scheme Welfare Web Application, please contact:
+For any inquiries or support regarding the Library Management Web Application, please contact:
 
 ***John***
 
