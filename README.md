@@ -51,6 +51,18 @@ To use the Library Management Web Application, follow these steps:
 
 7. Administrators can access additional features such as adding and removing books, as well as viewing user details and voting activity.
 
+## Admin Privileges
+
+Administrators have additional privileges compared to regular users. The admin features include:
+
+- ***Add Book***: Administrators can add new books to the library, including book details and assets.
+  
+- ***Remove Book***: Administrators can remove books from the library.
+  
+- ***User Details***: Administrators can access user details, including information about which books users have taken and the books they have voted for.
+  
+- ***Voting Activity***: Administrators can view the voting activity, including the books that have been voted for and the number of votes each book has received.
+
 ## Installation
 
 *To install and run the Library Management Web Application locally, follow these steps:*
@@ -84,18 +96,6 @@ To configure the Library Management Web Application, you will need to provide th
 - Enable Google One Tap Sign-In and configure the necessary OAuth credentials.
 
 - Update the application configuration files with the appropriate API keys, database URLs, and authentication settings.
-
-## Admin Privileges
-
-Administrators have additional privileges compared to regular users. The admin features include:
-
-- ***Add Book***: Administrators can add new books to the library, including book details and assets.
-  
-- ***Remove Book***: Administrators can remove books from the library.
-  
-- ***User Details***: Administrators can access user details, including information about which books users have taken and the books they have voted for.
-  
-- ***Voting Activity***: Administrators can view the voting activity, including the books that have been voted for and the number of votes each book has received.
 
 ## Build
 
