@@ -3,7 +3,7 @@
 Welcome to the Library Management Web Application! This application allows users to manage a library by viewing and interacting with books, marking them as taken, and voting for books that are not available in the physical library. Administrators have additional privileges such as adding and removing books, as well as accessing user details.
 
 *This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.*
-
+ 
 ## Technologies Used
 
 The Library Management Web Application is built using the following technologies:
