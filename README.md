@@ -6,7 +6,7 @@ Welcome to the Library Management Web Application! This application allows users
  
 ## Technologies Used
 
-The Library Management Web Application is built using the following technologies:
+The Library Management Web Application is built using the following technologies: 
 
 - ***Angular:*** A popular JavaScript framework for building web applications.
   
