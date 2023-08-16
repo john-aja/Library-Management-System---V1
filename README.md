@@ -1,6 +1,10 @@
 # Library Management Web Application
 
+![library-mock](https://github.com/john-aja/Library-Management-System---V1/assets/95049418/07e6a059-2d1d-4dd0-b938-d390165c5c7f)
+
 Welcome to the Library Management Web Application! This application allows users to manage a library by viewing and interacting with books, marking them as taken, and voting for books that are not available in the physical library. Administrators have additional privileges such as adding and removing books, as well as accessing user details.
+
+To open the website in a browser, please click on the following link : https://library-management-system-lms.el.r.appspot.com/
 
 *This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.*
  
@@ -36,8 +40,7 @@ The Library Management Web Application offers the following features:
 
 To use the Library Management Web Application, follow these steps:
 
-1. Access the application using the provided URL.
-   *Application URL: https://library-management-system-lms.el.r.appspot.com*
+1. Access the application using URL : https://library-management-system-lms.el.r.appspot.com*
    
 2. Sign in using your Google credentials.
  
