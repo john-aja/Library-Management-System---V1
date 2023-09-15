@@ -1,6 +1,6 @@
 # Library Management Web Application
 
-![library-mock](https://github.com/john-aja/Library-Management-System---V1/assets/95049418/07e6a059-2d1d-4dd0-b938-d390165c5c7f)
+![LIBRARY](https://github.com/john-aja/Library-Management-System---V1/assets/95049418/77a5fb23-7ef8-46d8-988e-c353c546b93d)
 
 Welcome to the Library Management Web Application! This application allows users to manage a library by viewing and interacting with books, marking them as taken, and voting for books that are not available in the physical library. Administrators have additional privileges such as adding and removing books, as well as accessing user details.
 
